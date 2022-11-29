@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import app from './App.module.css';
 import AppHeader from "./components/AppHeader/AppHeader";
 
 function App() {
   return (
-    <div className="App">
+    <div className={app.appContent}>
       <AppHeader />
     </div>
   );

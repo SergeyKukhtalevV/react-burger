@@ -1,20 +1,41 @@
 import React from 'react';
 import {Logo} from '@ya.praktikum/react-developer-burger-ui-components';
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import appHeader from './appHeader.module.css'
 import {Typography} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Box} from '@ya.praktikum/react-developer-burger-ui-components';
 
 
 const AppHeader = () => {
   return (
-    <div>
-      <ul >
-      <li className="p-2"><BurgerIcon  type="primary" /><span className="text text_type_main-default">Конструктор</span></li>
-        <li ><ListIcon type="primary" /><span className="text text_type_main-default">Лента заказов</span></li>
+    <header className={appHeader.header}>
+      <ul className={appHeader.header__navbar}>
+        <li>
+          <ul className={`pt-4 pb-4 ${appHeader.header__menu}`}>
+            <li className={`pl-5 pr-5`}>
+              <a className={` ${appHeader.header__link}`}>
+                <BurgerIcon type="primary"/>
+                <span className="pl-2 text text_type_main-default">Конструктор</span>
+              </a>
+            </li>
+            <li className={`ml-2 pl-5 pr-5`}>
+              <a className={`${appHeader.header__link}`}>
+                <ListIcon type="primary"/><span className="pl-2 text text_type_main-default">Лента заказов</span>
+              </a>
+            </li>
+            <li className={`ml-25 pl-3`}>
+              <Logo/>
+            </li>
+          </ul>
+        </li>
+        <li className={``}>
+          <a className={`${appHeader.header__link}`}>
+            <ProfileIcon type="primary"/>
+            <span className="pl-2 text text_type_main-default">Личный кабинет</span>
+          </a>
+        </li>
       </ul>
-      <Logo />
-      <ProfileIcon type="primary" /><span className="text text_type_main-default">Личный кабинет</span>
-    </div>
+    </header>
   );
 };
 
