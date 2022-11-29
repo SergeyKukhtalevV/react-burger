@@ -28,7 +28,7 @@ const AppHeader = () => {
             </li>
           </ul>
         </li>
-        <li className={``}>
+        <li className={`pr-5`}>
           <a className={`${appHeader.header__link}`}>
             <ProfileIcon type="primary"/>
             <span className="pl-2 text text_type_main-default">Личный кабинет</span>
