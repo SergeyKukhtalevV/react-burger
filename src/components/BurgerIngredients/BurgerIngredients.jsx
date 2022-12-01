@@ -6,6 +6,7 @@ import {Box} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredients from './burgerIngredients.module.css'
 import BurgerTab from "../BurgerTab/BurgerTab";
 import BurgerElement from "../BurgerElement/BurgerElement";
+import data from '../../utils/data';
 
 const BurgerIngredients = () => {
   return (
@@ -13,8 +14,15 @@ const BurgerIngredients = () => {
       <h1 className={`text text_type_main-large ${burgerIngredients.title}`}>Соберите бургер</h1>
       <BurgerTab/>
       <p className={`text text_type_main-medium ${burgerIngredients.subtitle}`}>Булки</p>
-      <ul>
-        <BurgerElement />
+      <ul className={burgerIngredients.cards}>
+        {
+          data.map(info => {
+            return (
+              <BurgerElement {...info}/>
+            )
+          })
+
+        }
       </ul>
     </div>
   );
