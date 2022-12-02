@@ -1,0 +1,10 @@
+.burgerConstructor {
+    max-width: 600px;
+    width: 100%;
+}
+.cards {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+}
