@@ -2,11 +2,38 @@
     margin: 0;
     padding: 0;
 }
+
 .subtitle {
     text-align: left;
 }
-.cards{
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
     list-style: none;
-    padding: 0;
     margin: 0;
+    max-height: 716px;
+    max-width: 600px;
+    overflow-y: scroll;
+    padding: 0;
+    scrollbar-color: #8585AD #2F2F37;
+    scrollbar-width: thin;
+    width: 100%;
+}
+
+.cards::-webkit-scrollbar {
+    background: #2F2F37;
+    max-height: 664px;
+    width: 8px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+    height: 492px;
+    width: 8px;
+}
+
+.cards::-webkit-scrollbar-track {
+    background: #2F2F37;
 }
