@@ -1,7 +1,7 @@
 import React from 'react';
 import data from '../../utils/data';
 import burgerConstructor from "./burgerConstructor.module.css";
-import BurgerElement from "../BurgerElement/BurgerElement";
+import BurgerElement from "../burgerElement/BurgerElement";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -12,9 +12,9 @@ const BurgerConstructor = () => {
       {
         data.map(info => {
           return (
-            <div className={burgerConstructor.cell}>
+            <div className={burgerConstructor.cell} key={info._id} >
             <DragIcon type="primary" />
-            <ConstructorElement {...info} key={info._id} text={info.name} thumbnail={info.image}/>
+            <ConstructorElement {...info} text={info.name} thumbnail={info.image}/>
             </div>
           )
         })

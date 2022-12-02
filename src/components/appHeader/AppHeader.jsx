@@ -2,8 +2,8 @@ import React from 'react';
 import {Logo} from '@ya.praktikum/react-developer-burger-ui-components';
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import appHeader from './appHeader.module.css'
-import {Typography} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Box} from '@ya.praktikum/react-developer-burger-ui-components';
+// import {Typography} from '@ya.praktikum/react-developer-burger-ui-components';
+// import {Box} from '@ya.praktikum/react-developer-burger-ui-components';
 
 
 const AppHeader = () => {
