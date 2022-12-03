@@ -17,24 +17,26 @@ const BurgerIngredients = () => {
 
   return (
     <div>
-      <h1 className={`text text_type_main-large ${burgerIngredients.title}`}>Соберите бургер</h1>
+      <h1 className={`mt-10 text text_type_main-large ${burgerIngredients.title}`}>Соберите бургер</h1>
       <BurgerTab/>
-      <ul className={burgerIngredients.ingredients}>
+      <ul className={`mt-10 ${burgerIngredients.ingredients}`}>
         {
           ingredients.map(ingredient => {
             return (
-              <li className={burgerIngredients.elements} key={ingredient.id}>
+              <li className={`${burgerIngredients.elements}`} key={ingredient.id}>
                 <p className={`text text_type_main-medium ${burgerIngredients.subtitle}`}>
                   {ingredient.name}
                 </p>
-                <ul className={burgerIngredients.cards}>
-                {data.map(info => {
-                if (ingredient.type === info.type) {
-                return (
-                <BurgerElement {...info} key={info._id}/>
-                )
-              }
-              })}
+                <ul className={`mt-6 mb-10 ${burgerIngredients.cards}`}>
+                  {
+                    data.map(info => {
+                      if (ingredient.type === info.type) {
+                        return (
+                          <BurgerElement {...info} key={info._id}/>
+                        )
+                      }
+                    })
+                  }
                 </ul>
               </li>
             )

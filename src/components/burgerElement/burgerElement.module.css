@@ -1,9 +1,12 @@
-.burgerElement {
-
-}
 .card {
-    border: aqua 1px solid;
-    max-width: 272px;
-    width: 100%;
-    position: relative;
+  max-width: 272px;
+  position: relative;
+  width: 100%;
+}
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
 }
