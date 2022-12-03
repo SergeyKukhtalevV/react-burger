@@ -8,7 +8,7 @@ import {DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 const BurgerConstructor = () => {
   return (
     <div className={burgerConstructor.burgerConstructor}>
-    <ul className={`mt-25 mr-4 mb-10 ml-4 ${burgerConstructor.cards}`}>
+    <ul className={`mt-25 mr-4 mb-10 ml-4 ${burgerConstructor.ingredients}`}>
       {
         data.map(info => {
           return (
