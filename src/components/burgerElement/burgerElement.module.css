@@ -3,10 +3,11 @@
   position: relative;
   width: 100%;
 }
+
 .price {
+  align-items: center;
+  column-gap: 8px;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
-  column-gap: 8px;
 }
