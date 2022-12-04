@@ -2,9 +2,10 @@ import React from 'react';
 import burgerIngredients from './burgerIngredients.module.css'
 import BurgerTab from "../burgerTab/BurgerTab";
 import BurgerElement from "../burgerElement/BurgerElement";
-import data from '../../utils/data';
+import BurgerConstructor from "../burgerConstructor/BurgerConstructor";
+import propTypes from '../../utils/propTypesValidate';
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({data}) => {
   const [ingredients, setIngredients] = React.useState([
     {id: 1, name: 'Булки', type: 'bun'},
     {id: 2, name: 'Соусы', type: 'sauce'},
@@ -44,3 +45,7 @@ const BurgerIngredients = () => {
 };
 
 export default BurgerIngredients;
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.burgerPropTypes
+}

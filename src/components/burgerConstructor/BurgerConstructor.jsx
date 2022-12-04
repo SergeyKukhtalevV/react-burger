@@ -1,10 +1,10 @@
 import React from 'react';
-import data from '../../utils/data';
+//import data from '../../utils/data';
 import burgerConstructor from "./burgerConstructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import propTypes from '../../utils/propTypesValidate'
+import propTypes from '../../utils/propTypesValidate';
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({data}) => {
   return (
     <div className={`mt-25 burgerConstructor.burgerConstructor`}>
       <ul className={`ml-4 mr-4 ${burgerConstructor.ingredients}`}>
@@ -34,3 +34,7 @@ const BurgerConstructor = () => {
 };
 
 export default BurgerConstructor;
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.burgerPropTypes
+}

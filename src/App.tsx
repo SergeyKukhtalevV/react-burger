@@ -3,16 +3,16 @@ import app from './App.module.css';
 import AppHeader from "./components/appHeader/AppHeader";
 import BurgerIngredients from "./components/burgerIngredients/BurgerIngredients";
 import BurgerConstructor from "./components/burgerConstructor/BurgerConstructor";
-
+import data from './utils/data';
 
 function App() {
   return (
     <div className={app.appContent}>
-      <AppHeader />
-        <main className={app.main}>
-        <BurgerIngredients />
-        <BurgerConstructor />
-        </main>
+      <AppHeader/>
+      <main className={app.main}>
+        <BurgerIngredients {...data}/>
+        <BurgerConstructor {...data}/>
+      </main>
     </div>
   );
 }
