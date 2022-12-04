@@ -10,8 +10,8 @@ function App() {
     <div className={app.appContent}>
       <AppHeader/>
       <main className={app.main}>
-        <BurgerIngredients {...data}/>
-        <BurgerConstructor {...data}/>
+        <BurgerIngredients data={data}/>
+        <BurgerConstructor data={data}/>
       </main>
     </div>
   );
