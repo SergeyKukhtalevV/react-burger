@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerTab from './burgerTab.module.css'
+import burgerTab from './burger-tab.module.css'
 
 const BurgerTab = () => {
   const [current, setCurrent] = React.useState('Булки')

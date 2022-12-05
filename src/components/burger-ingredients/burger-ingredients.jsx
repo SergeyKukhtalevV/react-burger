@@ -1,9 +1,9 @@
 import React from 'react';
-import burgerIngredients from './burgerIngredients.module.css'
-import BurgerTab from "../burgerTab/BurgerTab";
-import BurgerElement from "../burgerElement/BurgerElement";
-import BurgerConstructor from "../burgerConstructor/BurgerConstructor";
-import propTypes from '../../utils/propTypesValidate';
+import burgerIngredients from './burger-ingredients.module.css'
+import BurgerTab from "../burger-tab/burger-tab";
+import BurgerElement from "../burger-element/burger-element";
+import PropTypes from "prop-types";
+import {burgerPropTypes} from '../../utils/proptypes-validate';
 
 const BurgerIngredients = ({data}) => {
   const [ingredients, setIngredients] = React.useState([
@@ -13,7 +13,7 @@ const BurgerIngredients = ({data}) => {
   ]);
 
   return (
-    <div>
+    <section>
       <h1 className={`mt-10 text text_type_main-large ${burgerIngredients.title}`}>Соберите бургер</h1>
       <BurgerTab/>
       <ul className={`mt-10 ${burgerIngredients.ingredients}`}>
@@ -40,12 +40,12 @@ const BurgerIngredients = ({data}) => {
           })
         }
       </ul>
-    </div>
+    </section>
   );
 };
 
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.burgerPropTypes
+  data: PropTypes.arrayOf(burgerPropTypes)
 }

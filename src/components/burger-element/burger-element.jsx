@@ -1,6 +1,6 @@
 import React from 'react';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerElement from './burgerElement.module.css'
+import burgerElement from './burger-element.module.css'
 
 const BurgerElement = (props) => {
   return (

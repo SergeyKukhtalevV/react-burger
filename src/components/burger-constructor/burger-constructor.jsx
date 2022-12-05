@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import burgerConstructor from "./burgerConstructor.module.css";
+import burgerConstructor from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import { burgerPropTypes } from '../../utils/propTypesValidate';
+import { burgerPropTypes } from '../../utils/proptypes-validate';
 
 const BurgerConstructor = ({data}) => {
   return (
