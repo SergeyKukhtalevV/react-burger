@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 
 const BurgerIngredients = ({data}) => {
-  const [ingredients, setIngredients] = React.useState([
+  const [ingredientsTypes, setIngredients] = React.useState([
     {id: 1, name: 'Булки', type: 'bun'},
     {id: 2, name: 'Соусы', type: 'sauce'},
     {id: 3, name: 'Начинка', type: 'main'}
@@ -18,16 +18,16 @@ const BurgerIngredients = ({data}) => {
       <BurgerTabs/>
       <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`}>
         {
-          ingredients.map(ingredient => {
+          ingredientsTypes.map(type => {
             return (
-              <li className={`${burgerIngredientsStyles.elements}`} key={ingredient.id}>
+              <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
                 <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
-                  {ingredient.name}
+                  {type.name}
                 </p>
                 <ul className={`mt-6 mb-10 ${burgerIngredientsStyles.cards}`}>
                   {
                     data.map(info => {
-                      if (ingredient.type === info.type) {
+                      if (type.type === info.type) {
                         return (
                           <BurgerElement {...info} key={info._id}/>
                         )
