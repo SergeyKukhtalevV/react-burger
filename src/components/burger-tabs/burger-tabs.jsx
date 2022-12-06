@@ -1,11 +1,11 @@
 import React from 'react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerTabStyles from './burger-tab.module.css'
+import burgerTabsStyles from './burger-tabs.module.css'
 
-const BurgerTab = () => {
+const BurgerTabs = () => {
   const [current, setCurrent] = React.useState('Булки')
   return (
-    <div className={`mt-5 ${burgerTabStyles.tab}`}>
+    <div className={`mt-5 ${burgerTabsStyles.tabs}`}>
       <Tab value="Булки" active={current === 'Булки'} onClick={setCurrent}>
         Булки
       </Tab>
@@ -19,4 +19,4 @@ const BurgerTab = () => {
   )
 };
 
-export default BurgerTab;
+export default BurgerTabs;

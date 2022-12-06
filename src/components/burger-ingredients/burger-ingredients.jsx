@@ -1,6 +1,6 @@
 import React from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
-import BurgerTab from "../burger-tab/burger-tab";
+import BurgerTabs from "../burger-tabs/burger-tabs";
 import BurgerElement from "../burger-element/burger-element";
 import PropTypes from "prop-types";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
@@ -15,7 +15,7 @@ const BurgerIngredients = ({data}) => {
   return (
     <section>
       <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
-      <BurgerTab/>
+      <BurgerTabs/>
       <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`}>
         {
           ingredients.map(ingredient => {
