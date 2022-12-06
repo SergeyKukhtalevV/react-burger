@@ -1,14 +1,14 @@
 import React from 'react';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerElement from './burger-element.module.css'
+import burgerElementStyles from './burger-element.module.css'
 
 const BurgerElement = (props) => {
   return (
-    <li className={`ml-4 mr-2 ${burgerElement.card}`}>
+    <li className={`ml-4 mr-2 ${burgerElementStyles.card}`}>
       <Counter count={1} size="default" extraClass="m-1"/>
       <img className={BurgerElement.image} src={props.image}
            alt={props.name}/>
-      <div className={`mt-1 ${burgerElement.price}`}>
+      <div className={`mt-1 ${burgerElementStyles.price}`}>
         <p className={`text text_type_digits-default`}>{20} </p>
         <CurrencyIcon type="primary"/>
       </div>

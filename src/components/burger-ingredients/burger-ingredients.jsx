@@ -1,5 +1,5 @@
 import React from 'react';
-import burgerIngredients from './burger-ingredients.module.css'
+import burgerIngredientsStyles from './burger-ingredients.module.css'
 import BurgerTab from "../burger-tab/burger-tab";
 import BurgerElement from "../burger-element/burger-element";
 import PropTypes from "prop-types";
@@ -14,17 +14,17 @@ const BurgerIngredients = ({data}) => {
 
   return (
     <section>
-      <h1 className={`mt-10 text text_type_main-large ${burgerIngredients.title}`}>Соберите бургер</h1>
+      <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
       <BurgerTab/>
-      <ul className={`mt-10 ${burgerIngredients.ingredients}`}>
+      <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`}>
         {
           ingredients.map(ingredient => {
             return (
-              <li className={`${burgerIngredients.elements}`} key={ingredient.id}>
-                <p className={`text text_type_main-medium ${burgerIngredients.subtitle}`}>
+              <li className={`${burgerIngredientsStyles.elements}`} key={ingredient.id}>
+                <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
                   {ingredient.name}
                 </p>
-                <ul className={`mt-6 mb-10 ${burgerIngredients.cards}`}>
+                <ul className={`mt-6 mb-10 ${burgerIngredientsStyles.cards}`}>
                   {
                     data.map(info => {
                       if (ingredient.type === info.type) {
