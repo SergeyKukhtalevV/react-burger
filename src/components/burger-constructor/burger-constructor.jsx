@@ -9,13 +9,15 @@ const burgerConstructor = ({data}) => {
     <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
       <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
         {
-          data.map(info => {
-            return (
-              <div className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id}>
-                <DragIcon type="primary"/>
-                <ConstructorElement {...info} text={info.name} thumbnail={info.image}/>
-              </div>
-            )
+          data.map((info, index) => {
+            if (info.type !== 'bun') {
+              return (
+                <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id}>
+                  <DragIcon type="primary"/>
+                  <ConstructorElement {...info} text={info.name} thumbnail={info.image}/>
+                </li>
+              )
+            }
           })
         }
       </ul>
