@@ -4,17 +4,17 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 
-const burgerConstructor = ({data, bunBurger, setBunBurger}) => {
+const burgerConstructor = ({data}) => {
 
-  data.forEach(info => {
-    if (info.type === 'bun') {
-      setBunBurger(info);
+  const bun = data.filter(info => {
+    if(info.type === 'bun') {
+      return info;
     }
   });
   return (
     <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
-      <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`} key={bunBurger._id}>
-        <ConstructorElement {...bunBurger} text={bunBurger.name + '(верх)'} thumbnail={bunBurger.image} type={'top'}
+      <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
+        <ConstructorElement {...bun[0]} text={bun[0].name + '(верх)'} thumbnail={bun[0].image} type={'top'}
                             isLocked={true}/>
       </div>
       <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
@@ -31,8 +31,8 @@ const burgerConstructor = ({data, bunBurger, setBunBurger}) => {
           })
         }
       </ul>
-      <div className={`mr-4 mt-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`} key={bunBurger._id}>
-        <ConstructorElement {...bunBurger} text={bunBurger.name + '(низ)'} thumbnail={bunBurger.image} type={'bottom'}
+      <div className={`mr-4 mt-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
+        <ConstructorElement {...bun[0]} text={bun[0].name + '(низ)'} thumbnail={bun[0].image} type={'bottom'}
                             isLocked={true}/>
       </div>
       <div className={`mt-10 ${burgerConstructorStyles.total}`}>
@@ -50,7 +50,7 @@ const burgerConstructor = ({data, bunBurger, setBunBurger}) => {
 };
 
 export default burgerConstructor;
-//
-// burgerConstructor.propTypes = {
-//   data: PropTypes.arrayOf(burgerPropTypes).isRequired
-// }
+
+burgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(burgerPropTypes).isRequired
+}

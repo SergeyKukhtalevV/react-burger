@@ -1,9 +1,9 @@
 .burgerConstructor {
-  max-width: 600px;
-  width: 100%;
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  max-width: 600px;
+  width: 100%;
 }
 
 .cell {
@@ -23,7 +23,7 @@
   flex-direction: column;
   list-style: none;
   margin: 0;
-  max-height: 656px;
+  max-height: 464px;
   max-width: 600px;
   overflow-y: scroll;
   padding: 0;
@@ -35,7 +35,7 @@
 
 .ingredients::-webkit-scrollbar {
   background: #2F2F37;
-  max-height: 664px;
+  max-height: 464px;
   width: 8px;
 }
 

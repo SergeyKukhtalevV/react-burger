@@ -5,19 +5,14 @@ import BurgerElement from "../burger-element/burger-element";
 import PropTypes from "prop-types";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 
-const BurgerIngredients = ({data, setter}) => {
+const BurgerIngredients = ({data}) => {
 
   const [ingredientsTypes, setIngredients] = React.useState([
     {id: 1, name: 'Булки', type: 'bun'},
     {id: 2, name: 'Соусы', type: 'sauce'},
     {id: 3, name: 'Начинка', type: 'main'}
   ]);
-  const getBunBurger = (info) => {
-    //if(info.type === 'bun') {
-    //  console.log(info);
-      setter(info);
-    //}
-  }
+
   return (
     <section>
       <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
@@ -35,7 +30,7 @@ const BurgerIngredients = ({data, setter}) => {
                     data.map(info => {
                       if (type.type === info.type) {
                         return (
-                          <BurgerElement props={info} key={info._id} getter={getBunBurger}/>
+                          <BurgerElement props={info} key={info._id}/>
                         )
                       }
                     })
@@ -52,6 +47,6 @@ const BurgerIngredients = ({data, setter}) => {
 
 export default BurgerIngredients;
 
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(burgerPropTypes).isRequired
-// }
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(burgerPropTypes).isRequired
+}
