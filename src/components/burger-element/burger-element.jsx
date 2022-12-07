@@ -7,6 +7,8 @@ const BurgerElement = ({props, getter}) => {
   const getBun = (info) => {
     getter(info);
   }
+  const [cnt, setCnt] = React.useState(0);
+
   return (
     <li className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={()=>getBun(props)}>
       <Counter count={1} size="default" extraClass="m-1"/>

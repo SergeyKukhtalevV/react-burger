@@ -1,6 +1,9 @@
 .burgerConstructor {
   max-width: 600px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .cell {
@@ -9,6 +12,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.cell_no_scroll {
+  position: sticky;
 }
 
 .ingredients {

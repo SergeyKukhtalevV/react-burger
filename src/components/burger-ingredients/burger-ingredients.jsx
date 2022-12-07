@@ -13,10 +13,10 @@ const BurgerIngredients = ({data, setter}) => {
     {id: 3, name: 'Начинка', type: 'main'}
   ]);
   const getBunBurger = (info) => {
-    if(info.type === 'bun') {
-      console.log(info);
+    //if(info.type === 'bun') {
+    //  console.log(info);
       setter(info);
-    }
+    //}
   }
   return (
     <section>
