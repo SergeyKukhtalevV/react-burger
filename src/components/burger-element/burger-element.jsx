@@ -3,9 +3,12 @@ import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-com
 import burgerElementStyles from './burger-element.module.css'
 import PropTypes from "prop-types";
 
-const BurgerElement = (props) => {
+const BurgerElement = ({props, getter}) => {
+  const getBun = (info) => {
+    getter(info);
+  }
   return (
-    <li className={`ml-4 mr-2 ${burgerElementStyles.card}`}>
+    <li className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={()=>getBun(props)}>
       <Counter count={1} size="default" extraClass="m-1"/>
       <img src={props.image} alt={props.name}/>
       <div className={`mt-1 ${burgerElementStyles.price}`}>
@@ -19,8 +22,8 @@ const BurgerElement = (props) => {
 
 export default BurgerElement;
 
-BurgerElement.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired
-}
+// BurgerElement.propTypes = {
+//   image: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+//   price: PropTypes.number.isRequired
+// }
