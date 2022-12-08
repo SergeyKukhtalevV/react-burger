@@ -4,7 +4,7 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 
-const burgerConstructor = ({data}) => {
+const burgerConstructor = ({data, setModalActive}) => {
 
   const bun = data.filter(info => {
     if(info.type === 'bun') {
@@ -40,7 +40,7 @@ const burgerConstructor = ({data}) => {
           <p className="text text_type_digits-medium">610</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4">
+        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {setModalActive(true)}}>
           Оформить заказ
         </Button>
 
@@ -51,6 +51,6 @@ const burgerConstructor = ({data}) => {
 
 export default burgerConstructor;
 
-burgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired
-}
+// burgerConstructor.propTypes = {
+//   data: PropTypes.arrayOf(burgerPropTypes).isRequired
+// }
