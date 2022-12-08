@@ -11,7 +11,8 @@ function App() {
 
   const [state, setState] = useState({
     ingredientsData: [],
-    loading: true
+    loading: true,
+    error: ''
   });
 
   useEffect(() => {
@@ -20,10 +21,13 @@ function App() {
 
   const getIngredientsData = async () => {
     setState({...state, loading: true});
-    const res = await fetch(urlApi);
-    const data = await res.json();
-    setState({ingredientsData: data.data, loading: false});
-  }
+      fetch(urlApi)
+        .then(res => res.json())
+        .then(data => setState({ ...state, ingredientsData: data.data, loading: false }))
+        .catch(e => {
+          setState({ ...state, error: e.message, loading: false });
+        });
+    };
 
   return (
     <div className={appStyles.appContent}>
