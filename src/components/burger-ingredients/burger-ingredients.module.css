@@ -1,0 +1,53 @@
+.title {
+  text-align: left;
+}
+
+.subtitle {
+  text-align: left;
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  list-style: none;
+  max-height: 716px;
+  max-width: 600px;
+  overflow-y: scroll;
+  padding: 0;
+  scrollbar-color: #8585AD #2F2F37;
+  scrollbar-width: thin;
+  width: 100%;
+}
+
+.ingredients::-webkit-scrollbar {
+  background: #2F2F37;
+  max-height: 664px;
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  border: 3px solid #8585AD;
+  height: 492px;
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  max-width: inherit;
+  padding: 0;
+}

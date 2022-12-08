@@ -1,0 +1,14 @@
+.card {
+  max-width: 272px;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.price {
+  align-items: center;
+  column-gap: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

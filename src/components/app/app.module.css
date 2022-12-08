@@ -1,0 +1,26 @@
+.App {
+  margin: 0 auto;
+}
+
+.appContent {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1240px;
+  width: 100%;
+}
+
+.burgerConstructor {
+  max-width: 600px;
+  width: 100%;
+}

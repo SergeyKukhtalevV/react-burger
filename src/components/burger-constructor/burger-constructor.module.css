@@ -1,0 +1,66 @@
+.burgerConstructor {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+}
+
+.cell {
+  align-items: center;
+  column-gap: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cell_no_scroll {
+  position: sticky;
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  max-height: 464px;
+  max-width: 600px;
+  overflow-y: scroll;
+  padding: 0;
+  row-gap: 16px;
+  scrollbar-color: #8585AD #2F2F37;
+  scrollbar-width: thin;
+  width: 100%;
+}
+
+.ingredients::-webkit-scrollbar {
+  background: #2F2F37;
+  max-height: 464px;
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  border: 3px solid #8585AD;
+  height: 292px;
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.total {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.price {
+  align-items: center;
+  column-gap: 9px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
