@@ -45,7 +45,7 @@ function App() {
           </main>
       }
       <Modal active={modalActive} setActive={setModalActive}>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem blanditiis, consequuntur, deleniti et labore
+        <p className={`mt-30 mb-30 ml-10 mr-10 text text_type_main-default`}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem blanditiis, consequuntur, deleniti et labore
           natus neque possimus praesentium provident quae, quo ratione rerum sit. Consectetur consequatur eum omnis quam
           tenetur?</p>
       </Modal>
