@@ -5,7 +5,7 @@ import BurgerElement from "../burger-element/burger-element";
 import PropTypes from "prop-types";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 
-const BurgerIngredients = ({data}) => {
+const BurgerIngredients = ({data, setModalActive}) => {
 
   const [ingredientsTypes, setIngredients] = React.useState([
     {id: 1, name: 'Булки', type: 'bun'},
@@ -30,7 +30,7 @@ const BurgerIngredients = ({data}) => {
                     data.map(info => {
                       if (type.type === info.type) {
                         return (
-                          <BurgerElement props={info} key={info._id}/>
+                          <BurgerElement props={info} key={info._id} onClick={setModalActive}/>
                         )
                       }
                     })
@@ -47,6 +47,6 @@ const BurgerIngredients = ({data}) => {
 
 export default BurgerIngredients;
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired
-}
+// BurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(burgerPropTypes).isRequired
+// }

@@ -4,10 +4,10 @@ import burgerElementStyles from './burger-element.module.css'
 import PropTypes from "prop-types";
 import {burgerPropTypes} from "../../utils/proptypes-validate";
 
-const BurgerElement = ({props}) => {
+const BurgerElement = ({props, onClick}) => {
 
   return (
-    <li className={`ml-4 mr-2 ${burgerElementStyles.card}`}>
+    <li className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={onClick}>
       <Counter count={1} size="default" extraClass="m-1"/>
       <img src={props.image} alt={props.name}/>
       <div className={`mt-1 ${burgerElementStyles.price}`}>
