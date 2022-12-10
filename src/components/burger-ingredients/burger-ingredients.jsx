@@ -5,10 +5,11 @@ import BurgerElement from "../burger-element/burger-element";
 import PropTypes from "prop-types";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 
 const BurgerIngredients = ({data, isActive, setModalActive}) => {
 
-  const [ingredientsInfo, setIngredientsInfo] = React.useState([]);
+  const [ingredientsInfo, setIngredientsInfo] = React.useState({});
 
   const [ingredientsTypes, setIngredients] = React.useState([
     {id: 1, name: 'Булки', type: 'bun'},
@@ -47,31 +48,7 @@ const BurgerIngredients = ({data, isActive, setModalActive}) => {
       </ul>
 
       <Modal active={isActive} setActive={setModalActive}>
-        <div className={`${burgerIngredientsStyles.modal_ingredient}`}>
-          <p className="mt-10 ml-10 pt-3 text text_type_main-large">Детали ингредиента</p>
-          <div className={`${burgerIngredientsStyles.modal_ingredientDesc}`}>
-            <img className={`mt-3`} src={ingredientsInfo.image_large} alt={"изображение ингредиента"}/>
-            <p className="mt-4 text text_type_main-medium">{ingredientsInfo.name}</p>
-            <ul className={`mt-8 mb-15 ${burgerIngredientsStyles.modal_ingredientProp}`}>
-              <li className={`${burgerIngredientsStyles.modal_ingredientInfo}`}>
-                <p className="text text_type_main-default  text_color_inactive">Калории,ккал</p>
-                <p className=" text text_type_digits-default  text_color_inactive">{ingredientsInfo.calories}</p>
-              </li>
-              <li className={`${burgerIngredientsStyles.modal_ingredientInfo}`}>
-                <p className="text text_type_main-default  text_color_inactive">Белки, г</p>
-                <p className=" text text_type_digits-default  text_color_inactive">{ingredientsInfo.proteins}</p>
-              </li>
-              <li className={`${burgerIngredientsStyles.modal_ingredientInfo}`}>
-                <p className="text text_type_main-default  text_color_inactive">Жиры, г</p>
-                <p className=" text text_type_digits-default  text_color_inactive">{ingredientsInfo.fat}</p>
-              </li>
-              <li className={`${burgerIngredientsStyles.modal_ingredientInfo}`}>
-                <p className="text text_type_main-default  text_color_inactive">Углеводы, г</p>
-                <p className=" text text_type_digits-default  text_color_inactive">{ingredientsInfo.carbohydrates}</p>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <IngredientDetails info={ingredientsInfo}/>
       </Modal>
     </section>
   );
