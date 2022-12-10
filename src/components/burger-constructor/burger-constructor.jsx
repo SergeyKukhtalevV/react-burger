@@ -5,6 +5,7 @@ import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 import OrderDoneSvg from "../../images/graphics.svg";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/OrderDetails";
 
 const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
 
@@ -51,14 +52,7 @@ const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       </div>
 
       <Modal active={isActive} setActive={setModalActive}>
-        <div className={`${burgerConstructorStyles.modal_order}`}>
-          <p className="mt-30 text text_type_digits-large">{orderNumber}</p>
-          <p className="mt-8 text text_type_main-medium">идентификатор заказа</p>
-          <img className={"mt-15"} src={OrderDoneSvg} alt={"иконка принятия заказа"}/>
-          <p className="mt-15 text text_type_main-default">Ваш заказ начали готовить</p>
-          <p className="mt-2 mb-30 text text_type_main-default  text_color_inactive">Дождитесь готовности на орбитальной
-            станции</p>
-        </div>
+        <OrderDetails orderNum={orderNumber}/>
       </Modal>
     </section>
 

@@ -23,6 +23,6 @@ export default BurgerElement;
 
 BurgerElement.propTypes = {
   props: burgerPropTypes.isRequired,
-  setActive: PropTypes.bool.isRequired,
+  setActive: PropTypes.func.isRequired,
   setInfo: PropTypes.func.isRequired
 }
