@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from "prop-types";
 
 const Modal = ({active, setActive, children}) => {
 
@@ -42,3 +43,9 @@ const Modal = ({active, setActive, children}) => {
 };
 
 export default Modal;
+
+Modal.propTypes = {
+  active: PropTypes.bool.isRequired,
+  setActive: PropTypes.func.isRequired,
+  children: PropTypes.any.isRequired
+}
