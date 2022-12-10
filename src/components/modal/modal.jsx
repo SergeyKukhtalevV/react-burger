@@ -5,7 +5,6 @@ import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Modal = ({active, setActive, children}) => {
 
-
   function closeModalByEscape(e) {
     if (e.key === 'Escape') {
       setActive(false);
@@ -36,7 +35,6 @@ const Modal = ({active, setActive, children}) => {
             setActive(false)
           }}/>
         </div>
-
         {children}
       </div>
     </div>, document.getElementById('react-modals')

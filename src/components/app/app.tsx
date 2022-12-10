@@ -60,44 +60,34 @@ function App() {
           :
           <main className={appStyles.main}>
             <BurgerIngredients data={state.ingredientsData} setModalActive={setModalIngredientActive}/>
-            <BurgerConstructor data={order} setModalActive={setModalOrderActive}/>
+            <BurgerConstructor data={order} isActive={modalOrderActive} orderNumber={orderNumber} setModalActive={setModalOrderActive}/>
           </main>
       }
-      <Modal active={modalOrderActive} setActive={setModalOrderActive}>
-        <div className={`${appStyles.modal_order}`}>
-          <p className="mt-30 text text_type_digits-large">{orderNumber}</p>
-          <p className="mt-8 text text_type_main-medium">идентификатор заказа</p>
-          <img className={"mt-15"} src={OrderDoneSvg} alt={"иконка принятия заказа"}/>
-          <p className="mt-15 text text_type_main-default">Ваш заказ начали готовить</p>
-          <p className="mt-2 mb-30 text text_type_main-default  text_color_inactive">Дождитесь готовности на орбитальной
-            станции</p>
-        </div>
-      </Modal>
 
       <Modal active={modalIngredientActive} setActive={setModalIngredientActive}>
         <div className={`${appStyles.modal_ingredient}`}>
           <p className="mt-10 ml-10 pt-3 text text_type_main-large">Детали ингредиента</p>
           <div className={`${appStyles.modal_ingredientDesc}`}>
-          <img className={`mt-3`} src={info.image_large} alt={"изображение ингредиента"}/>
-          <p className="mt-4 text text_type_main-medium">{info.name}</p>
-          <ul className={`mt-8 mb-15 ${appStyles.modal_ingredientProp}`}>
-            <li className={`${appStyles.modal_ingredientInfo}`}>
-              <p className="text text_type_main-default  text_color_inactive">Калории,ккал</p>
-              <p className=" text text_type_digits-default  text_color_inactive">{info.calories}</p>
-            </li>
-            <li className={`${appStyles.modal_ingredientInfo}`}>
-              <p className="text text_type_main-default  text_color_inactive">Белки, г</p>
-              <p className=" text text_type_digits-default  text_color_inactive">{info.proteins}</p>
-            </li>
-            <li className={`${appStyles.modal_ingredientInfo}`}>
-              <p className="text text_type_main-default  text_color_inactive">Жиры, г</p>
-              <p className=" text text_type_digits-default  text_color_inactive">{info.fat}</p>
-            </li>
-            <li className={`${appStyles.modal_ingredientInfo}`}>
-              <p className="text text_type_main-default  text_color_inactive">Углеводы, г</p>
-              <p className=" text text_type_digits-default  text_color_inactive">{info.carbohydrates}</p>
-            </li>
-          </ul>
+            <img className={`mt-3`} src={info.image_large} alt={"изображение ингредиента"}/>
+            <p className="mt-4 text text_type_main-medium">{info.name}</p>
+            <ul className={`mt-8 mb-15 ${appStyles.modal_ingredientProp}`}>
+              <li className={`${appStyles.modal_ingredientInfo}`}>
+                <p className="text text_type_main-default  text_color_inactive">Калории,ккал</p>
+                <p className=" text text_type_digits-default  text_color_inactive">{info.calories}</p>
+              </li>
+              <li className={`${appStyles.modal_ingredientInfo}`}>
+                <p className="text text_type_main-default  text_color_inactive">Белки, г</p>
+                <p className=" text text_type_digits-default  text_color_inactive">{info.proteins}</p>
+              </li>
+              <li className={`${appStyles.modal_ingredientInfo}`}>
+                <p className="text text_type_main-default  text_color_inactive">Жиры, г</p>
+                <p className=" text text_type_digits-default  text_color_inactive">{info.fat}</p>
+              </li>
+              <li className={`${appStyles.modal_ingredientInfo}`}>
+                <p className="text text_type_main-default  text_color_inactive">Углеводы, г</p>
+                <p className=" text text_type_digits-default  text_color_inactive">{info.carbohydrates}</p>
+              </li>
+            </ul>
           </div>
         </div>
       </Modal>

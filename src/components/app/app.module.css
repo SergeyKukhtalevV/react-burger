@@ -25,12 +25,7 @@
   max-width: 600px;
   width: 100%;
 }
-.modal_order {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-}
+
 .modal_ingredientDesc {
   display: flex;
   flex-direction: column;
