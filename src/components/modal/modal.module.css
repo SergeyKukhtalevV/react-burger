@@ -2,35 +2,37 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.6);
   display: flex;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
   height: 100%;
   justify-content: center;
   left: 0;
+  opacity: 0;
+  overflow: hidden;
   position: fixed;
   top: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  visibility: hidden;
   width: 100%;
-  overflow: hidden;
   z-index: 999;
 }
 
 .modal_active {
-  overflow: auto;
-  visibility: visible;
   opacity: 1;
+  overflow: auto;
   transition-delay: 0s;
+  visibility: visible;
 }
+
 .modal__iconClose {
   position: absolute;
   right: 40px;
   top: 60px;
 
 }
+
 .modal__content {
-  position: relative;
-  border-radius: 40px;
   background: #1C1C21;
+  border-radius: 40px;
   max-width: 720px;
+  position: relative;
   width: 100%;
 }

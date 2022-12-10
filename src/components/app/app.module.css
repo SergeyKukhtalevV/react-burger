@@ -1,6 +1,6 @@
 .App {
-  margin: 0 auto;
   height: min-content;
+  margin: 0 auto;
 }
 
 .appContent {
@@ -24,25 +24,4 @@
 .burgerConstructor {
   max-width: 600px;
   width: 100%;
-}
-
-.modal_ingredientDesc {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-}
-.modal_ingredientProp {
-  width: 100%;
-  justify-content: center;
-  list-style: none;
-  display: flex;
-  column-gap: 50px;
-  padding: 0;
-}
-.modal_ingredientInfo{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 8px;
 }

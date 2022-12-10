@@ -9,7 +9,7 @@ import Modal from "../modal/modal";
 const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
 
   const bun = data.filter(info => {
-    if(info.type === 'bun') {
+    if (info.type === 'bun') {
       return info;
     }
   });
@@ -42,7 +42,9 @@ const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
           <p className="text text_type_digits-medium">610</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {setModalActive(true)}}>
+        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
+          setModalActive(true)
+        }}>
           Оформить заказ
         </Button>
 
@@ -70,4 +72,4 @@ burgerConstructor.propTypes = {
   setModalActive: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
   orderNumber: PropTypes.number.isRequired
- }
+}
