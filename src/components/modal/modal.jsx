@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Modal = ({active, setActive, children}) => {
+
 
   function closeModalByEscape(e) {
     if (e.key === 'Escape') {
@@ -35,6 +36,7 @@ const Modal = ({active, setActive, children}) => {
             setActive(false)
           }}/>
         </div>
+
         {children}
       </div>
     </div>, document.getElementById('react-modals')
