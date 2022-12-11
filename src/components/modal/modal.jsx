@@ -3,14 +3,19 @@ import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
+import ModalOverlay from "../modal-overlay/ModalOverlay";
 
 const Modal = ({active, setActive, children}) => {
+
+  function closePopup() {
+    setActive(false);
+  }
 
   React.useEffect(() => {
 
     function closeModalByEscape(e) {
       if (e.key === 'Escape') {
-        setActive(false);
+        closePopup();
       }
     }
 
@@ -23,25 +28,16 @@ const Modal = ({active, setActive, children}) => {
   }, [active]);
 
   return ReactDOM.createPortal(
-    <div
-      className={active
-        ? [modalStyles.modal__overlay, modalStyles.modal_active].join(' ')
-        : modalStyles.modal__overlay}
-      onClick={() => {
-        setActive(false)
-      }}
-      tabIndex='-1'
-    >
-
+    <ModalOverlay activeModalOverlay={active} setActiveModalOverlay={setActive}>
       <div className={`${modalStyles.modal__content}`} onClick={e => e.stopPropagation()}>
         <div className={modalStyles.modal__iconClose}>
           <CloseIcon type="primary" onClick={() => {
-            setActive(false)
+            closePopup()
           }}/>
         </div>
         {children}
       </div>
-    </div>, document.getElementById('react-modals')
+    </ModalOverlay>, document.getElementById('react-modals')
   );
 };
 
