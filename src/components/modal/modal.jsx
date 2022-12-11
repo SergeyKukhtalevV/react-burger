@@ -6,24 +6,27 @@ import PropTypes from "prop-types";
 
 const Modal = ({active, setActive, children}) => {
 
-  function closeModalByEscape(e) {
-    if (e.key === 'Escape') {
-      setActive(false);
-    }
-  }
-
   React.useEffect(() => {
-    document.addEventListener('keydown', closeModalByEscape);
-    return () => document.removeEventListener('keydown', closeModalByEscape);
-  });
+
+    function closeModalByEscape(e) {
+      if (e.key === 'Escape') {
+        setActive(false);
+      }
+    }
+
+    if (active) {
+      document.addEventListener('keydown', closeModalByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeModalByEscape);
+      }
+    }
+  }, [active]);
+
   return ReactDOM.createPortal(
     <div
       className={active
         ? [modalStyles.modal__overlay, modalStyles.modal_active].join(' ')
         : modalStyles.modal__overlay}
-      onKeyDown={(e) => {
-        closeModalByEscape(e)
-      }}
       onClick={() => {
         setActive(false)
       }}
