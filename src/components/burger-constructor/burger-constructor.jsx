@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
+import OrderDoneSvg from "../../images/graphics.svg";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/OrderDetails";
 
-const burgerConstructor = ({data}) => {
+const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
 
   const bun = data.filter(info => {
-    if(info.type === 'bun') {
+    if (info.type === 'bun') {
       return info;
     }
   });
@@ -40,17 +43,27 @@ const burgerConstructor = ({data}) => {
           <p className="text text_type_digits-medium">610</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4">
+        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
+          setModalActive(true)
+        }}>
           Оформить заказ
         </Button>
 
       </div>
+
+      <Modal active={isActive} setActive={setModalActive}>
+        <OrderDetails orderNum={orderNumber}/>
+      </Modal>
     </section>
+
   );
 };
 
 export default burgerConstructor;
 
 burgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired
+  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+  setModalActive: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  orderNumber: PropTypes.number.isRequired
 }

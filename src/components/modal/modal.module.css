@@ -1,0 +1,13 @@
+.modal__iconClose {
+  position: absolute;
+  right: 40px;
+  top: 60px;
+}
+
+.modal__content {
+  background: #1C1C21;
+  border-radius: 40px;
+  max-width: 720px;
+  position: relative;
+  width: 100%;
+}

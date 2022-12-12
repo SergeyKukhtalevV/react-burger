@@ -4,8 +4,12 @@ import BurgerTabs from "../burger-tabs/burger-tabs";
 import BurgerElement from "../burger-element/burger-element";
 import PropTypes from "prop-types";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 
-const BurgerIngredients = ({data}) => {
+const BurgerIngredients = ({data, isActive, setModalActive}) => {
+
+  const [ingredientsInfo, setIngredientsInfo] = React.useState({});
 
   const [ingredientsTypes, setIngredients] = React.useState([
     {id: 1, name: 'Булки', type: 'bun'},
@@ -21,7 +25,7 @@ const BurgerIngredients = ({data}) => {
         {
           ingredientsTypes.map(type => {
             return (
-              <li className={`${burgerIngredientsStyles.elements}`} key={type.id} >
+              <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
                 <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
                   {type.name}
                 </p>
@@ -30,7 +34,8 @@ const BurgerIngredients = ({data}) => {
                     data.map(info => {
                       if (type.type === info.type) {
                         return (
-                          <BurgerElement props={info} key={info._id}/>
+                          <BurgerElement props={info} key={info._id} setActive={setModalActive}
+                                         setInfo={setIngredientsInfo}/>
                         )
                       }
                     })
@@ -41,6 +46,10 @@ const BurgerIngredients = ({data}) => {
           })
         }
       </ul>
+
+      <Modal active={isActive} setActive={setModalActive}>
+        <IngredientDetails info={ingredientsInfo}/>
+      </Modal>
     </section>
   );
 };
@@ -48,5 +57,7 @@ const BurgerIngredients = ({data}) => {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired
+  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+  isActive: PropTypes.bool.isRequired,
+  setModalActive: PropTypes.func.isRequired
 }

@@ -1,4 +1,5 @@
 .App {
+  height: min-content;
   margin: 0 auto;
 }
 
