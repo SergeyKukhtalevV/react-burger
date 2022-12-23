@@ -1,19 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
-import OrderDoneSvg from "../../images/graphics.svg";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
+import {BurgerContext} from "../../services/burgerContext";
 
-const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
+const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
 
-  const bun = data.filter(info => {
+  const ingredientsInfo = useContext(BurgerContext);
+  console.log(ingredientsInfo);
+
+  const bun = ingredientsInfo.ingredientsData.filter(info => {
     if (info.type === 'bun') {
       return info;
     }
   });
+
   return (
     <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
       <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
@@ -22,7 +26,7 @@ const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       </div>
       <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
         {
-          data.map((info, index) => {
+          ingredientsInfo.ingredientsData.map((info, index) => {
             if (info.type !== 'bun') {
               return (
                 <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>
@@ -59,9 +63,9 @@ const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
   );
 };
 
-export default burgerConstructor;
+export default BurgerConstructor;
 
-burgerConstructor.propTypes = {
+BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(burgerPropTypes).isRequired,
   setModalActive: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
