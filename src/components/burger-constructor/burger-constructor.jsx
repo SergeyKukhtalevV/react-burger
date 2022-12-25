@@ -1,4 +1,4 @@
-import React, {useContext, useReducer} from 'react';
+import React, {useContext, useReducer, useState} from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,33 +8,12 @@ import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/burgerContext";
 import ingredientDetails from "../ingredient-details/IngredientDetails";
 
-const initialState = [];
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'add':
-      return [...state,
-        {
-          id: action.id,
-          price: action.price
-        }
-      ]
-    case 'remove':
-      return state.filter(ingredient => ingredient.id !== action.id)
-    case 'totalOrder':
-      return state.reduce((total, i) => total + i.price, 0)
-    case 'removeBuns':
-      return state.filter(ingredient => ingredient.type !== 'bun')
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
 
 const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
 
   const ingredientsInfo = useContext(BurgerContext);
 
-  const [state, dispatch] = useReducer(reducer, ingredientsInfo.ingredientsData, undefined);
+  const [state, setState] = useState(ingredientsInfo.ingredientsData.filter(ingredient => ingredient.type !== 'bun'));
 
   const bun = ingredientsInfo.ingredientsData.filter(info => {
     if (info.type === 'bun') {
@@ -42,13 +21,8 @@ const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
     }
   });
 
-  dispatch({type: 'removeBuns'});
-
   return (
-    <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}
-    //          onLoad={() => {      {console.log(dispatch({type: 'totalOrder'}))}
-    // }}
-    >
+    <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
       <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
         <ConstructorElement {...bun[0]} text={bun[0].name + '(верх)'} thumbnail={bun[0].image} type={'top'}
                             isLocked={true}/>
@@ -75,7 +49,7 @@ const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       </div>
       <div className={`mt-10 ${burgerConstructorStyles.total}`}>
         <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-          <p className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, 0)}</p>
+          <p className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, 0) + bun[0].price*2}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
