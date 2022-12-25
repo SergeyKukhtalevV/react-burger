@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -23,6 +23,8 @@ function reducer(state, action) {
       return state.filter(ingredient => ingredient.id !== action.id)
     case 'totalOrder':
       return state.reduce((total, i) => total + i.price, 0)
+    case 'removeBuns':
+      return state.filter(ingredient => ingredient.type !== 'bun')
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
@@ -30,26 +32,26 @@ function reducer(state, action) {
 
 const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
 
-
-
   const ingredientsInfo = useContext(BurgerContext);
 
-  const [state, dispatch] = React.useReducer(reducer, ingredientsInfo, undefined);
+  const [state, dispatch] = useReducer(reducer, ingredientsInfo.ingredientsData, undefined);
 
   const bun = ingredientsInfo.ingredientsData.filter(info => {
     if (info.type === 'bun') {
-      //dispatch({type: "add", id: info._id, price: info.price})
       return info;
     }
   });
 
+  dispatch({type: 'removeBuns'});
+
   return (
-    <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
+    <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}
+    //          onLoad={() => {      {console.log(dispatch({type: 'totalOrder'}))}
+    // }}
+    >
       <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
         <ConstructorElement {...bun[0]} text={bun[0].name + '(верх)'} thumbnail={bun[0].image} type={'top'}
                             isLocked={true}/>
-        {/*{dispatch({type: "add", id: bun[0]._id, price: bun[0].price})}*/}
-        {console.log(bun[0].price)})}
       </div>
       <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
         {
@@ -73,7 +75,7 @@ const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       </div>
       <div className={`mt-10 ${burgerConstructorStyles.total}`}>
         <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-          <p className="text text_type_digits-medium">{dispatch({type: 'totalOrder'})}</p>
+          <p className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, 0)}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
