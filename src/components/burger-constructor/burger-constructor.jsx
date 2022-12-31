@@ -1,4 +1,4 @@
-import React, {useContext, useReducer, useState} from 'react';
+import React, {useContext, useReducer, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,19 +8,61 @@ import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/burgerContext";
 import ingredientDetails from "../ingredient-details/IngredientDetails";
 
+const urlOrderApi = 'https://norma.nomoreparties.space/api/orders';
 
-const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
+const BurgerConstructor = ({data, setModalActive, isActive}) => {
 
   const ingredientsInfo = useContext(BurgerContext);
 
   const [state, setState] = useState(ingredientsInfo.ingredientsData.filter(ingredient => ingredient.type !== 'bun'));
+
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const bun = ingredientsInfo.ingredientsData.filter(info => {
     if (info.type === 'bun') {
       return info;
     }
   });
+  const [order, setOrder] = useState({
+    ingredientsID: ingredientsInfo.ingredientsData.map(ingredient => ingredient._id),
+    orderData: {},
+    loading: true,
+    error: ''
+  });
 
+  ///////////////////////////////////
+  useEffect(() => {
+    getOrder();
+    console.log(order.orderData);
+  }, []);
+
+  const getOrder = async () => {
+    setOrder({...order, loading: true});
+    fetch(urlOrderApi, {
+      method: 'POST',
+      headers: {
+        authorization: 'c362a370-694e-40e1-b195-d72fbbfd69f7',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "ingredients": order.ingredientsID
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then(data => {
+        //console.log(data);
+        setOrder({...order, orderData: data, loading: false});
+      })
+      .catch(e => {
+        setOrder({...order, error: e.message, loading: false});
+      });
+  };
+  ///////////////////////////////
   return (
     <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
       <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
@@ -49,10 +91,13 @@ const BurgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       </div>
       <div className={`mt-10 ${burgerConstructorStyles.total}`}>
         <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-          <p className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, 0) + bun[0].price*2}</p>
+          <p
+            className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, 0) + bun[0].price * 2}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
+          getOrder();
+          setOrderNumber(order.orderData.order.number)
           setModalActive(true)
         }}>
           Оформить заказ
@@ -73,6 +118,5 @@ export default BurgerConstructor;
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(burgerPropTypes).isRequired,
   setModalActive: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  orderNumber: PropTypes.number.isRequired
+  isActive: PropTypes.bool.isRequired
 }

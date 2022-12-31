@@ -7,14 +7,14 @@ import order from "../../utils/order";
 import {BurgerContext} from "../../services/burgerContext";
 import ingredientDetails from "../ingredient-details/IngredientDetails";
 
-const urlApi = 'https://norma.nomoreparties.space/api/ingredients ';
+const urlApi = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
 
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
 
-  const [orderNumber, setOrderNumber] = useState(142536);
+  //const [orderNumber, setOrderNumber] = useState(142536);
 
     const [state, setState] = useState({
     ingredientsData: [],
@@ -57,8 +57,7 @@ function App() {
             <BurgerIngredients data={state.ingredientsData} isActive={modalIngredientActive}
                                setModalActive={setModalIngredientActive}/>
             <BurgerContext.Provider value={state}>
-              <BurgerConstructor data={order} isActive={modalOrderActive} orderNumber={orderNumber}
-                                 setModalActive={setModalOrderActive}/>
+              <BurgerConstructor data={order} isActive={modalOrderActive} setModalActive={setModalOrderActive}/>
             </BurgerContext.Provider>
           </main>
       }
