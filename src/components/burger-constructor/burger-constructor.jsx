@@ -43,7 +43,6 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
     fetch(urlOrderApi, {
       method: 'POST',
       headers: {
-        authorization: 'c362a370-694e-40e1-b195-d72fbbfd69f7',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
