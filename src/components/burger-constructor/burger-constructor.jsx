@@ -32,8 +32,10 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
 
   ///////////////////////////////////
   useEffect(() => {
-    getOrder();
-    console.log(order.orderData);
+    document.querySelector('.buttonOrder').addEventListener('click', getOrder);
+    return () => {
+      document.querySelector('.buttonOrder').removeEventListener('click', getOrder);
+    }
   }, []);
 
   const getOrder = async () => {
@@ -55,8 +57,9 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
         return Promise.reject(`Ошибка ${res.status}`);
       })
       .then(data => {
-        //console.log(data);
+        console.log(data.order.number);
         setOrder({...order, orderData: data, loading: false});
+        setOrderNumber(data.order.number);
       })
       .catch(e => {
         setOrder({...order, error: e.message, loading: false});
@@ -95,10 +98,8 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
             className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, 0) + bun[0].price * 2}</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
-          getOrder();
-          setOrderNumber(order.orderData.order.number)
-          setModalActive(true)
+        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder" onClick={() => {
+          setModalActive(true);
         }}>
           Оформить заказ
         </Button>
