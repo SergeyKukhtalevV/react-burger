@@ -6,9 +6,9 @@ import {burgerPropTypes} from '../../utils/proptypes-validate';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/burgerContext";
-import ingredientDetails from "../ingredient-details/IngredientDetails";
+import {urlApi} from '../../constants/constants';
 
-const urlOrderApi = 'https://norma.nomoreparties.space/api/orders';
+const urlOrder = `${urlApi}/orders`;
 
 const BurgerConstructor = ({data, setModalActive, isActive}) => {
 
@@ -40,7 +40,7 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
 
   const getOrder = async () => {
     setOrder({...order, loading: true});
-    fetch(urlOrderApi, {
+    fetch(urlOrder, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

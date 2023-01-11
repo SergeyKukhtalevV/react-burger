@@ -5,25 +5,19 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import order from "../../utils/order";
 import {BurgerContext} from "../../services/burgerContext";
-import ingredientDetails from "../ingredient-details/IngredientDetails";
+import {urlApi} from '../../constants/constants';
 
-const urlApi = 'https://norma.nomoreparties.space/api/ingredients';
+const urlData = `${urlApi}/ingredients`;
 
 function App() {
 
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
-
-  //const [orderNumber, setOrderNumber] = useState(142536);
-
-    const [state, setState] = useState({
+  const [state, setState] = useState({
     ingredientsData: [],
     loading: true,
     error: ''
   });
-
-  //const [ingredientsInfo, setIngredientsInfo] = useState({});
-  //const ingredientsState = useState({});
 
   useEffect(() => {
     getIngredientsData();
@@ -31,7 +25,7 @@ function App() {
 
   const getIngredientsData = async () => {
     setState({...state, loading: true});
-    fetch(urlApi)
+    fetch(urlData)
       .then(res => {
         if (res.ok) {
           return res.json();
