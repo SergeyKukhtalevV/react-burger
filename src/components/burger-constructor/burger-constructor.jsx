@@ -1,19 +1,70 @@
-import React from 'react';
+import React, {useContext, useReducer, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
-import OrderDoneSvg from "../../images/graphics.svg";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
+import {BurgerContext} from "../../services/burgerContext";
+import {URL_API} from '../../constants/constants';
 
-const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
+const urlOrder = `${URL_API}/orders`;
 
-  const bun = data.filter(info => {
+const BurgerConstructor = ({data, setModalActive, isActive}) => {
+
+  const ingredientsInfo = useContext(BurgerContext);
+
+  const [state, setState] = useState(ingredientsInfo.ingredientsData.filter(ingredient => ingredient.type !== 'bun'));
+
+  const [orderNumber, setOrderNumber] = useState(null);
+
+  const bun = ingredientsInfo.ingredientsData.filter(info => {
     if (info.type === 'bun') {
       return info;
     }
   });
+  const [order, setOrder] = useState({
+    ingredientsID: ingredientsInfo.ingredientsData.map(ingredient => ingredient._id),
+    orderData: undefined,
+    loading: true,
+    error: ''
+  });
+
+  ///////////////////////////////////
+  useEffect(() => {
+    document.querySelector('.buttonOrder').addEventListener('click', getOrder);
+    return () => {
+      document.querySelector('.buttonOrder').removeEventListener('click', getOrder);
+    }
+  }, []);
+
+  const getOrder = async () => {
+    setOrder({...order, loading: true});
+    fetch(urlOrder, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "ingredients": order.ingredientsID
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then(data => {
+        setOrder({...order, orderData: data, loading: false});
+        setOrderNumber(data.order.number);
+        console.log(orderNumber);
+      })
+      .catch(e => {
+        setOrder({...order, error: e.message, loading: false});
+      });
+  };
+  ///////////////////////////////
   return (
     <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
       <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
@@ -22,12 +73,13 @@ const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       </div>
       <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
         {
-          data.map((info, index) => {
+          ingredientsInfo.ingredientsData.map((info, index) => {
             if (info.type !== 'bun') {
               return (
                 <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>
                   <DragIcon type="primary"/>
                   <ConstructorElement {...info} text={info.name} thumbnail={info.image}/>
+
                 </li>
               )
             }
@@ -37,14 +89,16 @@ const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       <div className={`mr-4 mt-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
         <ConstructorElement {...bun[0]} text={bun[0].name + '(низ)'} thumbnail={bun[0].image} type={'bottom'}
                             isLocked={true}/>
+
       </div>
       <div className={`mt-10 ${burgerConstructorStyles.total}`}>
         <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-          <p className="text text_type_digits-medium">610</p>
+          <p
+            className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, bun[0].price * 2)}</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
-          setModalActive(true)
+        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder" onClick={() => {
+          setModalActive(true);
         }}>
           Оформить заказ
         </Button>
@@ -52,18 +106,17 @@ const burgerConstructor = ({data, setModalActive, isActive, orderNumber}) => {
       </div>
 
       <Modal active={isActive} setActive={setModalActive}>
-        <OrderDetails orderNum={orderNumber}/>
+        <OrderDetails orderNum={ orderNumber ? orderNumber: 'Loading...'}/>
       </Modal>
     </section>
 
   );
 };
 
-export default burgerConstructor;
+export default BurgerConstructor;
 
-burgerConstructor.propTypes = {
+BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(burgerPropTypes).isRequired,
   setModalActive: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  orderNumber: PropTypes.number.isRequired
+  isActive: PropTypes.bool.isRequired
 }
