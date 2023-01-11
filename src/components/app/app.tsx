@@ -5,9 +5,9 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import order from "../../utils/order";
 import {BurgerContext} from "../../services/burgerContext";
-import {urlApi} from '../../constants/constants';
+import {URL_API} from '../../constants/constants';
 
-const urlData = `${urlApi}/ingredients`;
+const urlData = `${URL_API}/ingredients`;
 
 function App() {
 

@@ -6,9 +6,9 @@ import {burgerPropTypes} from '../../utils/proptypes-validate';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/burgerContext";
-import {urlApi} from '../../constants/constants';
+import {URL_API} from '../../constants/constants';
 
-const urlOrder = `${urlApi}/orders`;
+const urlOrder = `${URL_API}/orders`;
 
 const BurgerConstructor = ({data, setModalActive, isActive}) => {
 
@@ -56,9 +56,9 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
         return Promise.reject(`Ошибка ${res.status}`);
       })
       .then(data => {
-        console.log(data.order.number);
         setOrder({...order, orderData: data, loading: false});
         setOrderNumber(data.order.number);
+        console.log(orderNumber);
       })
       .catch(e => {
         setOrder({...order, error: e.message, loading: false});
@@ -106,7 +106,7 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
       </div>
 
       <Modal active={isActive} setActive={setModalActive}>
-        <OrderDetails orderNum={orderNumber}/>
+        <OrderDetails orderNum={ orderNumber ? orderNumber: 'Loading...'}/>
       </Modal>
     </section>
 
