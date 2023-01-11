@@ -25,7 +25,7 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
   });
   const [order, setOrder] = useState({
     ingredientsID: ingredientsInfo.ingredientsData.map(ingredient => ingredient._id),
-    orderData: {},
+    orderData: undefined,
     loading: true,
     error: ''
   });
@@ -94,7 +94,7 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
       <div className={`mt-10 ${burgerConstructorStyles.total}`}>
         <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
           <p
-            className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, 0) + bun[0].price * 2}</p>
+            className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, bun[0].price * 2)}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder" onClick={() => {
