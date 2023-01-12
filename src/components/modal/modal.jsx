@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -31,9 +31,7 @@ const Modal = ({active, setActive, children}) => {
     <ModalOverlay activeModalOverlay={active} setActiveModalOverlay={setActive}>
       <div className={`${modalStyles.modal__content}`} onClick={e => e.stopPropagation()}>
         <div className={modalStyles.modal__iconClose}>
-          <CloseIcon type="primary" onClick={() => {
-            closePopup()
-          }}/>
+          <CloseIcon type="primary" onClick={closePopup}/>
         </div>
         {children}
       </div>
