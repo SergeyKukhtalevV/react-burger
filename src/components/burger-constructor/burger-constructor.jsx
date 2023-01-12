@@ -30,14 +30,6 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
       error: ''
     });
 
-    ///////////////////////////////////
-    // useEffect(() => {
-    //   document.querySelector('.buttonOrder').addEventListener('click', getOrder);
-    //   return () => {
-    //     document.querySelector('.buttonOrder').removeEventListener('click', getOrder);
-    //   }
-    // }, []);
-
     const getOrder = async () => {
         setOrderInfo({...orderInfo, orderData: undefined, loading: true});
         try {
@@ -51,9 +43,9 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
             })
           });
           let data = await response.json();
+
           setOrderInfo({...orderInfo, orderData: data, loading: false});
           setOrderNumber(data.order.number);
-          console.log(orderInfo);
         } catch (e) {
           setOrderInfo({...orderInfo, error: e.message, loading: false});
         }
