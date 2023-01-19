@@ -48,7 +48,7 @@ function App() {
           ? <p className="text text_type_main-medium">Идет загрузка...</p>
           :
           <main className={appStyles.main}>
-            <BurgerIngredients data={state.ingredientsData} isActive={modalIngredientActive}
+            <BurgerIngredients isActive={modalIngredientActive}
                                setModalActive={setModalIngredientActive}/>
             <BurgerContext.Provider value={state}>
               <BurgerConstructor data={order} isActive={modalOrderActive} setModalActive={setModalOrderActive}/>

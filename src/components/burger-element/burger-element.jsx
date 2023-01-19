@@ -8,7 +8,7 @@ const BurgerElement = ({props, setActive, setInfo}) => {
 
   return (
     <li className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={() =>{setActive(true); setInfo(props)}}>
-      <Counter count={1} size="default" extraClass="m-1"/>
+      <Counter count={0} size="default" extraClass="m-1"/>
       <img src={props.image} alt={props.name}/>
       <div className={`mt-1 ${burgerElementStyles.price}`}>
         <p className={`text text_type_digits-default`}>{props.price} </p>

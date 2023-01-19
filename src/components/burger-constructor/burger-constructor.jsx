@@ -7,11 +7,16 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/burgerContext";
 import {URL_API} from '../../constants/constants';
+import {useSelector} from "react-redux";
 
 const urlOrder = `${URL_API}/orders`;
 
 const BurgerConstructor = ({data, setModalActive, isActive}) => {
+  /////
+    const {ingredientsData, dataRequest, dataFailed} = useSelector(store => store.ingredients);
+    console.log(ingredientsData);
 
+  /////
     const ingredientsInfo = useContext(BurgerContext);
 
     const [state, setState] = useState(ingredientsInfo.ingredientsData.filter(ingredient => ingredient.type !== 'bun'));
