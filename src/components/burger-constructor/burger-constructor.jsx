@@ -5,13 +5,12 @@ import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
-import {BurgerContext} from "../../services/burgerContext";
 import {URL_API} from '../../constants/constants';
 import {useSelector} from "react-redux";
 
 const urlOrder = `${URL_API}/orders`;
 
-const BurgerConstructor = ({data, setModalActive, isActive}) => {
+const BurgerConstructor = ({setModalActive, isActive}) => {
     /////
     const {ingredientsData, ingredientsConstructor, dataRequest, dataFailed} = useSelector(store => store.ingredients);
     if (ingredientsData.length === 0) {
@@ -20,20 +19,15 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
       console.log('Данные пришли');
     }
 
-    /////
-    const ingredientsInfo = useContext(BurgerContext);
-
-    const [state, setState] = useState(ingredientsInfo.ingredientsData.filter(ingredient => ingredient.type !== 'bun'));
-
     const [orderNumber, setOrderNumber] = useState(null);
 
-    const bun = ingredientsInfo.ingredientsData.filter(info => {
+    const bun = ingredientsData.filter(info => {
       if (info.type === 'bun') {
         return info;
       }
     });
     const [orderInfo, setOrderInfo] = useState({
-      ingredientsID: ingredientsInfo.ingredientsData.map(ingredient => ingredient._id),
+      ingredientsID: ingredientsData.map(ingredient => ingredient._id),
       orderData: undefined,
       loading: true,
       error: ''
@@ -63,7 +57,7 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
         {
-          ingredientsConstructor.length === 0
+          ingredientsData.length === 0
             ? <p className="text text_type_main-medium">Конструктор бургера пуст. Создайте свой бургер!</p>
             : <div>
               <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
@@ -72,7 +66,7 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
               </div>
               <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
                 {
-                  ingredientsInfo.ingredientsData.map((info, index) => {
+                  ingredientsData.map((info, index) => {
                     if (info.type !== 'bun') {
                       return (
                         <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>
@@ -92,8 +86,13 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
               </div>
               <div className={`mt-10 ${burgerConstructorStyles.total}`}>
                 <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-                  <p
-                    className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, bun[0].price * 2)}</p>
+                  <p className="text text_type_digits-medium">{ingredientsData.reduce((total, i) => {
+                    if (i.type !== 'bun') {
+                      return total + i.price
+                    } else return total
+                  },
+                    bun[0].price * 2)}
+                  </p>
                   <CurrencyIcon type="primary"/>
                 </div>
                 <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder" onClick={() => {
@@ -119,7 +118,6 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
   setModalActive: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired
 }
