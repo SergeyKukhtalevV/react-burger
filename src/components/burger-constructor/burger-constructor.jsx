@@ -12,11 +12,15 @@ import {useSelector} from "react-redux";
 const urlOrder = `${URL_API}/orders`;
 
 const BurgerConstructor = ({data, setModalActive, isActive}) => {
-  /////
-    const {ingredientsData, dataRequest, dataFailed} = useSelector(store => store.ingredients);
-    console.log(ingredientsData);
+    /////
+    const {ingredientsData, ingredientsConstructor, dataRequest, dataFailed} = useSelector(store => store.ingredients);
+    if (ingredientsData.length === 0) {
+      console.log('БургерКонструктор пуст');
+    } else {
+      console.log('Данные пришли');
+    }
 
-  /////
+    /////
     const ingredientsInfo = useContext(BurgerContext);
 
     const [state, setState] = useState(ingredientsInfo.ingredientsData.filter(ingredient => ingredient.type !== 'bun'));
@@ -36,66 +40,72 @@ const BurgerConstructor = ({data, setModalActive, isActive}) => {
     });
 
     const getOrder = async () => {
-        setOrderInfo({...orderInfo, orderData: undefined, loading: true});
-        try {
-          let response = await fetch(urlOrder, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              "ingredients": orderInfo.ingredientsID
-            })
-          });
-          let data = await response.json();
+      setOrderInfo({...orderInfo, orderData: undefined, loading: true});
+      try {
+        let response = await fetch(urlOrder, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "ingredients": orderInfo.ingredientsID
+          })
+        });
+        let data = await response.json();
 
-          setOrderInfo({...orderInfo, orderData: data, loading: false});
-          setOrderNumber(data.order.number);
-        } catch (e) {
-          setOrderInfo({...orderInfo, error: e.message, loading: false});
-        }
+        setOrderInfo({...orderInfo, orderData: data, loading: false});
+        setOrderNumber(data.order.number);
+      } catch (e) {
+        setOrderInfo({...orderInfo, error: e.message, loading: false});
       }
+    }
 ///////////////////////////////
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
-        <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
-          <ConstructorElement {...bun[0]} text={bun[0].name + '(верх)'} thumbnail={bun[0].image} type={'top'}
-                              isLocked={true}/>
-        </div>
-        <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
-          {
-            ingredientsInfo.ingredientsData.map((info, index) => {
-              if (info.type !== 'bun') {
-                return (
-                  <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>
-                    <DragIcon type="primary"/>
-                    <ConstructorElement {...info} text={info.name} thumbnail={info.image}/>
+        {
+          ingredientsConstructor.length === 0
+            ? <p className="text text_type_main-medium">Конструктор бургера пуст. Создайте свой бургер!</p>
+            : <div>
+              <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
+                <ConstructorElement {...bun[0]} text={bun[0].name + '(верх)'} thumbnail={bun[0].image} type={'top'}
+                                    isLocked={true}/>
+              </div>
+              <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
+                {
+                  ingredientsInfo.ingredientsData.map((info, index) => {
+                    if (info.type !== 'bun') {
+                      return (
+                        <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>
+                          <DragIcon type="primary"/>
+                          <ConstructorElement {...info} text={info.name} thumbnail={info.image}/>
 
-                  </li>
-                )
-              }
-            })
-          }
-        </ul>
-        <div className={`mr-4 mt-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
-          <ConstructorElement {...bun[0]} text={bun[0].name + '(низ)'} thumbnail={bun[0].image} type={'bottom'}
-                              isLocked={true}/>
+                        </li>
+                      )
+                    }
+                  })
+                }
+              </ul>
+              <div className={`mr-4 mt-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
+                <ConstructorElement {...bun[0]} text={bun[0].name + '(низ)'} thumbnail={bun[0].image} type={'bottom'}
+                                    isLocked={true}/>
 
-        </div>
-        <div className={`mt-10 ${burgerConstructorStyles.total}`}>
-          <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-            <p
-              className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, bun[0].price * 2)}</p>
-            <CurrencyIcon type="primary"/>
-          </div>
-          <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder" onClick={() => {
-            getOrder();
-            setModalActive(true);
-          }}>
-            Оформить заказ
-          </Button>
+              </div>
+              <div className={`mt-10 ${burgerConstructorStyles.total}`}>
+                <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
+                  <p
+                    className="text text_type_digits-medium">{state.reduce((total, i) => total + i.price, bun[0].price * 2)}</p>
+                  <CurrencyIcon type="primary"/>
+                </div>
+                <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder" onClick={() => {
+                  getOrder();
+                  setModalActive(true);
+                }}>
+                  Оформить заказ
+                </Button>
 
-        </div>
+              </div>
+            </div>
+        }
 
         <Modal active={isActive} setActive={setModalActive}>
           <OrderDetails orderNum={orderNumber ? orderNumber : 'Loading...'}/>
