@@ -6,18 +6,34 @@ import {burgerPropTypes} from '../../utils/proptypes-validate';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {URL_API} from '../../constants/constants';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {
+  GET_INGREDIENTS_CONSTRUCTOR,
+  getIngredients,
+  getIngredientsInConstructor
+} from "../../services/actions/ingredients";
 
 const urlOrder = `${URL_API}/orders`;
 
 const BurgerConstructor = ({setModalActive, isActive}) => {
     /////
     const {ingredientsData, ingredientsConstructor, dataRequest, dataFailed} = useSelector(store => store.ingredients);
-    if (ingredientsData.length === 0) {
-      console.log('БургерКонструктор пуст');
-    } else {
-      console.log('Данные пришли');
-    }
+    // if (ingredientsData.length === 0) {
+    //   console.log('БургерКонструктор пуст');
+    // } else {
+    //   console.log('Данные пришли');
+    // }
+
+    // const dispatch = useDispatch();
+    //
+    // useEffect(
+    //   () => {
+    //     dispatch({type: GET_INGREDIENTS_CONSTRUCTOR});
+    //     console.log(ingredientsConstructor);
+    //   },
+    //   []
+    // );
+
 
     const [orderNumber, setOrderNumber] = useState(null);
 

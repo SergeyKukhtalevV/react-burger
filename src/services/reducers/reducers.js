@@ -3,7 +3,10 @@ import {combineReducers} from 'redux';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED
+  GET_INGREDIENTS_FAILED,
+  GET_INGREDIENTS_CONSTRUCTOR,
+  SET_CURRENT_INGREDIENT,
+  REMOVE_CURRENT_INGREDIENT
 } from '../actions/ingredients';
 
 const initialState = {
@@ -35,6 +38,24 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state, dataFailed: true, dataRequest: false
       };
     }
+    case GET_INGREDIENTS_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredientsConstructor: [...state.ingredientsData].filter(item => item.type !== 'bun')
+        }
+    }
+    case SET_CURRENT_INGREDIENT: {
+      return {
+        ...state,
+        currentIngredient: [...state.ingredientsData].filter(item => item._id === action.id)[0]
+      }
+    }
+    case REMOVE_CURRENT_INGREDIENT: {
+      return {
+        ...state,
+        currentIngredient: {}
+      }
+    }
     default: {
       return state;
     }
@@ -43,5 +64,4 @@ export const ingredientReducer = (state = initialState, action) => {
 
 export const rootReducer = combineReducers({
   ingredients: ingredientReducer
-  // step: stepReducer
 })

@@ -6,13 +6,13 @@ import PropTypes from "prop-types";
 import {burgerPropTypes} from '../../utils/proptypes-validate';
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
+import {useDispatch, useSelector} from 'react-redux';
+import {getIngredients, REMOVE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT} from '../../services/actions/ingredients';
 
 
 const BurgerIngredients = ({isActive, setModalActive}) => {
 
-  const {ingredientsData, dataRequest, dataFailed} = useSelector(store => store.ingredients);
+  const {ingredientsData, dataRequest, dataFailed, currentIngredient} = useSelector(store => store.ingredients);
   const dispatch = useDispatch();
 
   useEffect(
@@ -30,12 +30,20 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     {id: 3, name: 'Начинка', type: 'main'}
   ]);
 
+  const setCurrentIngredient = (id) => {
+    setModalActive(true);
+    dispatch({
+      type: SET_CURRENT_INGREDIENT,
+      id
+    });
+  }
+
   return (
     <section>
       <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
       <BurgerTabs/>
       {
-        dataRequest
+        dataRequest && !dataFailed
           ? <p className="text text_type_main-medium">Идет загрузка...</p>
           : <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`}>
             {
@@ -50,8 +58,8 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
                         ingredientsData.map(info => {
                           if (type.type === info.type) {
                             return (
-                              <BurgerElement props={info} key={info._id} setActive={setModalActive}
-                                             setInfo={setIngredientsInfo}/>
+                              <BurgerElement props={info} key={info._id}
+                                             setCurrIngr={setCurrentIngredient} />
                             )
                           }
                         })
@@ -64,7 +72,7 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
           </ul>
       }
       <Modal active={isActive} setActive={setModalActive}>
-        <IngredientDetails info={ingredientsInfo}/>
+        <IngredientDetails info={currentIngredient}/>
       </Modal>
     </section>
   );

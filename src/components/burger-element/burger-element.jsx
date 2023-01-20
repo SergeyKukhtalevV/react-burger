@@ -4,10 +4,10 @@ import burgerElementStyles from './burger-element.module.css'
 import PropTypes from "prop-types";
 import {burgerPropTypes} from "../../utils/proptypes-validate";
 
-const BurgerElement = ({props, setActive, setInfo}) => {
+const BurgerElement = ({props, setCurrIngr}) => {
 
   return (
-    <li className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={() =>{setActive(true); setInfo(props)}}>
+    <li className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={() =>{setCurrIngr(props._id)}}>
       <Counter count={0} size="default" extraClass="m-1"/>
       <img src={props.image} alt={props.name}/>
       <div className={`mt-1 ${burgerElementStyles.price}`}>
@@ -23,6 +23,6 @@ export default BurgerElement;
 
 BurgerElement.propTypes = {
   props: burgerPropTypes.isRequired,
-  setActive: PropTypes.func.isRequired,
-  setInfo: PropTypes.func.isRequired
+  setCurrIngr: PropTypes.func.isRequired
+  //setInfo: PropTypes.func.isRequired
 }

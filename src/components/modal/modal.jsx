@@ -4,11 +4,20 @@ import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/ModalOverlay";
+import {useDispatch} from "react-redux";
+import {REMOVE_CURRENT_INGREDIENT} from "../../services/actions/ingredients";
 
 const Modal = ({active, setActive, children}) => {
 
+  const dispatch = useDispatch();
+  const removeCurrentIngredient = () => {
+    dispatch({
+      type: REMOVE_CURRENT_INGREDIENT
+    });
+  }
   function closePopup() {
     setActive(false);
+    removeCurrentIngredient();
   }
 
   React.useEffect(() => {

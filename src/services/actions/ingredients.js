@@ -14,12 +14,12 @@ export const GET_NUMBER_ORDER_SUCCESS = 'GET_NUMBER_ORDER_SUCCESS';
 export const GET_NUMBER_ORDER_FAILED = 'GET_NUMBER_ORDER_FAILED';
 
 export function getIngredients() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
     getIngredientsRequest().then(res => {
-      if(res) {
+      if (res) {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           items: res.data
@@ -31,4 +31,18 @@ export function getIngredients() {
       }
     });
   };
+}
+
+export function getIngredientsInConstructor(data) {
+  return function (dispatch) {
+    const info = data.filter(info => {
+      if (info.type !== 'bun') {
+        return info;
+      }
+      dispatch({
+        type: GET_INGREDIENTS_CONSTRUCTOR,
+        items: info
+      })
+    });
+  }
 }
