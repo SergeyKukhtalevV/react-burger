@@ -6,7 +6,7 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_CONSTRUCTOR,
   SET_CURRENT_INGREDIENT,
-  REMOVE_CURRENT_INGREDIENT
+  REMOVE_CURRENT_INGREDIENT, GET_ORDER_NUMBER_REQUEST, GET_ORDER_NUMBER_SUCCESS, GET_ORDER_NUMBER_FAILED
 } from '../actions/ingredients';
 
 const initialState = {
@@ -18,7 +18,12 @@ const initialState = {
 
   currentIngredient: {},
 
-  createdOrder: {}
+  createdOrder: {},
+
+  orderNumber: null,
+  orderNumberRequest: false,
+  orderNumberFailed: false
+
 };
 export const ingredientReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -55,6 +60,22 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state,
         currentIngredient: {}
       }
+    }
+    case GET_ORDER_NUMBER_REQUEST: {
+      return {
+        ...state,
+        orderNumberRequest: true
+      };
+    }
+    case GET_ORDER_NUMBER_SUCCESS: {
+      return {
+        ...state, orderNumberFailed: false, orderNumber: action.item, orderNumberRequest: false
+      };
+    }
+    case GET_ORDER_NUMBER_FAILED: {
+      return {
+        ...state, dataFailed: true, dataRequest: false
+      };
     }
     default: {
       return state;

@@ -10,32 +10,33 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   GET_INGREDIENTS_CONSTRUCTOR,
   getIngredients,
-  getIngredientsInConstructor
+  getIngredientsInConstructor, getOrderNumber
 } from "../../services/actions/ingredients";
 
 const urlOrder = `${URL_API}/orders`;
 
 const BurgerConstructor = ({setModalActive, isActive}) => {
     /////
-    const {ingredientsData, ingredientsConstructor, dataRequest, dataFailed} = useSelector(store => store.ingredients);
-    // if (ingredientsData.length === 0) {
+    const {ingredientsData, ingredientsConstructor, dataRequest, dataFailed, orderNumber, orderNumberRequest} =
+      useSelector(store => store.ingredients);
+    // if (ingredientsConstructor.length === 0) {
     //   console.log('БургерКонструктор пуст');
     // } else {
     //   console.log('Данные пришли');
     // }
 
-    // const dispatch = useDispatch();
-    //
+    const dispatch = useDispatch();
+
     // useEffect(
     //   () => {
     //     dispatch({type: GET_INGREDIENTS_CONSTRUCTOR});
     //     console.log(ingredientsConstructor);
     //   },
-    //   []
+    //   [dispatch]
     // );
 
 
-    const [orderNumber, setOrderNumber] = useState(null);
+    //const [orderNumber, setOrderNumber] = useState(null);
 
     const bun = ingredientsData.filter(info => {
       if (info.type === 'bun') {
@@ -49,25 +50,10 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       error: ''
     });
 
-    const getOrder = async () => {
+    const getOrder = () => {
       setOrderInfo({...orderInfo, orderData: undefined, loading: true});
-      try {
-        let response = await fetch(urlOrder, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            "ingredients": orderInfo.ingredientsID
-          })
-        });
-        let data = await response.json();
-
-        setOrderInfo({...orderInfo, orderData: data, loading: false});
-        setOrderNumber(data.order.number);
-      } catch (e) {
-        setOrderInfo({...orderInfo, error: e.message, loading: false});
-      }
+      //console.log(ingredientsData.map(ingredient => ingredient._id));
+      dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
     }
 ///////////////////////////////
     return (
