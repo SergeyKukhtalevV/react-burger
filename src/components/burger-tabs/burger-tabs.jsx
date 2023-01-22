@@ -2,7 +2,7 @@ import React from 'react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerTabsStyles from './burger-tabs.module.css'
 
-const BurgerTabs = () => {
+const BurgerTabs = (currentActiveTab) => {
   const [current, setCurrent] = React.useState('Булки')
   return (
     <div className={`mt-5 ${burgerTabsStyles.tabs}`}>

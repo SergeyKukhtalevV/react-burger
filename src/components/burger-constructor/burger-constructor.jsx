@@ -51,7 +51,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     });
 
     const getOrder = () => {
-      setOrderInfo({...orderInfo, orderData: undefined, loading: true});
+      //setOrderInfo({...orderInfo, orderData: undefined, loading: true});
       //console.log(ingredientsData.map(ingredient => ingredient._id));
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
     }

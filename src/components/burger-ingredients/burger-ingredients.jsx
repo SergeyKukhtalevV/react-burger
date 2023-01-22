@@ -12,7 +12,7 @@ import {getIngredients, REMOVE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT} from 
 
 const BurgerIngredients = ({isActive, setModalActive}) => {
 
-  const {ingredientsData, dataRequest, dataFailed, currentIngredient} = useSelector(store => store.ingredients);
+  const {ingredientsData, dataRequest, dataFailed, currentIngredient, tabsNames, currentTab} = useSelector(store => store.ingredients);
   const dispatch = useDispatch();
 
   useEffect(
@@ -21,6 +21,12 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     },
     [dispatch]
   );
+useEffect(() => {
+  document.addEventListener('scroll', (e) => {
+    console.log(document.getElementById('burgerIngredients').offsetTop);
+  });
+  //console.log(document.getElementById('burgerIngredients').offsetTop);
+}, []);
 
   const [ingredientsInfo, setIngredientsInfo] = React.useState({});
 
@@ -41,13 +47,13 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
   return (
     <section>
       <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
-      <BurgerTabs/>
+      <BurgerTabs currentActiveTab={currentTab}/>
       {
         dataRequest && !dataFailed
           ? <p className="text text_type_main-medium">Идет загрузка...</p>
-          : <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`}>
+          : <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`} id={"burgerIngredients"}>
             {
-              ingredientsTypes.map(type => {
+              tabsNames.map(type => {
                 return (
                   <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
                     <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>

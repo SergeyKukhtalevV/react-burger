@@ -13,6 +13,28 @@ export const GET_ORDER_NUMBER_REQUEST = 'GET_NUMBER_ORDER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_NUMBER_ORDER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_NUMBER_ORDER_FAILED';
 
+export const GET_POSITION_TITLE = 'GET_POSITION_TITLE';
+export const GET_CURRENT_TAB = 'GET_CURRENT_TAB';
+
+export function getPositionElement(element) {
+  return function (dispatch) {
+    const position = element.pageYOffset;
+      dispatch({
+        type: GET_POSITION_TITLE,
+        item: position
+      })
+  }
+}
+
+
+export function getCurrentTab(activeTab) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_CURRENT_TAB,
+      item: activeTab
+    })
+  }
+}
 export function getIngredients() {
   return function (dispatch) {
     dispatch({

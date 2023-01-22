@@ -6,7 +6,11 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_CONSTRUCTOR,
   SET_CURRENT_INGREDIENT,
-  REMOVE_CURRENT_INGREDIENT, GET_ORDER_NUMBER_REQUEST, GET_ORDER_NUMBER_SUCCESS, GET_ORDER_NUMBER_FAILED
+  REMOVE_CURRENT_INGREDIENT,
+  GET_ORDER_NUMBER_REQUEST,
+  GET_ORDER_NUMBER_SUCCESS,
+  GET_ORDER_NUMBER_FAILED,
+  GET_CURRENT_TAB
 } from '../actions/ingredients';
 
 const initialState = {
@@ -22,8 +26,13 @@ const initialState = {
 
   orderNumber: null,
   orderNumberRequest: false,
-  orderNumberFailed: false
+  orderNumberFailed: false,
 
+  tabsNames: [{id: 1, name: 'Булки', type: 'bun'},
+              {id: 2, name: 'Соусы', type: 'sauce'},
+              {id: 3, name: 'Начинка', type: 'main'}],
+  scrollPosition: null,
+  currentTab: ''
 };
 export const ingredientReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -47,7 +56,7 @@ export const ingredientReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsConstructor: [...state.ingredientsData].filter(item => item.type !== 'bun')
-        }
+      }
     }
     case SET_CURRENT_INGREDIENT: {
       return {
@@ -75,6 +84,11 @@ export const ingredientReducer = (state = initialState, action) => {
     case GET_ORDER_NUMBER_FAILED: {
       return {
         ...state, dataFailed: true, dataRequest: false
+      };
+    }
+    case GET_CURRENT_TAB: {
+      return {
+        ...state, currentTab: action.item
       };
     }
     default: {
