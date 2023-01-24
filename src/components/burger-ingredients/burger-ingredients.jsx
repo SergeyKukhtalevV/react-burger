@@ -21,12 +21,19 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     },
     [dispatch]
   );
-useEffect(() => {
-  document.addEventListener('scroll', (e) => {
-    console.log(document.getElementById('burgerIngredients').offsetTop);
-  });
+  let i = 0;
+  const handleScroll = (e) => {
+    console.log(e.target.childNodes[i].getBoundingClientRect().top >= 0 ? 'Булки' : i < 2 ? 'Соусы' : 'Начинки');
+    if(e.target.childNodes[i].getBoundingClientRect().top < 0) i++;
+    if(i>2) i = 0;
+    //TOGO вызов переключения активной вкладки таба + увеличение индекса потомка
+  }
+// useEffect(() => {
+//   document.addEventListener('scroll', (e) => {
+//     console.log(document.getElementById('burgerIngredients').offsetTop);
+//   });
   //console.log(document.getElementById('burgerIngredients').offsetTop);
-}, []);
+// }, []);
 
   const [ingredientsInfo, setIngredientsInfo] = React.useState({});
 
@@ -51,12 +58,12 @@ useEffect(() => {
       {
         dataRequest && !dataFailed
           ? <p className="text text_type_main-medium">Идет загрузка...</p>
-          : <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`} id={"burgerIngredients"}>
+          : <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`} id={"burgerIngredients"} onScroll={handleScroll}>
             {
               tabsNames.map(type => {
                 return (
                   <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
-                    <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
+                    <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`} >
                       {type.name}
                     </p>
                     <ul className={`mt-6 mb-10 ${burgerIngredientsStyles.cards}`}>
