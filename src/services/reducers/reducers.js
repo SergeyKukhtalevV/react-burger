@@ -53,19 +53,21 @@ export const ingredientReducer = (state = initialState, action) => {
       };
     }
     case SET_INGREDIENT_IN_CONSTRUCTOR: {
-      console.log(action);
       return {
         ...state,
-        ingredientsConstructor: [...state.ingredientsData].filter(item => item._id === action.id[0].id),
-        ingredientsData: [...state.ingredientsData].map(item => item._id === action.id[0].id ? {...item, __v: item.__v++} : item)
+        ingredientsData: [...state.ingredientsData].map(item =>
+          item._id === action.id ? {...item, __v: item.__v++} : item),
+        ingredientsConstructor: [...state.ingredientsConstructor.push([...state.ingredientsData].filter(item =>
+          item._id === action.id)[0])]
       }
     }
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
       return {
         ...state,
-        ingredientsConstructor: state.ingredientsConstructor.filter(item => item._id !== action.id),
-        ingredientsData: [...state.ingredientsData].map(
-          item => item._id === action.id ? {...item, __v: item.__v < 1 ? 0 : item.__v--} : item)
+        ingredientsData: [...state.ingredientsData].map(item =>
+          item._id === action.id ? {...item, __v: --item.__v} : item),
+       ingredientsConstructor: [...state.ingredientsConstructor.filter((item, i) =>
+         i !== action.index || item._id !== action.id)]
       }
     }
     case SET_CURRENT_INGREDIENT: {
