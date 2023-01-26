@@ -10,8 +10,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   GET_INGREDIENTS_CONSTRUCTOR,
   getIngredients,
-  getIngredientsInConstructor, getOrderNumber
+  getIngredientsInConstructor, getOrderNumber, SET_INGREDIENT_IN_CONSTRUCTOR
 } from "../../services/actions/ingredients";
+import {useDrop} from "react-dnd";
 
 const urlOrder = `${URL_API}/orders`;
 
@@ -19,47 +20,43 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     /////
     const {ingredientsData, ingredientsConstructor, dataRequest, dataFailed, orderNumber, orderNumberRequest} =
       useSelector(store => store.ingredients);
-    // if (ingredientsConstructor.length === 0) {
-    //   console.log('БургерКонструктор пуст');
-    // } else {
-    //   console.log('Данные пришли');
-    // }
 
+    const [{ isHover } , drop] = useDrop({
+      accept: "ingredient",
+      collect: monitor => ({
+        isHover: monitor.isOver(),
+      }),
+      drop(item) {
+        dispatch({
+          type: SET_INGREDIENT_IN_CONSTRUCTOR,
+          id: item.id
+        });
+      },
+    });
     const dispatch = useDispatch();
 
     // useEffect(
     //   () => {
-    //     dispatch({type: GET_INGREDIENTS_CONSTRUCTOR});
+    //     dispatch({type: SET_INGREDIENT_IN_CONSTRUCTOR, id: '60d3b41abdacab0026a733d4'});
     //     console.log(ingredientsConstructor);
     //   },
     //   [dispatch]
     // );
-
-
-    //const [orderNumber, setOrderNumber] = useState(null);
 
     const bun = ingredientsData.filter(info => {
       if (info.type === 'bun') {
         return info;
       }
     });
-    const [orderInfo, setOrderInfo] = useState({
-      ingredientsID: ingredientsData.map(ingredient => ingredient._id),
-      orderData: undefined,
-      loading: true,
-      error: ''
-    });
 
     const getOrder = () => {
-      //setOrderInfo({...orderInfo, orderData: undefined, loading: true});
-      //console.log(ingredientsData.map(ingredient => ingredient._id));
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
     }
 ///////////////////////////////
     return (
-      <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`}>
+      <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`} ref={drop} >
         {
-          ingredientsData.length === 0
+          ingredientsConstructor.length === 0
             ? <p className="text text_type_main-medium">Конструктор бургера пуст. Создайте свой бургер!</p>
             : <div>
               <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
@@ -68,7 +65,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
               </div>
               <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
                 {
-                  ingredientsData.map((info, index) => {
+                  ingredientsConstructor.map((info, index) => {
                     if (info.type !== 'bun') {
                       return (
                         <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>

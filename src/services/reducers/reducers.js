@@ -4,13 +4,13 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
-  GET_INGREDIENTS_CONSTRUCTOR,
+  SET_INGREDIENT_IN_CONSTRUCTOR,
   SET_CURRENT_INGREDIENT,
   REMOVE_CURRENT_INGREDIENT,
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
-  GET_CURRENT_TAB
+  GET_CURRENT_TAB, REMOVE_INGREDIENT_FROM_CONSTRUCTOR
 } from '../actions/ingredients';
 
 const initialState = {
@@ -30,9 +30,9 @@ const initialState = {
 
   tabsNames: [{id: 1, name: 'Булки', type: 'bun'},
               {id: 2, name: 'Соусы', type: 'sauce'},
-              {id: 3, name: 'Начинка', type: 'main'}],
+              {id: 3, name: 'Начинки', type: 'main'}],
   scrollPosition: null,
-  currentTab: ''
+  currentTab: 'Булки'
 };
 export const ingredientReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -52,10 +52,20 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state, dataFailed: true, dataRequest: false
       };
     }
-    case GET_INGREDIENTS_CONSTRUCTOR: {
+    case SET_INGREDIENT_IN_CONSTRUCTOR: {
+      console.log(action);
       return {
         ...state,
-        ingredientsConstructor: [...state.ingredientsData].filter(item => item.type !== 'bun')
+        ingredientsConstructor: [...state.ingredientsData].filter(item => item._id === action.id[0].id),
+        ingredientsData: [...state.ingredientsData].map(item => item._id === action.id[0].id ? {...item, __v: item.__v++} : item)
+      }
+    }
+    case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredientsConstructor: state.ingredientsConstructor.filter(item => item._id !== action.id),
+        ingredientsData: [...state.ingredientsData].map(
+          item => item._id === action.id ? {...item, __v: item.__v < 1 ? 0 : item.__v--} : item)
       }
     }
     case SET_CURRENT_INGREDIENT: {
@@ -91,6 +101,7 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state, currentTab: action.item
       };
     }
+
     default: {
       return state;
     }

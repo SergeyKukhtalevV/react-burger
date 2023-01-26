@@ -4,7 +4,8 @@ export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
-export const GET_INGREDIENTS_CONSTRUCTOR = 'GET_INGREDIENTS_CONSTRUCTOR';
+export const SET_INGREDIENT_IN_CONSTRUCTOR = 'SET_INGREDIENT_IN_CONSTRUCTOR';
+export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR = 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
 
 export const SET_CURRENT_INGREDIENT = 'SET_CURRENT_INGREDIENT';
 export const REMOVE_CURRENT_INGREDIENT = 'REMOVE_CURRENT_INGREDIENT';
@@ -16,18 +17,9 @@ export const GET_ORDER_NUMBER_FAILED = 'GET_NUMBER_ORDER_FAILED';
 export const GET_POSITION_TITLE = 'GET_POSITION_TITLE';
 export const GET_CURRENT_TAB = 'GET_CURRENT_TAB';
 
-export function getPositionElement(element) {
-  return function (dispatch) {
-    const position = element.pageYOffset;
-      dispatch({
-        type: GET_POSITION_TITLE,
-        item: position
-      })
-  }
-}
 
 
-export function getCurrentTab(activeTab) {
+export function setCurrentTab(activeTab) {
   return function (dispatch) {
     dispatch({
       type: GET_CURRENT_TAB,
@@ -35,6 +27,7 @@ export function getCurrentTab(activeTab) {
     })
   }
 }
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
@@ -55,14 +48,16 @@ export function getIngredients() {
   };
 }
 
-export function getIngredientsInConstructor(data) {
+
+
+export function setIngredientInConstructor(data) {
   return function (dispatch) {
     const res = data.filter(info => {
       if (info.type !== 'bun') {
         return info;
       }
       dispatch({
-        type: GET_INGREDIENTS_CONSTRUCTOR,
+        type: SET_INGREDIENT_IN_CONSTRUCTOR,
         items: res
       })
     });
