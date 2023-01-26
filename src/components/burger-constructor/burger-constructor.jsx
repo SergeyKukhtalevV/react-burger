@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   GET_INGREDIENTS_CONSTRUCTOR,
   getIngredients,
-  getIngredientsInConstructor, getOrderNumber, SET_INGREDIENT_IN_CONSTRUCTOR
+  getIngredientsInConstructor, getOrderNumber, REMOVE_INGREDIENT_FROM_CONSTRUCTOR, SET_INGREDIENT_IN_CONSTRUCTOR
 } from "../../services/actions/ingredients";
 import {useDrop} from "react-dnd";
 
@@ -27,21 +27,27 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
         isHover: monitor.isOver(),
       }),
       drop(item) {
+        //console.log(ingredientsData.filter(i => i._id === item.id)[0].__v);
         dispatch({
           type: SET_INGREDIENT_IN_CONSTRUCTOR,
           id: item.id
         });
+        // console.log(ingredientsConstructor);
+        // console.log(ingredientsData.filter(i => i._id === item.id)[0].__v);
+
       },
     });
     const dispatch = useDispatch();
 
-    // useEffect(
-    //   () => {
-    //     dispatch({type: SET_INGREDIENT_IN_CONSTRUCTOR, id: '60d3b41abdacab0026a733d4'});
-    //     console.log(ingredientsConstructor);
-    //   },
-    //   [dispatch]
-    // );
+    const handleRemoveIngredient = (id, index) => {
+      console.log(ingredientsConstructor);
+      dispatch({
+        type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+        id,
+        index
+      });
+      console.log(ingredientsConstructor);
+    }
 
     const bun = ingredientsData.filter(info => {
       if (info.type === 'bun') {
@@ -70,7 +76,8 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                       return (
                         <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>
                           <DragIcon type="primary"/>
-                          <ConstructorElement {...info} text={info.name} thumbnail={info.image}/>
+                          <ConstructorElement {...info} text={info.name} thumbnail={info.image}
+                                              handleClose={() => {handleRemoveIngredient(info._id, index)}} />
 
                         </li>
                       )

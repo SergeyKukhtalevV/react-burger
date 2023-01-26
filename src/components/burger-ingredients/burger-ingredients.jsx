@@ -34,7 +34,7 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     () => {
       dispatch(getIngredients());
       //console.log(ingredientsData);
-      console.log(ingredientsConstructor);
+      //console.log(ingredientsConstructor);
     },
     [dispatch]
   );

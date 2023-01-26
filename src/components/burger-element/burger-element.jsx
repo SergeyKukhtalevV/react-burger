@@ -20,7 +20,7 @@ const BurgerElement = ({props, setCurrIngr}) => {
   });
   return (
     <li ref={drag} className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={() =>{setCurrIngr(props._id)}}>
-      <Counter count={ingredientsData.filter(i => i._id === props._id).__v} size="default" extraClass="m-1"/>
+      <Counter count={ingredientsData.filter(i => i._id === props._id)[0].__v} size="default" extraClass="m-1"/>
       <img src={props.image} alt={props.name}/>
       <div className={`mt-1 ${burgerElementStyles.price}`}>
         <p className={`text text_type_digits-default`}>{props.price} </p>
