@@ -10,7 +10,10 @@ import {
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
-  GET_CURRENT_TAB, REMOVE_INGREDIENT_FROM_CONSTRUCTOR
+  GET_CURRENT_TAB,
+  REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+  SET_BUN_IN_CONSTRUCTOR,
+  REMOVE_BUN_FROM_CONSTRUCTOR
 } from '../actions/ingredients';
 
 const initialState = {
@@ -29,8 +32,8 @@ const initialState = {
   orderNumberFailed: false,
 
   tabsNames: [{id: 1, name: 'Булки', type: 'bun'},
-              {id: 2, name: 'Соусы', type: 'sauce'},
-              {id: 3, name: 'Начинки', type: 'main'}],
+    {id: 2, name: 'Соусы', type: 'sauce'},
+    {id: 3, name: 'Начинки', type: 'main'}],
   scrollPosition: null,
   currentTab: 'Булки'
 };
@@ -66,8 +69,33 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
           item._id === action.id ? {...item, __v: --item.__v} : item),
-       ingredientsConstructor: [...state.ingredientsConstructor.filter((item, i) =>
-         i !== action.index || item._id !== action.id)]
+        ingredientsConstructor: [...state.ingredientsConstructor.filter((item, i) =>
+          i !== action.index || item._id !== action.id)]
+      }
+    }
+    case SET_BUN_IN_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredientsData: [...state.ingredientsData].map((item) => {
+          if (item.type === action.ingr && item._id === action.id) {
+            return {
+              ...item, __v: 2
+            }
+          } else {
+            return {
+              ...item, __v: 0
+            }
+          }
+        }),
+        ingredientsConstructor: [...state.ingredientsConstructor.push([...state.ingredientsData].filter(item =>
+          item._id === action.id)[0])]
+      }
+    }
+    case REMOVE_BUN_FROM_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredientsConstructor: [...state.ingredientsConstructor.filter((item) =>
+          item.type !== action.ingr)]
       }
     }
     case SET_CURRENT_INGREDIENT: {
