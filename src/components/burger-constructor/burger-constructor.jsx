@@ -81,6 +81,9 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       const bun = ingredientsConstructor.filter(info => info.type === 'bun');
     }, []);
 
+    const getBunInConstructor = () => {
+      return ingredientsConstructor.filter(info => info.type === 'bun')[0];
+    }
 
     const getOrder = () => {
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
@@ -93,9 +96,9 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
             ? <p className="text text_type_main-medium">Конструктор бургера пуст. Создайте свой бургер!</p>
             : <div>
               <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
-                <ConstructorElement {...ingredientsConstructor.filter(info => info.type === 'bun')[0]}
-                                    text={ingredientsConstructor.filter(info => info.type === 'bun')[0].name + '(верх)'}
-                                    thumbnail={ingredientsConstructor.filter(info => info.type === 'bun')[0].image}
+                <ConstructorElement {...getBunInConstructor()}
+                                    text={getBunInConstructor().name + '(верх)'}
+                                    thumbnail={getBunInConstructor().image}
                                     type={'top'}
                                     isLocked={true}/>
               </div>
@@ -118,21 +121,22 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                 }
               </ul>
               <div className={`mr-4 mt-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
-                <ConstructorElement {...ingredientsConstructor.filter(info => info.type === 'bun')[0]}
-                                    text={ingredientsConstructor.filter(info => info.type === 'bun')[0].name + '(низ)'}
-                                    thumbnail={ingredientsConstructor.filter(info => info.type === 'bun')[0].image}
+                <ConstructorElement {...getBunInConstructor()}
+                                    text={getBunInConstructor().name + '(низ)'}
+                                    thumbnail={getBunInConstructor().image}
                                     type={'bottom'}
                                     isLocked={true}/>
 
               </div>
               <div className={`mt-10 ${burgerConstructorStyles.total}`}>
                 <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-                  <p className="text text_type_digits-medium">{ingredientsData.reduce((total, i) => {
+                  <p className="text text_type_digits-medium">{ingredientsConstructor.reduce((total, i) => {
                       if (i.type !== 'bun') {
-                        return total + i.price
-                      } else return total
+                        return total + i.price;
+                      } else return total + i.price * 2;
                     },
-                    ingredientsConstructor.filter(info => info.type === 'bun').price * 2)}
+                    0
+                  )}
                   </p>
                   <CurrencyIcon type="primary"/>
                 </div>
