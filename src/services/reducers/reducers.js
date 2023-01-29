@@ -76,17 +76,8 @@ export const ingredientReducer = (state = initialState, action) => {
     case SET_BUN_IN_CONSTRUCTOR: {
       return {
         ...state,
-        ingredientsData: [...state.ingredientsData].map((item) => {
-          if (item.type === action.ingr && item._id === action.id) {
-            return {
-              ...item, __v: 2
-            }
-          } else {
-            return {
-              ...item, __v: 0
-            }
-          }
-        }),
+        ingredientsData: [...state.ingredientsData].map(item =>
+          item._id === action.id ? {...item, __v: item.__v++} : item),
         ingredientsConstructor: [...state.ingredientsConstructor.push([...state.ingredientsData].filter(item =>
           item._id === action.id)[0])]
       }
@@ -94,6 +85,8 @@ export const ingredientReducer = (state = initialState, action) => {
     case REMOVE_BUN_FROM_CONSTRUCTOR: {
       return {
         ...state,
+        ingredientsData: [...state.ingredientsData].map(item =>
+          item.type === action.ingr ? {...item, __v: 0} : item),
         ingredientsConstructor: [...state.ingredientsConstructor.filter((item) =>
           item.type !== action.ingr)]
       }

@@ -32,24 +32,30 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       }),
       drop(item) {
         const elem = ingredientsData.filter(ingr => ingr._id === item.id)[0];
-        console.log(elem);
-        elem.type !== 'bun'
-          ?
+        //console.log(elem);
+        //console.log(ingredientsData.filter(i => i._id === item.id)[0].__v); // 60d3b41abdacab0026a733c7
+        if (elem.type !== 'bun') {
           dispatch({
             type: SET_INGREDIENT_IN_CONSTRUCTOR,
             id: item.id
           })
-        : dispatch({
-            type: REMOVE_BUN_FROM_CONSTRUCTOR,
-            ingr: 'bun'
-          })
+        }
+        else {
+          console.log(elem);
           dispatch({
-          type: SET_BUN_IN_CONSTRUCTOR,
-          id: item.id,
-          ingr: 'bun'
-        });
+            type: REMOVE_BUN_FROM_CONSTRUCTOR,
+            id: item.id,
+            ingr: elem.type
+          });
+          console.log(ingredientsData.filter(i => i._id === item.id)[0]);
+          dispatch({
+            type: SET_BUN_IN_CONSTRUCTOR,
+            id: item.id,
+            ingr: elem.type
+          });
+        }
         // console.log(ingredientsConstructor);
-        // console.log(ingredientsData.filter(i => i._id === item.id)[0].__v);
+        console.log(ingredientsData.filter(i => i._id === item.id)[0]);
 
       },
     });
