@@ -39,8 +39,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
             type: SET_INGREDIENT_IN_CONSTRUCTOR,
             id: item.id
           })
-        }
-        else {
+        } else {
           console.log(elem);
           dispatch({
             type: REMOVE_BUN_FROM_CONSTRUCTOR,
@@ -65,11 +64,11 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       const elem = ingredientsData.filter(ingr => ingr._id === id)[0];
       console.log(elem);
       elem.type !== 'bun'
-      ? dispatch({
-        type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-        id,
-        index
-      })
+        ? dispatch({
+          type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+          id,
+          index
+        })
         : dispatch({
           type: REMOVE_BUN_FROM_CONSTRUCTOR,
           ingr: 'bun'
@@ -96,11 +95,14 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
             ? <p className="text text_type_main-medium">Конструктор бургера пуст. Создайте свой бургер!</p>
             : <div>
               <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
-                <ConstructorElement {...getBunInConstructor()}
-                                    text={getBunInConstructor().name + '(верх)'}
-                                    thumbnail={getBunInConstructor().image}
-                                    type={'top'}
-                                    isLocked={true}/>
+                {!getBunInConstructor()
+                  ? <div></div>
+                  : <ConstructorElement {...getBunInConstructor()}
+                                        text={getBunInConstructor().name + '(верх)'}
+                                        thumbnail={getBunInConstructor().image}
+                                        type={'top'}
+                                        isLocked={true}/>
+                }
               </div>
               <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
                 {
@@ -113,7 +115,6 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                                               handleClose={() => {
                                                 handleRemoveIngredient(info._id, index)
                                               }}/>
-
                         </li>
                       )
                     }
@@ -121,13 +122,17 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                 }
               </ul>
               <div className={`mr-4 mt-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
-                <ConstructorElement {...getBunInConstructor()}
-                                    text={getBunInConstructor().name + '(низ)'}
-                                    thumbnail={getBunInConstructor().image}
-                                    type={'bottom'}
-                                    isLocked={true}/>
-
+                {
+                  !getBunInConstructor()
+                    ? <div></div>
+                    : <ConstructorElement {...getBunInConstructor()}
+                                          text={getBunInConstructor().name + '(низ)'}
+                                          thumbnail={getBunInConstructor().image}
+                                          type={'bottom'}
+                                          isLocked={true}/>
+                }
               </div>
+
               <div className={`mt-10 ${burgerConstructorStyles.total}`}>
                 <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
                   <p className="text text_type_digits-medium">{ingredientsConstructor.reduce((total, i) => {
@@ -140,14 +145,22 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                   </p>
                   <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder" onClick={() => {
-                  getOrder();
-                  setModalActive(true);
-                }}>
-                  Оформить заказ
-                </Button>
-
+                {
+                  !getBunInConstructor()
+                    ? <div></div>
+                    : <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder"
+                              onClick={() => {
+                                getOrder();
+                                setModalActive(true);
+                              }}>Оформить заказ
+                    </Button>
+                }
               </div>
+              {
+                !getBunInConstructor()
+                  ? <p className="text text_type_main-medium">Для оформления заказа бургера нужно добавить булку!</p>
+                  : <div></div>
+              }
             </div>
         }
 
