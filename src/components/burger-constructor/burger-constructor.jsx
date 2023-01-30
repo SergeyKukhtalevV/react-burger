@@ -16,7 +16,8 @@ import {
   SET_BUN_IN_CONSTRUCTOR,
   SET_INGREDIENT_IN_CONSTRUCTOR
 } from "../../services/actions/ingredients";
-import {useDrop} from "react-dnd";
+import {useDrag, useDrop} from "react-dnd";
+import ElementConstructor from "../element-constructor/element-constructor";
 
 const urlOrder = `${URL_API}/orders`;
 
@@ -87,6 +88,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     const getOrder = () => {
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
     }
+
 ///////////////////////////////
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`} ref={drop}>
@@ -109,13 +111,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                   ingredientsConstructor.map((info, index) => {
                     if (info.type !== 'bun') {
                       return (
-                        <li className={`mr-2 ${burgerConstructorStyles.cell}`} key={info._id + index}>
-                          <DragIcon type="primary"/>
-                          <ConstructorElement {...info} text={info.name} thumbnail={info.image}
-                                              handleClose={() => {
-                                                handleRemoveIngredient(info._id, index)
-                                              }}/>
-                        </li>
+                        <ElementConstructor key={info._id + index} info={info} index={index} />
                       )
                     }
                   })
