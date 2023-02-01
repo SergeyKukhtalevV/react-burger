@@ -14,7 +14,7 @@ import {
   getOrderNumber, REMOVE_BUN_FROM_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   SET_BUN_IN_CONSTRUCTOR,
-  SET_INGREDIENT_IN_CONSTRUCTOR
+  SET_INGREDIENT_IN_CONSTRUCTOR, SORT_IN_CONSTRUCTOR
 } from "../../services/actions/ingredients";
 import {useDrag, useDrop} from "react-dnd";
 import ElementConstructor from "../element-constructor/element-constructor";
@@ -89,6 +89,18 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
     }
 
+    const [{isHoverInConstructor}, dropInConstructor] = useDrop({
+      accept: "elementInConstructor",
+      collect: monitor => ({
+        isHoverInConstructor: monitor.isOver(),
+      }),
+      dropInConstructor(item) {
+        dispatch({
+          type: SORT_IN_CONSTRUCTOR,
+          id: item.id
+        })
+      },
+    });
 ///////////////////////////////
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`} ref={drop}>

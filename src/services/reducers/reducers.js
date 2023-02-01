@@ -13,7 +13,7 @@ import {
   GET_CURRENT_TAB,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   SET_BUN_IN_CONSTRUCTOR,
-  REMOVE_BUN_FROM_CONSTRUCTOR
+  REMOVE_BUN_FROM_CONSTRUCTOR, SORT_IN_CONSTRUCTOR
 } from '../actions/ingredients';
 
 const initialState = {
@@ -77,7 +77,7 @@ export const ingredientReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
-          item._id === action.id ? {...item, __v: item.__v++} : item),
+          item._id === action.id ? {...item, __v: (item.__v++ + item.__v++)} : item),
         ingredientsConstructor: [...state.ingredientsConstructor.push([...state.ingredientsData].filter(item =>
           item._id === action.id)[0])]
       }
@@ -87,6 +87,13 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
           item.type === action.ingr ? {...item, __v: 0} : item),
+        ingredientsConstructor: [...state.ingredientsConstructor.filter((item) =>
+          item.type !== action.ingr)]
+      }
+    }
+    case SORT_IN_CONSTRUCTOR: {
+      return {
+        ...state,
         ingredientsConstructor: [...state.ingredientsConstructor.filter((item) =>
           item.type !== action.ingr)]
       }
