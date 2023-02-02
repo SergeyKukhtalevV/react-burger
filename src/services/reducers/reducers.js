@@ -59,8 +59,8 @@ export const ingredientReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
-          item._id === action.id ? {...item, __v: item.__v++} : item),
-        ingredientsConstructor: [...state.ingredientsConstructor.push([...state.ingredientsData].filter(item =>
+          item._id === action.id ? {...item, __v: ++item.__v} : item),
+        ingredientsConstructor: [...state.ingredientsConstructor, ([...state.ingredientsData].filter(item =>
           item._id === action.id)[0])]
       }
     }
@@ -77,8 +77,8 @@ export const ingredientReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
-          item._id === action.id ? {...item, __v: (item.__v++ + item.__v++)} : item),
-        ingredientsConstructor: [...state.ingredientsConstructor.push([...state.ingredientsData].filter(item =>
+          item._id === action.id ? {...item, __v: (item.__v++ + ++item.__v)} : item),
+        ingredientsConstructor: [...state.ingredientsConstructor, ([...state.ingredientsData].filter(item =>
           item._id === action.id)[0])]
       }
     }
@@ -94,8 +94,9 @@ export const ingredientReducer = (state = initialState, action) => {
     case SORT_IN_CONSTRUCTOR: {
       return {
         ...state,
-        ingredientsConstructor: [...state.ingredientsConstructor.filter((item) =>
-          item.type !== action.ingr)]
+        ingredientsConstructor: [...state.ingredientsConstructor.splice(0, 1, state.ingredientsConstructor[0]),
+          ...state.ingredientsConstructor.splice(action.dragIndex, 1),
+          ...state.ingredientsConstructor.splice(action.hoverIndex, 0, state.ingredientsConstructor[action.dragIndex])]
       }
     }
     case SET_CURRENT_INGREDIENT: {

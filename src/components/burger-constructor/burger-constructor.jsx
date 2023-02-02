@@ -89,18 +89,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
     }
 
-    const [{isHoverInConstructor}, dropInConstructor] = useDrop({
-      accept: "elementInConstructor",
-      collect: monitor => ({
-        isHoverInConstructor: monitor.isOver(),
-      }),
-      dropInConstructor(item) {
-        dispatch({
-          type: SORT_IN_CONSTRUCTOR,
-          id: item.id
-        })
-      },
-    });
+
 ///////////////////////////////
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`} ref={drop}>
