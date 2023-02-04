@@ -5,12 +5,14 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import {
   REMOVE_BUN_FROM_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-  SORT_IN_CONSTRUCTOR
+  SORT_IN_CONSTRUCTOR, SORT_IN_CONSTRUCTOR_2
 } from "../../services/actions/ingredients";
 import {useDispatch, useSelector} from "react-redux";
 
 const ElementConstructor = ({info, index}) => {
   const ref = useRef(null);
+
+  const {ingredientsConstructor} = useSelector(store => store.ingredients);
 
   const id = info._id;
   const {ingredientsData } =
@@ -21,13 +23,13 @@ const ElementConstructor = ({info, index}) => {
     type: "elementInConstructor",
     item: {id, index},
     collect: monitor => ({
-      isDrag: monitor.isDragging()
-    })
+      isDrag: monitor.isDragging(),
+    }),
   });
-  const [{isHoverInConstructor}, dropInConstructor] = useDrop({
+  const [{handlerId}, dropInConstructor] = useDrop({
     accept: "elementInConstructor",
     collect: monitor => ({
-      isHoverInConstructor: monitor.getHandlerId()//.isOver(),
+      handlerId: monitor.getHandlerId()
     }),
     hover(item, monitor){
       if (!ref.current) {
@@ -61,28 +63,33 @@ const ElementConstructor = ({info, index}) => {
       }
       // Time to actually perform the action
       //moveElement(dragIndex, hoverIndex);
+      console.log(dragIndex, hoverIndex);
+      console.log('dragIndex', dragIndex, ingredientsConstructor[dragIndex]);
+      console.log('hoverIndex', hoverIndex, ingredientsConstructor[hoverIndex]);
+      //console.log(ingredientsConstructor);
       dispatch({
         type: SORT_IN_CONSTRUCTOR,
         dragIndex,
         hoverIndex
       });
+      dispatch({
+        type: SORT_IN_CONSTRUCTOR_2,
+        dragIndex,
+        hoverIndex
+      });
+      console.log(ingredientsConstructor);
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
       // to avoid expensive index searches.
-      item.index = hoverIndex
+      item.index = hoverIndex;
     },
-    // dropInConstructor(item) {
-    //   dispatch({
-    //     type: SORT_IN_CONSTRUCTOR,
-    //     index
-    //   })
-    // },
   });
 
-  const dragDropRef = dragInConstructor(dropInConstructor(ref))
+  dragInConstructor(dropInConstructor(ref));
+  const opacity = isDrag ? 0 : 1
 
-  const handleRemoveIngredient = (id, index) => {
+    const handleRemoveIngredient = (id, index) => {
     const elem = ingredientsData.filter(ingr => ingr._id === id)[0];
     console.log(elem);
     elem.type !== 'bun'
@@ -99,7 +106,7 @@ const ElementConstructor = ({info, index}) => {
   }
 
   return (
-    <li ref={dragDropRef} className={`mr-2 ${burgerConstructorStyles.cell}`} >
+    <li style={{ opacity }} ref={ref} className={`mr-2 ${burgerConstructorStyles.cell}`} data-handler-id={handlerId} >
       <DragIcon type="primary"/>
       <ConstructorElement {...info} text={info.name} thumbnail={info.image}
                           handleClose={() => {

@@ -48,11 +48,11 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     let i = 0;
   const handleScroll = (e) => {
     //console.log(e.target.childNodes[i].firstChild);
-    if (e.target.childNodes[i].firstChild.getBoundingClientRect().bottom >= 0) {
-      if (currentTab !== ingredientsTypes[i].name) {
-        dispatch(setCurrentTab(ingredientsTypes[i].name));
-      }
-  } else i++;
+  //   if (e.target.childNodes[i].firstChild.getBoundingClientRect().bottom >= 0) {
+  //     if (currentTab !== ingredientsTypes[i].name) {
+  //       dispatch(setCurrentTab(ingredientsTypes[i].name));
+  //     }
+  // } else i++;
 }
 
 const setCurrentIngredient = (id) => {

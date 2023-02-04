@@ -13,7 +13,7 @@ import {
   GET_CURRENT_TAB,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   SET_BUN_IN_CONSTRUCTOR,
-  REMOVE_BUN_FROM_CONSTRUCTOR, SORT_IN_CONSTRUCTOR
+  REMOVE_BUN_FROM_CONSTRUCTOR, SORT_IN_CONSTRUCTOR, SORT_IN_CONSTRUCTOR_2
 } from '../actions/ingredients';
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
   dataFailed: false,
 
   ingredientsConstructor: [],
-
+  dragIngredientInConstructor: {},
   currentIngredient: {},
 
   createdOrder: {},
@@ -94,9 +94,14 @@ export const ingredientReducer = (state = initialState, action) => {
     case SORT_IN_CONSTRUCTOR: {
       return {
         ...state,
-        ingredientsConstructor: [...state.ingredientsConstructor.splice(0, 1, state.ingredientsConstructor[0]),
-          ...state.ingredientsConstructor.splice(action.dragIndex, 1),
-          ...state.ingredientsConstructor.splice(action.hoverIndex, 0, state.ingredientsConstructor[action.dragIndex])]
+        dragIngredientInConstructor: [...state.ingredientsConstructor.splice(action.dragIndex, 1)][0]
+      }
+    }
+    case SORT_IN_CONSTRUCTOR_2: {
+      return {
+        ...state,
+        ...state.ingredientsConstructor.splice(action.hoverIndex, 0,
+          {...state.dragIngredientInConstructor})
       }
     }
     case SET_CURRENT_INGREDIENT: {

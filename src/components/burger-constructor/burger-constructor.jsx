@@ -32,6 +32,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
         isHover: monitor.isOver(),
       }),
       drop(item) {
+        console.log(ingredientsConstructor);
         const elem = ingredientsData.filter(ingr => ingr._id === item.id)[0];
         //console.log(elem);
         //console.log(ingredientsData.filter(i => i._id === item.id)[0].__v); // 60d3b41abdacab0026a733c7
@@ -41,13 +42,13 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
             id: item.id
           })
         } else {
-          console.log(elem);
+          //console.log(elem);
           dispatch({
             type: REMOVE_BUN_FROM_CONSTRUCTOR,
             id: item.id,
             ingr: elem.type
           });
-          console.log(ingredientsData.filter(i => i._id === item.id)[0]);
+          //console.log(ingredientsData.filter(i => i._id === item.id)[0]);
           dispatch({
             type: SET_BUN_IN_CONSTRUCTOR,
             id: item.id,
@@ -55,7 +56,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
           });
         }
         // console.log(ingredientsConstructor);
-        console.log(ingredientsData.filter(i => i._id === item.id)[0]);
+        //console.log(ingredientsData.filter(i => i._id === item.id)[0]);
 
       },
     });
@@ -63,7 +64,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
 
     const handleRemoveIngredient = (id, index) => {
       const elem = ingredientsData.filter(ingr => ingr._id === id)[0];
-      console.log(elem);
+      //console.log(elem);
       elem.type !== 'bun'
         ? dispatch({
           type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
