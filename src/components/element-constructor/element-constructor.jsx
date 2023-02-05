@@ -3,16 +3,14 @@ import {useDrag, useDrop} from "react-dnd";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {
+  DRAG_CURRENT_ELEMENT,
   REMOVE_BUN_FROM_CONSTRUCTOR,
-  REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-  SORT_IN_CONSTRUCTOR, SORT_IN_CONSTRUCTOR_2
+  REMOVE_INGREDIENT_FROM_CONSTRUCTOR, SET_DRAGGING_ELEMENT
 } from "../../services/actions/ingredients";
 import {useDispatch, useSelector} from "react-redux";
 
 const ElementConstructor = ({info, index}) => {
   const ref = useRef(null);
-
-  const {ingredientsConstructor} = useSelector(store => store.ingredients);
 
   const id = info._id;
   const {ingredientsData } =
@@ -61,27 +59,16 @@ const ElementConstructor = ({info, index}) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      // Time to actually perform the action
-      //moveElement(dragIndex, hoverIndex);
-      console.log(dragIndex, hoverIndex);
-      console.log('dragIndex', dragIndex, ingredientsConstructor[dragIndex]);
-      console.log('hoverIndex', hoverIndex, ingredientsConstructor[hoverIndex]);
-      //console.log(ingredientsConstructor);
       dispatch({
-        type: SORT_IN_CONSTRUCTOR,
+        type: DRAG_CURRENT_ELEMENT,
         dragIndex,
         hoverIndex
       });
       dispatch({
-        type: SORT_IN_CONSTRUCTOR_2,
+        type: SET_DRAGGING_ELEMENT,
         dragIndex,
         hoverIndex
       });
-      console.log(ingredientsConstructor);
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
       item.index = hoverIndex;
     },
   });

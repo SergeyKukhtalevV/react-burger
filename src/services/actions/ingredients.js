@@ -8,8 +8,8 @@ export const SET_INGREDIENT_IN_CONSTRUCTOR = 'SET_INGREDIENT_IN_CONSTRUCTOR';
 export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR = 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
 export const SET_BUN_IN_CONSTRUCTOR = 'SET_BUN_IN_CONSTRUCTOR';
 export const REMOVE_BUN_FROM_CONSTRUCTOR = 'REMOVE_BUN_FROM_CONSTRUCTOR';
-export const SORT_IN_CONSTRUCTOR = 'SORT_IN_CONSTRUCTOR';
-export const SORT_IN_CONSTRUCTOR_2 = 'SORT_IN_CONSTRUCTOR_2';
+export const DRAG_CURRENT_ELEMENT = 'DRAG_CURRENT_ELEMENT';
+export const SET_DRAGGING_ELEMENT = 'SET_DRAGGING_ELEMENT';
 export const SET_CURRENT_INGREDIENT = 'SET_CURRENT_INGREDIENT';
 export const REMOVE_CURRENT_INGREDIENT = 'REMOVE_CURRENT_INGREDIENT';
 
@@ -19,8 +19,6 @@ export const GET_ORDER_NUMBER_FAILED = 'GET_NUMBER_ORDER_FAILED';
 
 export const GET_POSITION_TITLE = 'GET_POSITION_TITLE';
 export const GET_CURRENT_TAB = 'GET_CURRENT_TAB';
-
-
 
 export function setCurrentTab(activeTab) {
   return function (dispatch) {
@@ -51,21 +49,6 @@ export function getIngredients() {
   };
 }
 
-
-
-export function setIngredientInConstructor(data) {
-  return function (dispatch) {
-    const res = data.filter(info => {
-      if (info.type !== 'bun') {
-        return info;
-      }
-      dispatch({
-        type: SET_INGREDIENT_IN_CONSTRUCTOR,
-        items: res
-      })
-    });
-  }
-}
 
 export function getOrderNumber(data) {
   return function (dispatch) {

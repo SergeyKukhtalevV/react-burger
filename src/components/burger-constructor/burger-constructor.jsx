@@ -1,29 +1,21 @@
-import React, {useContext, useReducer, useState, useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import {ConstructorElement, Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {burgerPropTypes} from '../../utils/proptypes-validate';
+import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
-import {URL_API} from '../../constants/constants';
 import {useDispatch, useSelector} from "react-redux";
 import {
-  GET_INGREDIENTS_CONSTRUCTOR,
-  getIngredients,
-  getIngredientsInConstructor,
   getOrderNumber, REMOVE_BUN_FROM_CONSTRUCTOR,
-  REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   SET_BUN_IN_CONSTRUCTOR,
-  SET_INGREDIENT_IN_CONSTRUCTOR, SORT_IN_CONSTRUCTOR
+  SET_INGREDIENT_IN_CONSTRUCTOR
 } from "../../services/actions/ingredients";
-import {useDrag, useDrop} from "react-dnd";
+import {useDrop} from "react-dnd";
 import ElementConstructor from "../element-constructor/element-constructor";
 
-const urlOrder = `${URL_API}/orders`;
 
 const BurgerConstructor = ({setModalActive, isActive}) => {
-    /////
-    const {ingredientsData, ingredientsConstructor, dataRequest, dataFailed, orderNumber, orderNumberRequest} =
+    const {ingredientsData, ingredientsConstructor, orderNumber} =
       useSelector(store => store.ingredients);
 
     const [{isHover}, drop] = useDrop({
@@ -32,55 +24,27 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
         isHover: monitor.isOver(),
       }),
       drop(item) {
-        console.log(ingredientsConstructor);
         const elem = ingredientsData.filter(ingr => ingr._id === item.id)[0];
-        //console.log(elem);
-        //console.log(ingredientsData.filter(i => i._id === item.id)[0].__v); // 60d3b41abdacab0026a733c7
         if (elem.type !== 'bun') {
           dispatch({
             type: SET_INGREDIENT_IN_CONSTRUCTOR,
             id: item.id
           })
         } else {
-          //console.log(elem);
           dispatch({
             type: REMOVE_BUN_FROM_CONSTRUCTOR,
             id: item.id,
             ingr: elem.type
           });
-          //console.log(ingredientsData.filter(i => i._id === item.id)[0]);
           dispatch({
             type: SET_BUN_IN_CONSTRUCTOR,
             id: item.id,
             ingr: elem.type
           });
         }
-        // console.log(ingredientsConstructor);
-        //console.log(ingredientsData.filter(i => i._id === item.id)[0]);
-
       },
     });
     const dispatch = useDispatch();
-
-    const handleRemoveIngredient = (id, index) => {
-      const elem = ingredientsData.filter(ingr => ingr._id === id)[0];
-      //console.log(elem);
-      elem.type !== 'bun'
-        ? dispatch({
-          type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-          id,
-          index
-        })
-        : dispatch({
-          type: REMOVE_BUN_FROM_CONSTRUCTOR,
-          ingr: 'bun'
-        })
-      //console.log(ingredientsConstructor);
-    }
-
-    useEffect(() => {
-      const bun = ingredientsConstructor.filter(info => info.type === 'bun');
-    }, []);
 
     const getBunInConstructor = () => {
       return ingredientsConstructor.filter(info => info.type === 'bun')[0];
@@ -90,8 +54,6 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
     }
 
-
-///////////////////////////////
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`} ref={drop}>
         {
@@ -161,12 +123,10 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
               }
             </div>
         }
-
         <Modal active={isActive} setActive={setModalActive}>
           <OrderDetails orderNum={orderNumber ? orderNumber : 'Loading...'}/>
         </Modal>
       </section>
-
     );
   }
 ;
