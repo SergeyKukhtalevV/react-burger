@@ -124,7 +124,9 @@ export const ingredientReducer = (state = initialState, action) => {
     }
     case GET_ORDER_NUMBER_SUCCESS: {
       return {
-        ...state, orderNumberFailed: false, orderNumber: action.item, orderNumberRequest: false
+        ...state, orderNumberFailed: false, orderNumber: action.item,
+        orderNumberRequest: false,
+        ingredientsConstructor: []
       };
     }
     case GET_ORDER_NUMBER_FAILED: {

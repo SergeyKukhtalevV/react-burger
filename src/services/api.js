@@ -1,21 +1,15 @@
-import {URL_API} from '../constants/constants';
+import {request} from "../utils/utils";
 
-const urlData = `${URL_API}/ingredients`;
-const urlOrder = `${URL_API}/orders`;
+const urlData = '/ingredients';
+const urlOrder = '/orders';
 
 
 export const getIngredientsRequest = async () => {
-  return await fetch(urlData)
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
+  return await request(urlData);
 }
 
 export const getOrderNumberRequest = async (orderInfo) => {
-    let response = await fetch(urlOrder, {
+  return await request(urlOrder, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,6 +17,5 @@ export const getOrderNumberRequest = async (orderInfo) => {
       body: JSON.stringify({
         "ingredients": orderInfo
       })
-    });
-    return response.json();
+  });
 }

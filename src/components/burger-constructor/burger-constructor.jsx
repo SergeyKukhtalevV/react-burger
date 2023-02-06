@@ -6,6 +6,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {useDispatch, useSelector} from "react-redux";
 import {
+  getIngredients,
   getOrderNumber, REMOVE_BUN_FROM_CONSTRUCTOR,
   SET_BUN_IN_CONSTRUCTOR,
   SET_INGREDIENT_IN_CONSTRUCTOR
@@ -52,6 +53,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
 
     const getOrder = () => {
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
+      dispatch(getIngredients());
     }
 
     return (
