@@ -45,6 +45,8 @@ export function getIngredients() {
           type: GET_INGREDIENTS_FAILED
         });
       }
+    }).catch(err => {
+      console.log('Ошибка, запрос на получение списка ингредиентов не выполнен', err);
     });
   };
 }
@@ -66,6 +68,9 @@ export function getOrderNumber(data) {
           type: GET_ORDER_NUMBER_FAILED
         });
       }
-    });
+    })
+      .catch(err => {
+        console.log('Ошибка, запрос на получение номера заказа не выполнен', err);
+      });
   };
 }
