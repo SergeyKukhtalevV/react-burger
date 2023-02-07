@@ -8,11 +8,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   addIngredient,
   getIngredients,
-  getOrderNumber, REMOVE_BUN_FROM_CONSTRUCTOR,
-  SET_BUN_IN_CONSTRUCTOR,
-  SET_INGREDIENT_IN_CONSTRUCTOR
+  getOrderNumber
 } from "../../services/actions/ingredients";
 import {useDrop} from "react-dnd";
+import { v4 as uuidv4 } from 'uuid';
 import ElementConstructor from "../element-constructor/element-constructor";
 
 
@@ -27,7 +26,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       }),
       drop(item) {
         const elem = ingredientsData.filter(ingr => ingr._id === item.id)[0];
-        dispatch(addIngredient(elem.type, elem._id));
+        dispatch(addIngredient(elem.type, elem._id, uuidv4()));
       },
     });
     const dispatch = useDispatch();
@@ -62,7 +61,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                   ingredientsConstructor.map((info, index) => {
                     if (info.type !== 'bun') {
                       return (
-                        <ElementConstructor key={info._id + index} info={info} index={index} />
+                        <ElementConstructor key={info.uuid} info={info} index={index} />
                       )
                     }
                   })

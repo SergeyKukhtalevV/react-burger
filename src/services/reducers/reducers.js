@@ -60,8 +60,8 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
           item._id === action.id ? {...item, __v: ++item.__v} : item),
-        ingredientsConstructor: [...state.ingredientsConstructor, ([...state.ingredientsData].filter(item =>
-          item._id === action.id)[0])]
+        ingredientsConstructor: [...state.ingredientsConstructor, {...[...state.ingredientsData].filter(item =>
+          item._id === action.id)[0], uuid: action.uuid}]
       }
     }
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
@@ -69,8 +69,8 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
           item._id === action.id ? {...item, __v: --item.__v} : item),
-        ingredientsConstructor: [...state.ingredientsConstructor.filter((item, i) =>
-          i !== action.index || item._id !== action.id)]
+        ingredientsConstructor: [...state.ingredientsConstructor.filter(item =>
+          item.uuid !== action.uuid)]
       }
     }
     case SET_BUN_IN_CONSTRUCTOR: {

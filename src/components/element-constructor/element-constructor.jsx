@@ -13,11 +13,11 @@ const ElementConstructor = ({info, index}) => {
   const ref = useRef(null);
 
   const id = info._id;
-  const {ingredientsData } =
+  const {ingredientsConstructor} =
     useSelector(store => store.ingredients);
   const dispatch = useDispatch();
 
-  const [{ isDrag }, dragInConstructor] = useDrag({
+  const [{isDrag}, dragInConstructor] = useDrag({
     type: "elementInConstructor",
     item: {id, index},
     collect: monitor => ({
@@ -29,7 +29,7 @@ const ElementConstructor = ({info, index}) => {
     collect: monitor => ({
       handlerId: monitor.getHandlerId()
     }),
-    hover(item, monitor){
+    hover(item, monitor) {
       if (!ref.current) {
         return;
       }
@@ -76,14 +76,13 @@ const ElementConstructor = ({info, index}) => {
   dragInConstructor(dropInConstructor(ref));
   const opacity = isDrag ? 0 : 1
 
-    const handleRemoveIngredient = (id, index) => {
-    const elem = ingredientsData.filter(ingr => ingr._id === id)[0];
-    console.log(elem);
+  const handleRemoveIngredient = (uuid, id) => {
+    const elem = ingredientsConstructor.filter(ingr => ingr.uuid === uuid)[0];
     elem.type !== 'bun'
       ? dispatch({
         type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-        id,
-        index
+        uuid,
+        id
       })
       : dispatch({
         type: REMOVE_BUN_FROM_CONSTRUCTOR,
@@ -93,11 +92,11 @@ const ElementConstructor = ({info, index}) => {
   }
 
   return (
-    <li style={{ opacity }} ref={ref} className={`mr-2 ${burgerConstructorStyles.cell}`} data-handler-id={handlerId} >
+    <li style={{opacity}} ref={ref} className={`mr-2 ${burgerConstructorStyles.cell}`} data-handler-id={handlerId}>
       <DragIcon type="primary"/>
       <ConstructorElement {...info} text={info.name} thumbnail={info.image}
                           handleClose={() => {
-                            handleRemoveIngredient(info._id, index)
+                            handleRemoveIngredient(info.uuid, info._id)
                           }}/>
     </li>
   );
