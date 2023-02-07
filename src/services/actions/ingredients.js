@@ -29,6 +29,27 @@ export function setCurrentTab(activeTab) {
   }
 }
 
+export function addIngredient(type, id) {
+  return function (dispatch) {
+    if (type !== 'bun') {
+      dispatch({
+        type: SET_INGREDIENT_IN_CONSTRUCTOR,
+        id
+      })
+    } else {
+      dispatch({
+        type: REMOVE_BUN_FROM_CONSTRUCTOR,
+        id,
+        ingr: type
+      });
+      dispatch({
+        type: SET_BUN_IN_CONSTRUCTOR,
+        id,
+        ingr: type
+      });
+    }
+  }
+}
 export function getIngredients() {
   return function (dispatch) {
     dispatch({

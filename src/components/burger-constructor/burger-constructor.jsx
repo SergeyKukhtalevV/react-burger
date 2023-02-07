@@ -6,6 +6,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {useDispatch, useSelector} from "react-redux";
 import {
+  addIngredient,
   getIngredients,
   getOrderNumber, REMOVE_BUN_FROM_CONSTRUCTOR,
   SET_BUN_IN_CONSTRUCTOR,
@@ -26,23 +27,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       }),
       drop(item) {
         const elem = ingredientsData.filter(ingr => ingr._id === item.id)[0];
-        if (elem.type !== 'bun') {
-          dispatch({
-            type: SET_INGREDIENT_IN_CONSTRUCTOR,
-            id: item.id
-          })
-        } else {
-          dispatch({
-            type: REMOVE_BUN_FROM_CONSTRUCTOR,
-            id: item.id,
-            ingr: elem.type
-          });
-          dispatch({
-            type: SET_BUN_IN_CONSTRUCTOR,
-            id: item.id,
-            ingr: elem.type
-          });
-        }
+        dispatch(addIngredient(elem.type, elem._id));
       },
     });
     const dispatch = useDispatch();
