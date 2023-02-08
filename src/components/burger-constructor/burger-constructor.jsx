@@ -7,7 +7,6 @@ import OrderDetails from "../order-details/OrderDetails";
 import {useDispatch, useSelector} from "react-redux";
 import {
   addIngredient,
-  getIngredients,
   getOrderNumber
 } from "../../services/actions/ingredients";
 import {useDrop} from "react-dnd";

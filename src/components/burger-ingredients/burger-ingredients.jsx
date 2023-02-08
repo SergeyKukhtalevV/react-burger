@@ -9,28 +9,36 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   setCurrentTab,
   getIngredients,
-  SET_CURRENT_INGREDIENT
+  SET_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT
 } from '../../services/actions/ingredients';
 
 
 const BurgerIngredients = ({isActive, setModalActive}) => {
 
-  const {
-    ingredientsData,
-    dataRequest,
-    dataFailed,
-    currentIngredient,
-    tabsNames,
-    currentTab
-  } = useSelector(store => store.ingredients);
-  const dispatch = useDispatch();
+    const {
+      ingredientsData,
+      dataRequest,
+      dataFailed,
+      currentIngredient,
+      tabsNames,
+      currentTab
+    } = useSelector(store => store.ingredients);
+    const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      dispatch(getIngredients());
-    },
-    [dispatch]
-  );
+    useEffect(
+      () => {
+        dispatch(getIngredients());
+      },
+      [dispatch]
+    );
+
+    useEffect(() => {
+      if (!isActive) {
+        dispatch({
+          type: REMOVE_CURRENT_INGREDIENT
+        });
+      }
+    }, [isActive]);
 
     const [ingredientsTypes, setIngredients] = React.useState([
       {id: 1, name: 'Булки', type: 'bun'},
@@ -39,62 +47,62 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     ]);
 
     let i = 0;
-  const handleScroll = (e) => {
-    if (e.target.childNodes[i].getBoundingClientRect().bottom >= 0) {
-      if (currentTab !== ingredientsTypes[i].name) {
-        dispatch(setCurrentTab(ingredientsTypes[i].name));
-      }
-  } else i++;
-}
-
-const setCurrentIngredient = (id) => {
-  setModalActive(true);
-  dispatch({
-    type: SET_CURRENT_INGREDIENT,
-    id
-  });
-}
-
-return (
-  <section>
-    <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
-    <BurgerTabs />
-    {
-      dataRequest && !dataFailed
-        ? <p className="text text_type_main-medium">Идет загрузка...</p>
-        :
-        <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`} onScroll={handleScroll} >
-          {
-            tabsNames.map(type => {
-              return (
-                <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
-                  <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
-                    {type.name}
-                  </p>
-                  <ul className={`mt-6 mb-10 ${burgerIngredientsStyles.cards}`}>
-                    {
-                      ingredientsData.map(info => {
-                        if (type.type === info.type) {
-                          return (
-                            <BurgerElement props={info} key={info._id}
-                                           setCurrIngr={setCurrentIngredient}/>
-                          )
-                        }
-                      })
-                    }
-                  </ul>
-                </li>
-              )
-            })
-          }
-        </ul>
+    const handleScroll = (e) => {
+      if (e.target.childNodes[i].getBoundingClientRect().bottom >= 0) {
+        if (currentTab !== ingredientsTypes[i].name) {
+          dispatch(setCurrentTab(ingredientsTypes[i].name));
+        }
+      } else i++;
     }
-    <Modal active={isActive} setActive={setModalActive}>
-      <IngredientDetails info={currentIngredient}/>
-    </Modal>
-  </section>
-);
-}
+
+    const setCurrentIngredient = (id) => {
+      setModalActive(true);
+      dispatch({
+        type: SET_CURRENT_INGREDIENT,
+        id
+      });
+    }
+
+    return (
+      <section>
+        <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
+        <BurgerTabs/>
+        {
+          dataRequest && !dataFailed
+            ? <p className="text text_type_main-medium">Идет загрузка...</p>
+            :
+            <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`} onScroll={handleScroll}>
+              {
+                tabsNames.map(type => {
+                  return (
+                    <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
+                      <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
+                        {type.name}
+                      </p>
+                      <ul className={`mt-6 mb-10 ${burgerIngredientsStyles.cards}`}>
+                        {
+                          ingredientsData.map(info => {
+                            if (type.type === info.type) {
+                              return (
+                                <BurgerElement props={info} key={info._id}
+                                               setCurrIngr={setCurrentIngredient}/>
+                              )
+                            }
+                          })
+                        }
+                      </ul>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+        }
+        <Modal active={isActive} setActive={setModalActive}>
+          <IngredientDetails info={currentIngredient}/>
+        </Modal>
+      </section>
+    );
+  }
 ;
 
 export default BurgerIngredients;
