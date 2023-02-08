@@ -37,7 +37,6 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
 
     const getOrder = () => {
       dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
-      dispatch(getIngredients());
     }
 
     return (

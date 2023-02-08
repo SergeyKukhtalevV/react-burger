@@ -126,6 +126,7 @@ export const ingredientReducer = (state = initialState, action) => {
       return {
         ...state, orderNumberFailed: false, orderNumber: action.item,
         orderNumberRequest: false,
+        ingredientsData: [...state.ingredientsData].map(item => [{...item, __v: 0}][0]),
         ingredientsConstructor: []
       };
     }
