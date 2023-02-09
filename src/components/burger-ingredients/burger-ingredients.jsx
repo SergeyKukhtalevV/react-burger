@@ -32,13 +32,15 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
       [dispatch]
     );
 
-    useEffect(() => {
-      if (!isActive) {
+  useEffect(() => {
+    if (!isActive) {
+      setTimeout(() => {
         dispatch({
-          type: REMOVE_CURRENT_INGREDIENT
+          type: REMOVE_CURRENT_INGREDIENT,
         });
-      }
-    }, [isActive]);
+      }, 500);
+    }
+  }, [isActive]);
 
     const [ingredientsTypes, setIngredients] = React.useState([
       {id: 1, name: 'Булки', type: 'bun'},
