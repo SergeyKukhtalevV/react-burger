@@ -32,29 +32,27 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
       [dispatch]
     );
 
-  useEffect(() => {
-    if (!isActive) {
-      setTimeout(() => {
-        dispatch({
-          type: REMOVE_CURRENT_INGREDIENT,
-        });
-      }, 500);
-    }
-  }, [isActive]);
+    useEffect(() => {
+      if (!isActive) {
+        setTimeout(() => {
+          dispatch({
+            type: REMOVE_CURRENT_INGREDIENT,
+          });
+        }, 500);
+      }
+    }, [isActive]);
 
-    const [ingredientsTypes, setIngredients] = React.useState([
-      {id: 1, name: 'Булки', type: 'bun'},
-      {id: 2, name: 'Соусы', type: 'sauce'},
-      {id: 3, name: 'Начинки', type: 'main'}
-    ]);
-
-    let i = 0;
     const handleScroll = (e) => {
-      if (e.target.childNodes[i].getBoundingClientRect().bottom >= 0) {
-        if (currentTab !== ingredientsTypes[i].name) {
-          dispatch(setCurrentTab(ingredientsTypes[i].name));
+      const j = tabsNames.map((item, index) => {
+        return e.target.childNodes[index].getBoundingClientRect().top - e.target.getBoundingClientRect().top;
+      }).findIndex((element) => {
+        return element >= 0
+      });
+      if (j >= 0) {
+        if (currentTab !== tabsNames[j].name) {
+          dispatch(setCurrentTab(tabsNames[j].name));
         }
-      } else i++;
+      }
     }
 
     const setCurrentIngredient = (id) => {
