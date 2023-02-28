@@ -20,10 +20,10 @@ const LoginPage = () => {
         <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"} onChange={onChange}
                        icon={"ShowIcon"}/>
         <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"} onClick={login}>Войти</Button>
-        <p className={`mt-20 text text_type_main-default text_color_inactive`}>Вы - новый пользователь?
+        <p className={`mt-20 text text_type_main-default text_color_inactive`}>Вы - новый пользователь?&nbsp;
           <Link to={"/register"}>Зарегистрироваться</Link>
         </p>
-        <p className={`mt-4 text text_type_main-default text_color_inactive`}>Забыли пароль?
+        <p className={`mt-4 text text_type_main-default text_color_inactive`}>Забыли пароль?&nbsp;
           <Link to={"/forgot-password"}>Восстановить пароль</Link>
         </p>
       </form>

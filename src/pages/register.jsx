@@ -21,7 +21,7 @@ const RegisterPage = () => {
         <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"} onChange={onChange}
                        icon={"ShowIcon"}/>
         <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"} onClick={register}>Зарегистрироваться</Button>
-        <p className={`mt-20 text text_type_main-default text_color_inactive`}>Уже зарегистрированы?
+        <p className={`mt-20 text text_type_main-default text_color_inactive`}>Уже зарегистрированы?&nbsp;
           <Link to={"/login"}>Войти</Link>
         </p>
       </form>

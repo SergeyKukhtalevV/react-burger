@@ -8,6 +8,8 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {DndProvider} from "react-dnd";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
+import ForgotPassword from "../../pages/forgot-password";
+import ResetPasswordPage from "../../pages/reset-password";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -30,8 +32,8 @@ function App() {
         </div>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<h1> forgot-password </h1>} />
-        <Route path="/reset-password" element={<h1> reset-password </h1>} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/profile" element={<h1> profile </h1>} />
         <Route path="/ingredients/:id" element={<h1> ingredients/:id </h1>} />
         <Route path="*" element={<h1> page 404 </h1>} />
