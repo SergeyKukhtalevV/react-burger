@@ -11,6 +11,7 @@ import RegisterPage from "../../pages/register";
 import ForgotPassword from "../../pages/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password";
 import ProfilePage from "../../pages/profile";
+import NotFoundPage from "../../pages/not-found";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -37,7 +38,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/ingredients/:id" element={<h1> ingredients/:id </h1>} />
-        <Route path="*" element={<h1> page 404 </h1>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

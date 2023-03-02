@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .form {
   margin-top: 180px;
   display: flex;
@@ -12,3 +13,11 @@
   justify-content: center;
 }
 
+.link {
+  text-decoration: none;
+  color: #8585AD;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
