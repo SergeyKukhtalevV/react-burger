@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './autorization.module.css'
+import styles from './authorization.module.css'
 import {Link, NavLink} from "react-router-dom";
 
 const NotFoundPage = () => {

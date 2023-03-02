@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {Link, Navigate} from "react-router-dom";
-import styles from './autorization.module.css'
+import styles from './authorization.module.css'
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const LoginPage = () => {

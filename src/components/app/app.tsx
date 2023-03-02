@@ -37,6 +37,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/orders" element={<h1> /profile/orders </h1>} />
+        <Route path="/profile/orders/:id" element={<h1> /profile/orders/:id </h1>} />
         <Route path="/ingredients/:id" element={<h1> ingredients/:id </h1>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
