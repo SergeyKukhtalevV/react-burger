@@ -1,5 +1,3 @@
-import {combineReducers} from 'redux';
-
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -146,7 +144,3 @@ export const ingredientReducer = (state = initialState, action) => {
     }
   }
 }
-
-export const rootReducer = combineReducers({
-  ingredients: ingredientReducer
-})

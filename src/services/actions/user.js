@@ -1,4 +1,4 @@
-import {getAuthUserRequest} from "../api";
+import {getAuthUserRequest, setRegisterUserRequest} from "../api";
 
 export const SET_REGISTER_USER_REQUEST= 'SET_REGISTER_USER_REQUEST';
 export const SET_REGISTER_USER_SUCCESS = 'SET_REGISTER_USER_SUCCESS';
@@ -25,7 +25,7 @@ export function getAuthUser(email, password) {
       if (res) {
         dispatch({
           type: GET_AUTHORIZATION_USER_SUCCESS,
-          user: res.data
+          data: res.data
         });
       } else {
         dispatch({
@@ -38,3 +38,24 @@ export function getAuthUser(email, password) {
   };
 }
 
+export function setRegisterUser(email, password, name) {
+  return function (dispatch) {
+    dispatch({
+      type: SET_REGISTER_USER_REQUEST
+    });
+    setRegisterUserRequest({email, password, name}).then(res => {
+      if (res) {
+        dispatch({
+          type: SET_REGISTER_USER_SUCCESS,
+          data: res.data
+        });
+      } else {
+        dispatch({
+          type: SET_REGISTER_USER_FAILED
+        });
+      }
+    }).catch(err => {
+      console.log('Ошибка, запрос на регистрацию пользователя не выполнен', err);
+    });
+  };
+}
