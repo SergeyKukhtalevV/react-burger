@@ -1,3 +1,4 @@
+import {getAuthUserRequest} from "../api";
 
 export const SET_REGISTER_USER_REQUEST= 'SET_REGISTER_USER_REQUEST';
 export const SET_REGISTER_USER_SUCCESS = 'SET_REGISTER_USER_SUCCESS';
@@ -15,4 +16,25 @@ export const SET_LOGOUT_USER_REQUEST= 'SET_LOGOUT_USER_REQUEST';
 export const SET_LOGOUT_USER_SUCCESS = 'SET_LOGOUT_USER_SUCCESS';
 export const SET_LOGOUT_USER_FAILED = 'SET_LOGOUT_USER_FAILED';
 
+export function getAuthUser(email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_AUTHORIZATION_USER_REQUEST
+    });
+    getAuthUserRequest({email, password}).then(res => {
+      if (res) {
+        dispatch({
+          type: GET_AUTHORIZATION_USER_SUCCESS,
+          user: res.data
+        });
+      } else {
+        dispatch({
+          type: GET_AUTHORIZATION_USER_FAILED
+        });
+      }
+    }).catch(err => {
+      console.log('Ошибка, запрос на авторизацию пользователя не выполнен', err);
+    });
+  };
+}
 

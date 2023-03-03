@@ -5,8 +5,8 @@ const urlOrder = 'orders';
 
 const urlLogin = 'login';
 const urlRegister = 'register';
-const urlLogout = 'logout';
-const urlToken = 'token';
+export const urlLogout = 'logout';
+export const urlToken = 'token';
 
 export const getIngredientsRequest = async () => {
   return await request(urlData);
@@ -34,6 +34,31 @@ export const setRegisterUserRequest = async ({email, password, name}) => {
       email,
       password,
       name
+    })
+  });
+}
+
+export const getAuthUserRequest = async ({email, password}) => {
+  return await request(urlLogin, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  });
+}
+
+export const getTokenRequest = async ({url, refreshToken}) => {
+  return await request(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      'token': refreshToken
     })
   });
 }
