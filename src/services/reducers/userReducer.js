@@ -10,7 +10,14 @@ import {
   GET_REFRESH_TOKEN_FAILED,
   SET_LOGOUT_USER_REQUEST,
   SET_LOGOUT_USER_SUCCESS,
-  SET_LOGOUT_USER_FAILED
+  SET_LOGOUT_USER_FAILED,
+  GET_USER_INFO_REQUEST,
+  GET_USER_INFO_SUCCESS,
+  GET_USER_INFO_FAILED,
+  SET_USER_INFO_REQUEST,
+  SET_USER_INFO_SUCCESS,
+  SET_USER_INFO_FAILED
+
 } from '../actions/user';
 
 const initialState = {
@@ -18,7 +25,7 @@ const initialState = {
   userInfoRequest: false,
   userInfoFailed: false,
   accessToken: '',
-  refreshToken: ''
+  refreshToken: '' //TODO сохранять в куки
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -61,6 +68,85 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case GET_AUTHORIZATION_USER_FAILED: {
+      return {
+        ...state, userInfoFailed: true, userInfoRequest: false
+      };
+    }
+    case GET_REFRESH_TOKEN_REQUEST: {
+      return {
+        ...state,
+        userInfoRequest: true
+      };
+    }
+    case GET_REFRESH_TOKEN_SUCCESS: {
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        accessToken: action.data.accessToken.split('Bearer ')[1],
+        refreshToken: action.data.refreshToken
+      };
+    }
+    case GET_REFRESH_TOKEN_FAILED: {
+      return {
+        ...state, userInfoFailed: true, userInfoRequest: false
+      };
+    }
+    case SET_LOGOUT_USER_REQUEST: {
+      return {
+        ...state,
+        userInfoRequest: true
+      };
+    }
+    case SET_LOGOUT_USER_SUCCESS: {
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        accessToken: "",
+        refreshToken: "",
+        userInfo: {}
+      };
+    }
+    case SET_LOGOUT_USER_FAILED: {
+      return {
+        ...state, userInfoFailed: true, userInfoRequest: false
+      };
+    }
+    case GET_USER_INFO_REQUEST: {
+      return {
+        ...state,
+        userInfoRequest: true
+      };
+    }
+    case GET_USER_INFO_SUCCESS: {
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        userInfo: action.data.user
+      };
+    }
+    case GET_USER_INFO_FAILED: {
+      return {
+        ...state, userInfoFailed: true, userInfoRequest: false
+      };
+    }
+    case SET_USER_INFO_REQUEST: {
+      return {
+        ...state,
+        userInfoRequest: true
+      };
+    }
+    case SET_USER_INFO_SUCCESS: {
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        userInfo: action.data.user
+      };
+    }
+    case SET_USER_INFO_FAILED: {
       return {
         ...state, userInfoFailed: true, userInfoRequest: false
       };
