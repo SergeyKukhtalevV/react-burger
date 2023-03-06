@@ -30,16 +30,16 @@ export const SET_USER_INFO_REQUEST = 'SET_USER_INFO_REQUEST';
 export const SET_USER_INFO_SUCCESS = 'SET_USER_INFO_SUCCESS';
 export const SET_USER_INFO_FAILED = 'SET_USER_INFO_FAILED';
 
-export function getAuthUser(email, password) {
+export function getAuthUser(info) {
   return function (dispatch) {
     dispatch({
       type: GET_AUTHORIZATION_USER_REQUEST
     });
-    getAuthUserRequest({email, password}).then(res => {
+    getAuthUserRequest(info).then(res => {
       if (res) {
         dispatch({
           type: GET_AUTHORIZATION_USER_SUCCESS,
-          data: res.data
+          data: res
         });
       } else {
         dispatch({
@@ -84,7 +84,7 @@ export function getRefreshTokenUser(urlToken, refreshToken) {
       if (res) {
         dispatch({
           type: GET_REFRESH_TOKEN_SUCCESS,
-          data: res.data
+          data: res
         });
       } else {
         dispatch({
@@ -106,7 +106,7 @@ export function getUserInfo(token) {
       if (res) {
         dispatch({
           type: GET_USER_INFO_SUCCESS,
-          data: res.data
+          data: res
         });
       } else {
         dispatch({
@@ -128,7 +128,7 @@ export function setUserInfo(token, name, email, password) {
       if (res) {
         dispatch({
           type: SET_USER_INFO_SUCCESS,
-          data: res.data
+          data: res
         });
       } else {
         dispatch({

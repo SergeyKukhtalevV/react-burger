@@ -43,15 +43,15 @@ export const setRegisterUserRequest = async (data) => {
   });
 }
 
-export const getAuthUserRequest = async ({email, password}) => {
+export const getAuthUserRequest = async (data) => {
   return await request(urlLogin, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email,
-      password
+      email: data.email,
+      password: data.password
     })
   });
 }

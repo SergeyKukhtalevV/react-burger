@@ -8,25 +8,18 @@ import {setCookie} from "../utils/utils";
 
 const RegisterPage = () => {
 
-  const {
-    userInfo,
-    userInfoRequest,
-    userInfoFailed,
-    accessToken,
-    refreshToken
-  } = useSelector(store => store.user);
+  const { accessToken } = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [form, setValue] = useState({name: '', email: '', password: ''});
   useEffect(() => {
-    if (refreshToken) {
-      setCookie('token', refreshToken);
+    if (accessToken) {
       setTimeout(() => {
         navigate('/');
       }, 3000);
     }
-  }, [refreshToken])
+  }, [accessToken]);
 
   const register = useCallback(e => {
       e.preventDefault();
@@ -47,8 +40,8 @@ const RegisterPage = () => {
         <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"}
                        onChange={onChange}
                        icon={"ShowIcon"}/>
-        {refreshToken
-          ? <p className={`mt-20 text text_type_main-default text_color_active`}>Регистрация пользователя успешна
+        {accessToken
+          ? <p className={`mt-20 text text_type_main-large text_color_active`}>Регистрация пользователя успешна
             выполнена! Вы будете перенаправлены на главную страницу через 3 секунды </p>
           : <div>
               <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}

@@ -19,13 +19,13 @@ import {
   SET_USER_INFO_FAILED
 
 } from '../actions/user';
+import {deleteCookie, setCookie} from "../../utils/utils";
 
 const initialState = {
   userInfo: {},
   userInfoRequest: false,
   userInfoFailed: false,
-  accessToken: '',
-  refreshToken: '' //TODO сохранять в куки
+  accessToken: ''
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -37,13 +37,13 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case SET_REGISTER_USER_SUCCESS: {
+      setCookie('token', action.data.refreshToken);
       return {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
         userInfo: action.data.user,
-        accessToken: action.data.accessToken.split('Bearer ')[1],
-        refreshToken: action.data.refreshToken
+        accessToken: action.data.accessToken.split('Bearer ')[1]
       };
     }
     case SET_REGISTER_USER_FAILED: {
@@ -58,13 +58,13 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case GET_AUTHORIZATION_USER_SUCCESS: {
+      setCookie('token', action.data.refreshToken);
       return {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
         userInfo: action.data.user,
-        accessToken: action.data.accessToken.split('Bearer ')[1],
-        refreshToken: action.data.refreshToken
+        accessToken: action.data.accessToken.split('Bearer ')[1]
       };
     }
     case GET_AUTHORIZATION_USER_FAILED: {
@@ -79,12 +79,12 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case GET_REFRESH_TOKEN_SUCCESS: {
+      setCookie('token', action.data.refreshToken);
       return {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
-        accessToken: action.data.accessToken.split('Bearer ')[1],
-        refreshToken: action.data.refreshToken
+        accessToken: action.data.accessToken.split('Bearer ')[1]
       };
     }
     case GET_REFRESH_TOKEN_FAILED: {
@@ -99,12 +99,12 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case SET_LOGOUT_USER_SUCCESS: {
+      deleteCookie('token');
       return {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
         accessToken: "",
-        refreshToken: "",
         userInfo: {}
       };
     }
@@ -120,6 +120,7 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case GET_USER_INFO_SUCCESS: {
+      setCookie('token', action.data.refreshToken);
       return {
         ...state,
         userInfoRequest: false,
@@ -139,6 +140,7 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case SET_USER_INFO_SUCCESS: {
+      setCookie('token', action.data.refreshToken);
       return {
         ...state,
         userInfoRequest: false,
