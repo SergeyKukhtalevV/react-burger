@@ -151,5 +151,8 @@ export const userReducer = (state = initialState, action) => {
         ...state, userInfoFailed: true, userInfoRequest: false
       };
     }
+    default: {
+      return state;
+    }
   }
 }

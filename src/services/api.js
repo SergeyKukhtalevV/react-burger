@@ -1,6 +1,5 @@
 import {request} from "../utils/utils";
 import {userReducer} from "./reducers/userReducer";
-import {getCookie} from "../utils/utils";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
@@ -30,16 +29,16 @@ export const getOrderNumberRequest = async (orderInfo) => {
   });
 }
 
-export const setRegisterUserRequest = async ({email, password, name}) => {
+export const setRegisterUserRequest = async (data) => {
   return await request(urlRegister, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email,
-      password,
-      name
+      email: data.email,
+      password: data.password,
+      name: data.name
     })
   });
 }
@@ -58,7 +57,7 @@ export const getAuthUserRequest = async ({email, password}) => {
 }
 
 export const getUserInfoRequest = async ({accessToken}) => {
-  return await request(userReducer(), {
+  return await request(urlUser, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -72,7 +71,7 @@ export const getUserInfoRequest = async ({accessToken}) => {
 }
 
 export const setUserInfoRequest = async ({accessToken, name, email, password}) => {
-  return await request(userReducer(), {
+  return await request(urlUser, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

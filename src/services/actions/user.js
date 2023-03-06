@@ -3,10 +3,8 @@ import {
   getTokenRequest,
   getUserInfoRequest,
   setRegisterUserRequest,
-  setUserInfoRequest,
-  urlToken
+  setUserInfoRequest
 } from "../api";
-import {getCookie} from "../../utils/utils";
 
 export const SET_REGISTER_USER_REQUEST= 'SET_REGISTER_USER_REQUEST';
 export const SET_REGISTER_USER_SUCCESS = 'SET_REGISTER_USER_SUCCESS';
@@ -54,16 +52,17 @@ export function getAuthUser(email, password) {
   };
 }
 
-export function setRegisterUser(email, password, name) {
+export function setRegisterUser(info) {
   return function (dispatch) {
     dispatch({
       type: SET_REGISTER_USER_REQUEST
     });
-    setRegisterUserRequest({email, password, name}).then(res => {
+    setRegisterUserRequest(info).then(res => {
       if (res) {
+        console.log(res);
         dispatch({
           type: SET_REGISTER_USER_SUCCESS,
-          data: res.data
+          data: res
         });
       } else {
         dispatch({
@@ -98,12 +97,11 @@ export function getRefreshTokenUser(urlToken, refreshToken) {
   };
 }
 
-export function getUserInfo() {
+export function getUserInfo(token) {
   return function (dispatch) {
     dispatch({
       type: GET_USER_INFO_REQUEST
     });
-    const token = getCookie('reFreshToken');
     getUserInfoRequest({token}).then(res => {
       if (res) {
         dispatch({
@@ -121,12 +119,11 @@ export function getUserInfo() {
   };
 }
 
-export function setUserInfo(reFreshToken, name, email, password) {
+export function setUserInfo(token, name, email, password) {
   return function (dispatch) {
     dispatch({
       type: SET_USER_INFO_REQUEST
     });
-    const token = getCookie(reFreshToken);
     setUserInfoRequest({token, name, email, password}).then(res => {
       if (res) {
         dispatch({
