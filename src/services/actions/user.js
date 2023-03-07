@@ -3,7 +3,7 @@ import {
   getTokenRequest,
   getUserInfoRequest, getUserNewPasswordRequest,
   setRegisterUserRequest,
-  setUserInfoRequest, setUserNewPasswordRequest
+  setUserInfoRequest, setUserNewPasswordRequest, urlLogout
 } from "../api";
 
 export const SET_REGISTER_USER_REQUEST = 'SET_REGISTER_USER_REQUEST';
@@ -18,9 +18,9 @@ export const GET_REFRESH_TOKEN_REQUEST = 'GET_REFRESH_TOKEN_REQUEST';
 export const GET_REFRESH_TOKEN_SUCCESS = 'GET_REFRESH_TOKEN_SUCCESS';
 export const GET_REFRESH_TOKEN_FAILED = 'GET_REFRESH_TOKEN_FAILED';
 
-export const SET_LOGOUT_USER_REQUEST = 'SET_LOGOUT_USER_REQUEST';
-export const SET_LOGOUT_USER_SUCCESS = 'SET_LOGOUT_USER_SUCCESS';
-export const SET_LOGOUT_USER_FAILED = 'SET_LOGOUT_USER_FAILED';
+export const GET_LOGOUT_USER_REQUEST = 'GET_LOGOUT_USER_REQUEST';
+export const GET_LOGOUT_USER_SUCCESS = 'GET_LOGOUT_USER_SUCCESS';
+export const GET_LOGOUT_USER_FAILED = 'GET_LOGOUT_USER_FAILED';
 
 export const GET_USER_INFO_REQUEST = 'GET_USER_INFO_REQUEST';
 export const GET_USER_INFO_SUCCESS = 'GET_USER_INFO_SUCCESS';
@@ -168,6 +168,26 @@ export function setUserNewPassword(info) {
         type: SET_USER_NEW_PASSWORD_FAILED
       });
       console.log('Ошибка, запрос на сохранение нового пароля пользователя не выполнен', err);
+    });
+  };
+}
+
+export function getLogOutUser(data) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_LOGOUT_USER_REQUEST
+    });
+    getTokenRequest(urlLogout, data).then(res => {
+      console.log(res);
+      dispatch({
+        type: GET_LOGOUT_USER_SUCCESS,
+        data: res
+      });
+    }).catch(err => {
+      dispatch({
+        type: GET_LOGOUT_USER_FAILED
+      });
+      console.log('Ошибка, запрос на выход из системы не выполнен', err);
     });
   };
 }

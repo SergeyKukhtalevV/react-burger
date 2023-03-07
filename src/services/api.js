@@ -111,14 +111,14 @@ export const setUserInfoRequest = async ({accessToken, name, email, password}) =
 }
 
 
-export const getTokenRequest = async ({url, refreshToken}) => {
+export const getTokenRequest = async (url, data) => {
   return await request(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      'token': refreshToken
+      token: data.token
     })
   });
 }

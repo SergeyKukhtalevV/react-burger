@@ -8,9 +8,9 @@ import {
   GET_REFRESH_TOKEN_REQUEST,
   GET_REFRESH_TOKEN_SUCCESS,
   GET_REFRESH_TOKEN_FAILED,
-  SET_LOGOUT_USER_REQUEST,
-  SET_LOGOUT_USER_SUCCESS,
-  SET_LOGOUT_USER_FAILED,
+  GET_LOGOUT_USER_REQUEST,
+  GET_LOGOUT_USER_SUCCESS,
+  GET_LOGOUT_USER_FAILED,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
   GET_USER_INFO_FAILED,
@@ -107,13 +107,13 @@ export const userReducer = (state = initialState, action) => {
         ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
     }
-    case SET_LOGOUT_USER_REQUEST: {
+    case GET_LOGOUT_USER_REQUEST: {
       return {
         ...state,
         userInfoRequest: true, userInfoAnswer: false
       };
     }
-    case SET_LOGOUT_USER_SUCCESS: {
+    case GET_LOGOUT_USER_SUCCESS: {
       deleteCookie('token');
       return {
         ...state,
@@ -124,7 +124,7 @@ export const userReducer = (state = initialState, action) => {
         userInfo: {}
       };
     }
-    case SET_LOGOUT_USER_FAILED: {
+    case GET_LOGOUT_USER_FAILED: {
       return {
         ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
