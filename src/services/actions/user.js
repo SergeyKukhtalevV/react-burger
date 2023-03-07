@@ -3,7 +3,7 @@ import {
   getTokenRequest,
   getUserInfoRequest, getUserNewPasswordRequest,
   setRegisterUserRequest,
-  setUserInfoRequest, setUserNewPasswordRequest, urlLogout
+  setUserInfoRequest, setUserNewPasswordRequest, urlLogout, urlToken
 } from "../api";
 
 export const SET_REGISTER_USER_REQUEST = 'SET_REGISTER_USER_REQUEST';
@@ -96,12 +96,13 @@ export function getRefreshTokenUser(urlToken, refreshToken) {
   };
 }
 
-export function getUserInfo(token) {
+export function getUserInfo(data) {
   return function (dispatch) {
     dispatch({
       type: GET_USER_INFO_REQUEST
     });
-    getUserInfoRequest({token}).then(res => {
+    getUserInfoRequest(data).then(res => {
+      console.log(res);
       dispatch({
         type: GET_USER_INFO_SUCCESS,
         data: res
@@ -188,6 +189,25 @@ export function getLogOutUser(data) {
         type: GET_LOGOUT_USER_FAILED
       });
       console.log('Ошибка, запрос на выход из системы не выполнен', err);
+    });
+  };
+}
+export function getFreshToken(data) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_REFRESH_TOKEN_REQUEST
+    });
+    getTokenRequest(urlToken, data).then(res => {
+      console.log(res);
+      dispatch({
+        type: GET_REFRESH_TOKEN_SUCCESS,
+        data: res
+      });
+    }).catch(err => {
+      dispatch({
+        type: GET_REFRESH_TOKEN_FAILED
+      });
+      console.log('Ошибка, запрос на обновление токена не выполнен', err);
     });
   };
 }

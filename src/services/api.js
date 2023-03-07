@@ -81,12 +81,12 @@ export const setUserNewPasswordRequest = async (data) => {
   });
 }
 
-export const getUserInfoRequest = async ({accessToken}) => {
+export const getUserInfoRequest = async (data) => {
   return await request(urlUser, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
+      Authorization: 'Bearer ' + data.accessToken
      }//,
     // body: JSON.stringify({
     //   email,

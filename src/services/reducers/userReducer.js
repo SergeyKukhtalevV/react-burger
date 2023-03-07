@@ -86,6 +86,7 @@ export const userReducer = (state = initialState, action) => {
       };
     }
     case GET_REFRESH_TOKEN_REQUEST: {
+      deleteCookie('token');
       return {
         ...state,
         userInfoRequest: true,

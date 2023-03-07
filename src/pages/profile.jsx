@@ -3,7 +3,7 @@ import {Link, Navigate, NavLink, useNavigate} from "react-router-dom";
 import styles from './profile.module.css'
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {getLogOutUser} from "../services/actions/user";
+import {getLogOutUser, getUserInfo} from "../services/actions/user";
 import {getCookie} from "../utils/utils";
 
 const ProfilePage = () => {
@@ -24,6 +24,9 @@ const ProfilePage = () => {
   const getOut = () => {
     dispatch(getLogOutUser(data));
   }
+  useEffect(()=> {
+    dispatch(getUserInfo({'accessToken': accessToken}));
+  }, [accessToken]);
   useEffect(() => {
     if (!accessToken) {
       setTimeout(() => {
