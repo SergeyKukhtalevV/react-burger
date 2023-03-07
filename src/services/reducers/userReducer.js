@@ -19,7 +19,11 @@ import {
   SET_USER_INFO_FAILED,
   GET_USER_NEW_PASSWORD_REQUEST,
   GET_USER_NEW_PASSWORD_SUCCESS,
-  GET_USER_NEW_PASSWORD_FAILED
+  GET_USER_NEW_PASSWORD_FAILED,
+  SET_USER_NEW_PASSWORD_REQUEST,
+  SET_USER_NEW_PASSWORD_SUCCESS,
+  SET_USER_NEW_PASSWORD_FAILED,
+  GET_USER_NEW_PASSWORD_INIT
 
 } from '../actions/user';
 import {deleteCookie, setCookie} from "../../utils/utils";
@@ -61,6 +65,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userInfoRequest: true,
+        userInfoFailed: false,
         userInfoAnswer: false
       };
     }
@@ -184,6 +189,36 @@ export const userReducer = (state = initialState, action) => {
     case GET_USER_NEW_PASSWORD_FAILED: {
       return {
         ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
+      };
+    }
+    case SET_USER_NEW_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        userInfoRequest: true, userInfoAnswer: false
+      };
+    }
+    case SET_USER_NEW_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        userInfoAnswer: true
+      };
+    }
+    case SET_USER_NEW_PASSWORD_FAILED: {
+      return {
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
+      };
+    }
+    case GET_USER_NEW_PASSWORD_INIT: {
+      deleteCookie('token');
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        userInfoAnswer: false,
+        accessToken: "",
+        userInfo: {}
       };
     }
     default: {

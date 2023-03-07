@@ -7,7 +7,7 @@ import {getAuthUser, setRegisterUser} from "../services/actions/user";
 
 const LoginPage = () => {
 
-  const {accessToken} = useSelector(store => store.user);
+  const {accessToken, userInfoFailed, userInfoAnswer} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const LoginPage = () => {
                        icon={"ShowIcon"}/>
         {accessToken
           ? <div className={styles.container__login}>
-            <p className={`mt-20 text text_type_main-default text_color_active`}>Регистрация пользователя успешна
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Авторизация пользователя успешна
               выполнена!</p>
             <p className={`mt-20 text text_type_main-default text_color_active`}>Вы будете перенаправлены на главную
               страницу через 3 секунды </p></div>
@@ -53,6 +53,12 @@ const LoginPage = () => {
             </p>
           </div>
         }
+        {!userInfoAnswer && userInfoFailed
+          ? <div className={styles.container__login}>
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Не правильно введена электронная почта
+              или пароль</p>
+          </div>
+          : null}
       </form>
     </div>
   );

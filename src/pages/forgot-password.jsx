@@ -3,7 +3,7 @@ import {Link, Navigate, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserNewPassword} from "../services/actions/user";
+import {getUserNewPassword, GET_USER_NEW_PASSWORD_INIT} from "../services/actions/user";
 
 const ForgotPasswordPage = () => {
 
@@ -20,6 +20,7 @@ const ForgotPasswordPage = () => {
   useEffect(() => {
     if (userInfoAnswer) {
       setTimeout(() => {
+        dispatch({type: GET_USER_NEW_PASSWORD_INIT});
         navigate('/reset-password');
       }, 3000);
     }

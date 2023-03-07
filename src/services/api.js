@@ -68,6 +68,18 @@ export const getUserNewPasswordRequest = async (data) => {
   });
 }
 
+export const setUserNewPasswordRequest = async (data) => {
+  return await request(urlPasReset, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      password: data.password,
+      token: data.token
+    })
+  });
+}
 
 export const getUserInfoRequest = async ({accessToken}) => {
   return await request(urlUser, {
