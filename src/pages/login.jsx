@@ -31,14 +31,17 @@ const LoginPage = () => {
   return (
     <div className={styles.container}>
       <form className={`${styles.form}`}>
-        <h1 className={`text text_type_main-large`}> Вход </h1>
+        <h1 className={`text text_type_main-medium`}> Вход </h1>
         <EmailInput extraClass={`mt-6`} placeholder={'E-mail'} value={form.email} name={"email"} onChange={onChange}/>
         <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"}
                        onChange={onChange}
                        icon={"ShowIcon"}/>
         {accessToken
-          ? <p className={`mt-20 text text_type_main-large text_color_active`}>Регистрация пользователя успешна
-            выполнена! Вы будете перенаправлены на главную страницу через 3 секунды </p>
+          ? <div className={styles.container__login}>
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Регистрация пользователя успешна
+              выполнена!</p>
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Вы будете перенаправлены на главную
+              страницу через 3 секунды </p></div>
           : <div className={styles.container__login}>
             <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
                     onClick={login}>Войти</Button>

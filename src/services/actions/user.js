@@ -1,7 +1,7 @@
 import {
   getAuthUserRequest,
   getTokenRequest,
-  getUserInfoRequest,
+  getUserInfoRequest, getUserNewPasswordRequest,
   setRegisterUserRequest,
   setUserInfoRequest
 } from "../api";
@@ -29,6 +29,11 @@ export const GET_USER_INFO_FAILED = 'GET_USER_INFO_FAILED';
 export const SET_USER_INFO_REQUEST = 'SET_USER_INFO_REQUEST';
 export const SET_USER_INFO_SUCCESS = 'SET_USER_INFO_SUCCESS';
 export const SET_USER_INFO_FAILED = 'SET_USER_INFO_FAILED';
+
+export const GET_USER_NEW_PASSWORD_REQUEST = 'GET_USER_NEW_PASSWORD_REQUEST';
+export const GET_USER_NEW_PASSWORD_SUCCESS = 'GET_USER_NEW_PASSWORD_SUCCESS';
+export const GET_USER_NEW_PASSWORD_FAILED = 'GET_USER_NEW_PASSWORD_FAILED';
+
 
 export function getAuthUser(info) {
   return function (dispatch) {
@@ -137,6 +142,28 @@ export function setUserInfo(token, name, email, password) {
       }
     }).catch(err => {
       console.log('Ошибка, запрос на изменение данных пользователя не выполнен', err);
+    });
+  };
+}
+
+export function getUserNewPassword(info) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_USER_NEW_PASSWORD_REQUEST
+    });
+    getUserNewPasswordRequest(info).then(res => {
+      if (res) {
+        dispatch({
+          type: GET_USER_NEW_PASSWORD_SUCCESS,
+          data: res
+        });
+      } else {
+        dispatch({
+          type: GET_USER_NEW_PASSWORD_FAILED
+        });
+      }
+    }).catch(err => {
+      console.log('Ошибка, запрос на восстановление пользователя не выполнен', err);
     });
   };
 }

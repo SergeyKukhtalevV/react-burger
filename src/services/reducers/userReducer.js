@@ -16,7 +16,10 @@ import {
   GET_USER_INFO_FAILED,
   SET_USER_INFO_REQUEST,
   SET_USER_INFO_SUCCESS,
-  SET_USER_INFO_FAILED
+  SET_USER_INFO_FAILED,
+  GET_USER_NEW_PASSWORD_REQUEST,
+  GET_USER_NEW_PASSWORD_SUCCESS,
+  GET_USER_NEW_PASSWORD_FAILED
 
 } from '../actions/user';
 import {deleteCookie, setCookie} from "../../utils/utils";
@@ -25,6 +28,7 @@ const initialState = {
   userInfo: {},
   userInfoRequest: false,
   userInfoFailed: false,
+  userInfoAnswer: false,
   accessToken: ''
 }
 
@@ -33,7 +37,8 @@ export const userReducer = (state = initialState, action) => {
     case SET_REGISTER_USER_REQUEST: {
       return {
         ...state,
-        userInfoRequest: true
+        userInfoRequest: true,
+        userInfoAnswer: false
       };
     }
     case SET_REGISTER_USER_SUCCESS: {
@@ -42,19 +47,21 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
+        userInfoAnswer: true,
         userInfo: action.data.user,
         accessToken: action.data.accessToken.split('Bearer ')[1]
       };
     }
     case SET_REGISTER_USER_FAILED: {
       return {
-        ...state, userInfoFailed: true, userInfoRequest: false
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
     }
     case GET_AUTHORIZATION_USER_REQUEST: {
       return {
         ...state,
-        userInfoRequest: true
+        userInfoRequest: true,
+        userInfoAnswer: false
       };
     }
     case GET_AUTHORIZATION_USER_SUCCESS: {
@@ -63,19 +70,21 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
+        userInfoAnswer: true,
         userInfo: action.data.user,
         accessToken: action.data.accessToken.split('Bearer ')[1]
       };
     }
     case GET_AUTHORIZATION_USER_FAILED: {
       return {
-        ...state, userInfoFailed: true, userInfoRequest: false
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
     }
     case GET_REFRESH_TOKEN_REQUEST: {
       return {
         ...state,
-        userInfoRequest: true
+        userInfoRequest: true,
+        userInfoAnswer: false
       };
     }
     case GET_REFRESH_TOKEN_SUCCESS: {
@@ -84,18 +93,19 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
+        userInfoAnswer: true,
         accessToken: action.data.accessToken.split('Bearer ')[1]
       };
     }
     case GET_REFRESH_TOKEN_FAILED: {
       return {
-        ...state, userInfoFailed: true, userInfoRequest: false
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
     }
     case SET_LOGOUT_USER_REQUEST: {
       return {
         ...state,
-        userInfoRequest: true
+        userInfoRequest: true, userInfoAnswer: false
       };
     }
     case SET_LOGOUT_USER_SUCCESS: {
@@ -104,19 +114,20 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
+        userInfoAnswer: true,
         accessToken: "",
         userInfo: {}
       };
     }
     case SET_LOGOUT_USER_FAILED: {
       return {
-        ...state, userInfoFailed: true, userInfoRequest: false
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
     }
     case GET_USER_INFO_REQUEST: {
       return {
         ...state,
-        userInfoRequest: true
+        userInfoRequest: true, userInfoAnswer: false
       };
     }
     case GET_USER_INFO_SUCCESS: {
@@ -125,18 +136,20 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
+        userInfoAnswer: true,
         userInfo: action.data.user
       };
     }
     case GET_USER_INFO_FAILED: {
       return {
-        ...state, userInfoFailed: true, userInfoRequest: false
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
     }
     case SET_USER_INFO_REQUEST: {
       return {
         ...state,
-        userInfoRequest: true
+        userInfoRequest: true,
+        userInfoAnswer: false
       };
     }
     case SET_USER_INFO_SUCCESS: {
@@ -145,12 +158,32 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
+        userInfoAnswer: true,
         userInfo: action.data.user
       };
     }
     case SET_USER_INFO_FAILED: {
       return {
-        ...state, userInfoFailed: true, userInfoRequest: false
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
+      };
+    }
+    case GET_USER_NEW_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        userInfoRequest: true, userInfoAnswer: false
+      };
+    }
+    case GET_USER_NEW_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        userInfoAnswer: true
+      };
+    }
+    case GET_USER_NEW_PASSWORD_FAILED: {
+      return {
+        ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };
     }
     default: {

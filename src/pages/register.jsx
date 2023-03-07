@@ -8,7 +8,7 @@ import {setCookie} from "../utils/utils";
 
 const RegisterPage = () => {
 
-  const { accessToken } = useSelector(store => store.user);
+  const {accessToken} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const RegisterPage = () => {
   return (
     <div className={styles.container}>
       <form className={`${styles.form}`}>
-        <h1 className={`text text_type_main-large`}> Регистрация </h1>
+        <h1 className={`text text_type_main-medium`}> Регистрация </h1>
         <Input type={"text"} extraClass={`mt-6`} placeholder={'Имя'} value={form.name} name={"name"}
                onChange={onChange}/>
         <EmailInput extraClass={`mt-6`} placeholder={'E-mail'} value={form.email} name={"email"} onChange={onChange}/>
@@ -41,14 +41,18 @@ const RegisterPage = () => {
                        onChange={onChange}
                        icon={"ShowIcon"}/>
         {accessToken
-          ? <p className={`mt-20 text text_type_main-large text_color_active`}>Регистрация пользователя успешна
-            выполнена! Вы будете перенаправлены на главную страницу через 3 секунды </p>
+          ? <div className={styles.container__login}>
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Регистрация пользователя успешна
+              выполнена!</p>
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Вы будете перенаправлены на главную
+              страницу через 3 секунды </p>
+          </div>
           : <div>
-              <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
+            <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
                     onClick={register}>Зарегистрироваться</Button>
-              <p className={`mt-20 text text_type_main-default text_color_inactive`}>Уже зарегистрированы?&nbsp;
-                <Link to={"/login"}>Войти</Link>
-              </p>
+            <p className={`mt-20 text text_type_main-default text_color_inactive`}>Уже зарегистрированы?&nbsp;
+              <Link to={"/login"}>Войти</Link>
+            </p>
           </div>
         }
       </form>

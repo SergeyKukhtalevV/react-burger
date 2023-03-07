@@ -15,7 +15,7 @@ const ResetPasswordPage = () => {
   return (
     <div className={styles.container}>
       <form className={`${styles.form}`}>
-        <h1 className={`text text_type_main-large`}>Восстановление пароля</h1>
+        <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
         <PasswordInput extraClass={`mt-6`} placeholder={'Введите новый пароль'} value={form.password} name={"password"}
                        onChange={onChange}
                        icon={"ShowIcon"}/>

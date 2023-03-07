@@ -1,11 +1,11 @@
 import {request} from "../utils/utils";
-import {userReducer} from "./reducers/userReducer";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
 
 const urlLogin = 'auth/login';
 const urlRegister = 'auth/register';
+const urlPasReset = 'password-reset';
 const urlUser = 'auth/user';
 export const urlLogout = 'auth/logout';
 export const urlToken = 'auth/token';
@@ -55,6 +55,19 @@ export const getAuthUserRequest = async (data) => {
     })
   });
 }
+
+export const getUserNewPasswordRequest = async (data) => {
+  return await request(urlPasReset, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: data.email
+    })
+  });
+}
+
 
 export const getUserInfoRequest = async ({accessToken}) => {
   return await request(urlUser, {
