@@ -116,25 +116,6 @@ export function getUserInfo(data) {
   };
 }
 
-export function setUserInfo(token, name, email, password) {
-  return function (dispatch) {
-    dispatch({
-      type: SET_USER_INFO_REQUEST
-    });
-    setUserInfoRequest({token, name, email, password}).then(res => {
-      dispatch({
-        type: SET_USER_INFO_SUCCESS,
-        data: res
-      });
-    }).catch(err => {
-      dispatch({
-        type: SET_USER_INFO_FAILED
-      });
-      console.log('Ошибка, запрос на изменение данных пользователя не выполнен', err);
-    });
-  };
-}
-
 export function getUserNewPassword(info) {
   return function (dispatch) {
     dispatch({
@@ -211,3 +192,23 @@ export function getFreshToken(data) {
     });
   };
 }
+
+export function setUserInfo(info) {
+  return function (dispatch) {
+    dispatch({
+      type: SET_USER_INFO_REQUEST
+    });
+    setUserInfoRequest(info).then(res => {
+      dispatch({
+        type: SET_USER_INFO_SUCCESS,
+        data: res
+      });
+    }).catch(err => {
+      dispatch({
+        type: SET_USER_INFO_FAILED
+      });
+      console.log('Ошибка, запрос на изменение данных пользователя не выполнен', err);
+    });
+  };
+}
+

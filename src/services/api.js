@@ -87,25 +87,21 @@ export const getUserInfoRequest = async (data) => {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + data.accessToken
-     }//,
-    // body: JSON.stringify({
-    //   email,
-    //   password
-    // })
+     }
   });
 }
 
-export const setUserInfoRequest = async ({accessToken, name, email, password}) => {
+export const setUserInfoRequest = async (data) => {
   return await request(urlUser, {
-    method: 'POST',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
+      Authorization: 'Bearer ' + data.accessToken
     },
     body: JSON.stringify({
-      name,
-      email,
-      password
+      name: data.name,
+      email: data.email,
+      password: data.password
     })
   });
 }

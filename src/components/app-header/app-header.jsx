@@ -4,7 +4,8 @@ import appHeaderStyles from './app-header.module.css'
 import {NavLink} from "react-router-dom";
 
 const AppHeader = () => {
-  const setActive = ({isActive}) => isActive? `${appHeaderStyles.header__link} ${appHeaderStyles.header__link_active}` : `${appHeaderStyles.header__link} `;
+  const setActive = ({isActive}) => isActive ? `${appHeaderStyles.header__link} ${appHeaderStyles.header__link_active}`
+    : `${appHeaderStyles.header__link} `;
   return (
     <header className={appHeaderStyles.header}>
       <ul className={appHeaderStyles.header__navbar}>

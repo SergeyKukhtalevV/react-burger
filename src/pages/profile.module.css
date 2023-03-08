@@ -35,11 +35,21 @@
   text-decoration: none;
 }
 
+.link_active {
+  color: #F2F2F3;
+}
+
 .form {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
+.buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
 
