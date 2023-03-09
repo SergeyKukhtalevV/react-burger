@@ -11,19 +11,21 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [form, setValue] = useState({name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken});
+  const [form, setValue] = useState({name: '', email: '', password: '', accessToken: ''});
   const [data, setData] = useState({token: getCookie('token')});
+  const token = getCookie('token');
+  console.log('token: ' + token);
   const setActive = ({isActive}) => isActive ? `${styles.link} text text_type_main-medium ${styles.link_active}`
     : `${styles.link} text text_type_main-medium`;
 
   const editUserInfo = useCallback(e => {
       e.preventDefault();
       dispatch(setUserInfo(form));
-    if (userInfoFailed) {
-      dispatch(getFreshToken(data));
-      form.accessToken = accessToken;
-      dispatch(setUserInfo(form));
-    }
+      if (userInfoFailed) {
+        dispatch(getFreshToken(data));
+        form.accessToken = accessToken;
+        dispatch(setUserInfo(form));
+      }
     }, [form]
   );
 
@@ -43,11 +45,12 @@ const ProfilePage = () => {
       dispatch(getFreshToken(data));
       dispatch(getUserInfo({'accessToken': accessToken}));
     }
-    if (!accessToken) {
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
+    if (accessToken) {
+      setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
+    } else {
+      navigate('/login');
     }
+
   }, [accessToken]);
 
   return (
@@ -55,7 +58,8 @@ const ProfilePage = () => {
       <div className={styles.container}>
         <ul className={styles.menu}>
           <li>
-            <NavLink to={"/profile"} className={setActive}>Профиль</NavLink>
+            <NavLink to="/profile" className={setActive}
+                     >Профиль</NavLink>
           </li>
           <li>
             <NavLink to={"/profile/orders"} className={`${styles.link} text text_type_main-medium`}>История

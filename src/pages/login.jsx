@@ -4,12 +4,14 @@ import styles from './authorization.module.css'
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuthUser, setRegisterUser} from "../services/actions/user";
+import {getCookie} from "../utils/utils";
 
 const LoginPage = () => {
 
-  const {accessToken, userInfoFailed, userInfoAnswer} = useSelector(store => store.user);
+  const {isUserAuth, accessToken, userInfoFailed, userInfoAnswer} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = getCookie('token');
 
   const [form, setValue] = useState({email: '', password: ''});
   useEffect(() => {
@@ -28,6 +30,14 @@ const LoginPage = () => {
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});
   }
+// useEffect(() => {
+//   if (isUserAuth) {
+//     navigate('/');
+//   }
+// }, [isUserAuth]);
+
+
+
   return (
     <div className={styles.container}>
       <form className={`${styles.form}`}>
@@ -53,7 +63,7 @@ const LoginPage = () => {
             </p>
           </div>
         }
-        {!userInfoAnswer && userInfoFailed
+        {userInfoFailed
           ? <div className={styles.container__login}>
             <p className={`mt-20 text text_type_main-default text_color_active`}>Не правильно введена электронная почта
               или пароль</p>

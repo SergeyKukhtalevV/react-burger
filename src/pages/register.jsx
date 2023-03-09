@@ -8,7 +8,7 @@ import {setCookie} from "../utils/utils";
 
 const RegisterPage = () => {
 
-  const {accessToken} = useSelector(store => store.user);
+  const {accessToken, isUserAuth} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,6 +29,11 @@ const RegisterPage = () => {
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});
   }
+  // useEffect(() => {
+  //   if (isUserAuth) {
+  //     navigate('/');
+  //   }
+  // }, [isUserAuth]);
 
   return (
     <div className={styles.container}>

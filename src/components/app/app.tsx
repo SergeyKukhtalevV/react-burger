@@ -12,8 +12,11 @@ import ForgotPassword from "../../pages/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password";
 import ProfilePage from "../../pages/profile";
 import NotFoundPage from "../../pages/not-found";
+import {ProtectedRouteElement} from "../protected-route/protected-route";
+import {UnprotectedRouteElement} from "../unprotected-route/unprotected-route";
 
 function App() {
+
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
   return (
@@ -32,13 +35,13 @@ function App() {
             }
           </DndProvider>
         </div>} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/orders" element={<h1> /profile/orders </h1>} />
-        <Route path="/profile/orders/:id" element={<h1> /profile/orders/:id </h1>} />
+        <Route path="/login" element={<UnprotectedRouteElement element={<LoginPage />} />} />
+        <Route path="/register" element={<UnprotectedRouteElement element={<RegisterPage />} />} />
+        <Route path="/forgot-password" element={<UnprotectedRouteElement element={<ForgotPassword />} />} />
+        <Route path="/reset-password" element={<UnprotectedRouteElement element={<ResetPasswordPage />} />} />
+        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        <Route path="/profile/orders" element={<ProtectedRouteElement element={<h1> /profile/orders </h1>} />} />
+        <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={<h1> /profile/orders/:id </h1>} />} />
         <Route path="/ingredients/:id" element={<h1> ingredients/:id </h1>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
