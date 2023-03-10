@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,13 +11,17 @@ const LoginPage = () => {
   const {isUserAuth, accessToken, userInfoFailed, userInfoAnswer} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const  fromPage = location.state?.from?.pathname || '/';
   const token = getCookie('token');
 
   const [form, setValue] = useState({email: '', password: ''});
+
   useEffect(() => {
     if (accessToken) {
       setTimeout(() => {
-        navigate('/');
+        navigate(fromPage);
       }, 3000);
     }
   }, [accessToken]);
@@ -50,8 +54,7 @@ const LoginPage = () => {
           ? <div className={styles.container__login}>
             <p className={`mt-20 text text_type_main-default text_color_active`}>Авторизация пользователя успешна
               выполнена!</p>
-            <p className={`mt-20 text text_type_main-default text_color_active`}>Вы будете перенаправлены на главную
-              страницу через 3 секунды </p></div>
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Вы будете перенаправлены через 3 секунды </p></div>
           : <div className={styles.container__login}>
             <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
                     onClick={login}>Войти</Button>

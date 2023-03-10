@@ -40,11 +40,11 @@ const ProfilePage = () => {
     dispatch(getLogOutUser(data));
   }
   useEffect(() => {
-    dispatch(getUserInfo({'accessToken': accessToken}));
-    if (userInfoFailed) {
+    // dispatch(getUserInfo({'accessToken': accessToken}));
+    // if (userInfoFailed) {
       dispatch(getFreshToken(data));
       dispatch(getUserInfo({'accessToken': accessToken}));
-    }
+   // }
     if (accessToken) {
       setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
     } else {
