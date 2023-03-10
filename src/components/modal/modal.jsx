@@ -4,7 +4,7 @@ import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/ModalOverlay";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useParams} from "react-router";
 
 const Modal = ({active, setActive, children}) => {
@@ -15,7 +15,7 @@ const Modal = ({active, setActive, children}) => {
   function closePopup() {
     setActive(false);
     if(id){
-      navigate(-1);
+      navigate('/');
     }
   }
 

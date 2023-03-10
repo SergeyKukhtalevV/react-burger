@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {SET_CURRENT_INGREDIENT} from "../services/actions/ingredients";
+import {getIngredients, SET_CURRENT_INGREDIENT} from "../services/actions/ingredients";
 import styles from './ingredient.module.css';
 import Modal from "../components/modal/modal";
 import {useLocation} from "react-router-dom";
@@ -9,23 +9,29 @@ import {useLocation} from "react-router-dom";
 const IngredientPage = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
-  const {currentIngredient} = useSelector(store => store.ingredients);
+  const {ingredientsData, currentIngredient} = useSelector(store => store.ingredients);
+  const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-  // const location = useLocation();
-  // console.log(location);
+
+  const init = async () => {
+    await dispatch({
+      type: SET_CURRENT_INGREDIENT,
+      id
+    })
+    console.log(ingredientsData);
+
+  }
+
   useEffect(
-    () => {
+    (id) => {
+      dispatch(getIngredients());
+      setIsLoaded(true);
       setModalActive(true);
-      if(!currentIngredient) {
-        dispatch({
-          type: SET_CURRENT_INGREDIENT,
-          id
-        });
-        console.log(currentIngredient);
-      }
+      setTimeout(init, 500, [id]);
     },
-    [id, dispatch]
+    [isActive]
   );
+
 
   return (
     <Modal active={isActive} setActive={setModalActive}>
