@@ -14,6 +14,7 @@ import ProfilePage from "../../pages/profile";
 import NotFoundPage from "../../pages/not-found";
 import {ProtectedRouteElement} from "../protected-route/protected-route";
 import {UnprotectedRouteElement} from "../unprotected-route/unprotected-route";
+import IngredientPage from "../../pages/ingredient";
 
 function App() {
 
@@ -26,25 +27,26 @@ function App() {
       <Routes>
         <Route path="/" element={
           <div className={appStyles.appContent}>
-          <DndProvider backend={HTML5Backend}>
-            {
-              <main className={appStyles.main}>
-                <BurgerIngredients isActive={modalIngredientActive}
-                                   setModalActive={setModalIngredientActive}/>
-                <BurgerConstructor isActive={modalOrderActive} setModalActive={setModalOrderActive}/>
-              </main>
-            }
-          </DndProvider>
-        </div>} />
-        <Route path="/login" element={<UnprotectedRouteElement element={<LoginPage />} />} />
-        <Route path="/register" element={<UnprotectedRouteElement element={<RegisterPage />} />} />
-        <Route path="/forgot-password" element={<UnprotectedRouteElement element={<ForgotPassword />} />} />
-        <Route path="/reset-password" element={<UnprotectedRouteElement element={<ResetPasswordPage />} />} />
-        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
-        <Route path="/profile/orders" element={<ProtectedRouteElement element={<h1> /profile/orders </h1>} />} />
-        <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={<h1> /profile/orders/:id </h1>} />} />
-        <Route path="/ingredients/:id" element={<h1> ingredients/:id </h1>} />
-        <Route path="*" element={<NotFoundPage />} />
+            <DndProvider backend={HTML5Backend}>
+              {
+                <main className={appStyles.main}>
+                  <BurgerIngredients isActive={modalIngredientActive}
+                                     setModalActive={setModalIngredientActive}/>
+                  <BurgerConstructor isActive={modalOrderActive} setModalActive={setModalOrderActive}/>
+                </main>
+              }
+            </DndProvider>
+          </div>}/>
+        <Route path="/login" element={<UnprotectedRouteElement element={<LoginPage/>}/>}/>
+        <Route path="/register" element={<UnprotectedRouteElement element={<RegisterPage/>}/>}/>
+        <Route path="/forgot-password" element={<UnprotectedRouteElement element={<ForgotPassword/>}/>}/>
+        <Route path="/reset-password" element={<UnprotectedRouteElement element={<ResetPasswordPage/>}/>}/>
+        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
+        <Route path="/profile/orders" element={<ProtectedRouteElement element={<h1> /profile/orders </h1>}/>}/>
+        <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={<h1> /profile/orders/:id </h1>}/>}/>
+        <Route path="/ingredients/:id"
+               element={<IngredientPage isActive={modalIngredientActive} setModalActive={setModalIngredientActive}/>}/>
+        <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
   );

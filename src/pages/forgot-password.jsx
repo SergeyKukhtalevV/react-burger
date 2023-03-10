@@ -16,7 +16,7 @@ const ForgotPasswordPage = () => {
   const forgotPassword = useCallback(e => {
       e.preventDefault();
       dispatch(getUserNewPassword(form))
-    }, [form]
+    }, [dispatch]
   );
   useEffect(() => {
     if (userInfoAnswer) {
@@ -25,7 +25,7 @@ const ForgotPasswordPage = () => {
         navigate('/reset-password', {state: {from: location}});
       }, 3000);
     }
-  }, [userInfoAnswer]);
+  }, [dispatch]);
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});
   }

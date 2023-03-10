@@ -10,7 +10,6 @@ export const checkResponse = (res) => {
 
 export const  request = (endPoint, options) => {
   // принимает два аргумента: урл и объект опций, как и `fetch`
-  console.log(endPoint, options);
   return fetch(URL_API+endPoint, options).then(checkResponse);
 }
 

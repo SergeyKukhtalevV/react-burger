@@ -11,6 +11,7 @@ import {
   getIngredients,
   SET_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT
 } from '../../services/actions/ingredients';
+import {useNavigate} from "react-router-dom";
 
 
 const BurgerIngredients = ({isActive, setModalActive}) => {
@@ -24,7 +25,7 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
       currentTab
     } = useSelector(store => store.ingredients);
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     useEffect(
       () => {
         dispatch(getIngredients());
@@ -61,6 +62,7 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
         type: SET_CURRENT_INGREDIENT,
         id
       });
+      navigate(`/ingredients/${id}`);
     }
 
     return (
