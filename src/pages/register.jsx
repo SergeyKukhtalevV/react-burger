@@ -4,7 +4,6 @@ import styles from './authorization.module.css'
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {setRegisterUser} from "../services/actions/user";
-import {setCookie} from "../utils/utils";
 
 const RegisterPage = () => {
 
@@ -29,12 +28,6 @@ const RegisterPage = () => {
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});
   }
-  // useEffect(() => {
-  //   if (isUserAuth) {
-  //     navigate('/');
-  //   }
-  // }, [isUserAuth]);
-
   return (
     <div className={styles.container}>
       <form className={`${styles.form}`}>

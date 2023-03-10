@@ -2,16 +2,12 @@ import {request} from "../utils/utils";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
-
 const urlLogin = 'auth/login';
 const urlRegister = 'auth/register';
 const urlPasReset = 'password-reset';
 const urlUser = 'auth/user';
 export const urlLogout = 'auth/logout';
 export const urlToken = 'auth/token';
-
-const urlPasswordResetRequest = 'password-reset';
-const urlPasswordResetSuccess = 'password-reset/reset';
 
 export const getIngredientsRequest = async () => {
   return await request(urlData);

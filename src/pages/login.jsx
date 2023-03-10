@@ -1,21 +1,18 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {getAuthUser, setRegisterUser} from "../services/actions/user";
-import {getCookie} from "../utils/utils";
+import {getAuthUser} from "../services/actions/user";
 
 const LoginPage = () => {
 
-  const {isUserAuth, accessToken, userInfoFailed, userInfoAnswer} = useSelector(store => store.user);
+  const {accessToken, userInfoFailed} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const  fromPage = location.state?.from?.pathname || '/';
-  const token = getCookie('token');
-
   const [form, setValue] = useState({email: '', password: ''});
 
   useEffect(() => {
@@ -34,13 +31,6 @@ const LoginPage = () => {
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});
   }
-// useEffect(() => {
-//   if (isUserAuth) {
-//     navigate('/');
-//   }
-// }, [isUserAuth]);
-
-
 
   return (
     <div className={styles.container}>

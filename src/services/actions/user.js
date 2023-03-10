@@ -77,24 +77,6 @@ export function setRegisterUser(info) {
   };
 }
 
-export function getRefreshTokenUser(urlToken, refreshToken) {
-  return function (dispatch) {
-    dispatch({
-      type: GET_REFRESH_TOKEN_REQUEST
-    });
-    getTokenRequest({urlToken, refreshToken}).then(res => {
-      dispatch({
-        type: GET_REFRESH_TOKEN_SUCCESS,
-        data: res
-      });
-    }).catch(err => {
-      dispatch({
-        type: GET_REFRESH_TOKEN_FAILED
-      });
-      console.log('Ошибка, запрос на обновление токена пользователя не выполнен', err);
-    });
-  };
-}
 
 export function getUserInfo(data) {
   return function (dispatch) {
@@ -102,7 +84,6 @@ export function getUserInfo(data) {
       type: GET_USER_INFO_REQUEST
     });
     getUserInfoRequest(data).then(res => {
-      console.log(res);
       dispatch({
         type: GET_USER_INFO_SUCCESS,
         data: res
@@ -160,7 +141,6 @@ export function getLogOutUser(data) {
       type: GET_LOGOUT_USER_REQUEST
     });
     getTokenRequest(urlLogout, data).then(res => {
-      console.log(res);
       dispatch({
         type: GET_LOGOUT_USER_SUCCESS,
         data: res
@@ -179,7 +159,6 @@ export function getFreshToken(data) {
       type: GET_REFRESH_TOKEN_REQUEST
     });
     getTokenRequest(urlToken, data).then(res => {
-      console.log(res);
       dispatch({
         type: GET_REFRESH_TOKEN_SUCCESS,
         data: res

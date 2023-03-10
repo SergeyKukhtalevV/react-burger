@@ -19,6 +19,7 @@ function App() {
 
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
+
   return (
     <BrowserRouter>
       <AppHeader/>
