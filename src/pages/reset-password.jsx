@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,6 +9,8 @@ const ResetPasswordPage = () => {
   const {userInfoAnswer} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const  fromPage = location.state?.from?.pathname || '';
 
   const [form, setValue] = useState({password: '', token: ''});
   const resetPassword = useCallback(e => {
@@ -17,6 +19,9 @@ const ResetPasswordPage = () => {
     }, [form]
   );
   useEffect(() => {
+    if(fromPage !== '/forgot-password'){
+      navigate('/login');
+    }
     if (userInfoAnswer) {
       setTimeout(() => {
         navigate('/login');
