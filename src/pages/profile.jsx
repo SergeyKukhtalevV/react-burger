@@ -8,6 +8,7 @@ import {getCookie} from "../utils/utils";
 
 const ProfilePage = () => {
   const {userInfo, accessToken, userInfoFailed, userInfoAnswer} = useSelector(store => store.user);
+  const [isInfoChanged, setIsInfoChanged] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,15 +27,18 @@ const ProfilePage = () => {
         form.accessToken = accessToken;
         dispatch(setUserInfo(form));
       }
+      setIsInfoChanged(false);
     }, [form]
   );
 
   const resetUserInfo = useCallback(() => {
     setValue({...form, name: userInfo.name, email: userInfo.email});
+    setIsInfoChanged(false);
   }, [form]);
 
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});
+    setIsInfoChanged(true);
   }
   const getOut = () => {
     dispatch(getLogOutUser(data));
@@ -85,12 +89,15 @@ const ProfilePage = () => {
           <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"}
                          onChange={onChange}
                          icon={"EditIcon"}/>
-          <div className={styles.buttons}>
-            <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"} onClick={editUserInfo}
-            >Сохранить</Button>
-            <Button extraClass={`mt-6`} htmlType={"reset"} type={"primary"} size={"medium"} onClick={resetUserInfo}
-            >Отмена</Button>
-          </div>
+          {isInfoChanged
+            ? <div className={styles.buttons}>
+              <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"} onClick={editUserInfo}
+              >Сохранить</Button>
+              <Button extraClass={`mt-6`} htmlType={"reset"} type={"primary"} size={"medium"} onClick={resetUserInfo}
+              >Отмена</Button>
+            </div>
+            : null
+          }
         </form>
         {!accessToken
           ? <p className={`${styles.menu} mt-20 text text_type_main-default text_color_active`}>Вы успешно вышли из
