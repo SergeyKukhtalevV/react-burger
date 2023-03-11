@@ -4,12 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIngredients, SET_CURRENT_INGREDIENT} from "../services/actions/ingredients";
 import styles from './ingredient.module.css';
 import Modal from "../components/modal/modal";
-import {useLocation} from "react-router-dom";
 
 const IngredientPage = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
-  const {ingredientsData, currentIngredient} = useSelector(store => store.ingredients);
+  const {currentIngredient} = useSelector(store => store.ingredients);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
 
@@ -17,9 +16,7 @@ const IngredientPage = ({isActive, setModalActive}) => {
     await dispatch({
       type: SET_CURRENT_INGREDIENT,
       id
-    })
-    console.log(ingredientsData);
-
+    });
   }
 
   useEffect(
@@ -69,6 +66,3 @@ const IngredientPage = ({isActive, setModalActive}) => {
 
 export default IngredientPage;
 
-// IngredientDetails.propTypes = {
-//   currentIngredient: PropTypes.object.isRequired
-// }

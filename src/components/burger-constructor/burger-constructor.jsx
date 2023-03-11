@@ -10,14 +10,16 @@ import {
   getOrderNumber
 } from "../../services/actions/ingredients";
 import {useDrop} from "react-dnd";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import ElementConstructor from "../element-constructor/element-constructor";
+import {useNavigate} from "react-router-dom";
 
 
 const BurgerConstructor = ({setModalActive, isActive}) => {
+  const navigate = useNavigate();
     const {ingredientsData, ingredientsConstructor, orderNumber} =
       useSelector(store => store.ingredients);
-
+    const {accessToken} = useSelector(store => store.user);
     const [{isHover}, drop] = useDrop({
       accept: "ingredient",
       collect: monitor => ({
@@ -35,7 +37,12 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     }
 
     const getOrder = () => {
-      dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
+      if (accessToken) {
+        dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
+        setModalActive(true);
+      } else {
+        navigate('/login');
+      }
     }
 
     return (
@@ -59,7 +66,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                   ingredientsConstructor.map((info, index) => {
                     if (info.type !== 'bun') {
                       return (
-                        <ElementConstructor key={info.uuid} info={info} index={index} />
+                        <ElementConstructor key={info.uuid} info={info} index={index}/>
                       )
                     }
                   })
@@ -95,7 +102,6 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                     : <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder"
                               onClick={() => {
                                 getOrder();
-                                setModalActive(true);
                               }}>Оформить заказ
                     </Button>
                 }
