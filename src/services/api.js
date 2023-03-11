@@ -13,11 +13,12 @@ export const getIngredientsRequest = async () => {
   return await request(urlData);
 }
 
-export const getOrderNumberRequest = async (orderInfo) => {
+export const getOrderNumberRequest = async (accessToken, orderInfo) => {
   return await request(urlOrder, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + accessToken
       },
       body: JSON.stringify({
         "ingredients": orderInfo

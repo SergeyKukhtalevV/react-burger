@@ -117,7 +117,8 @@ export const ingredientReducer = (state = initialState, action) => {
     case GET_ORDER_NUMBER_REQUEST: {
       return {
         ...state,
-        orderNumberRequest: true
+        orderNumberRequest: true,
+        orderNumber: null
       };
     }
     case GET_ORDER_NUMBER_SUCCESS: {

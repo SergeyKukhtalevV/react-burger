@@ -38,7 +38,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
 
     const getOrder = () => {
       if (accessToken) {
-        dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
+        dispatch(getOrderNumber(accessToken, ingredientsData.map(ingredient => ingredient._id)));
         setModalActive(true);
       } else {
         navigate('/login');
@@ -114,7 +114,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
             </div>
         }
         <Modal active={isActive} setActive={setModalActive}>
-          <OrderDetails orderNum={orderNumber ? orderNumber : 'Loading...'}/>
+          <OrderDetails orderNum={orderNumber}/>
         </Modal>
       </section>
     );
