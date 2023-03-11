@@ -5,6 +5,7 @@ import {
   setRegisterUserRequest,
   setUserInfoRequest, setUserNewPasswordRequest, urlLogout, urlToken
 } from "../api";
+import {getCookie} from "../../utils/utils";
 
 export const SET_REGISTER_USER_REQUEST = 'SET_REGISTER_USER_REQUEST';
 export const SET_REGISTER_USER_SUCCESS = 'SET_REGISTER_USER_SUCCESS';
@@ -89,6 +90,7 @@ export function getUserInfo(data) {
         data: res
       });
     }).catch(err => {
+      dispatch(getFreshToken({token: getCookie('token')}));
       dispatch({
         type: GET_USER_INFO_FAILED
       });
@@ -153,7 +155,7 @@ export function getLogOutUser(data) {
     });
   };
 }
-export function getFreshToken(data) {
+ function getFreshToken(data) {
   return function (dispatch) {
     dispatch({
       type: GET_REFRESH_TOKEN_REQUEST

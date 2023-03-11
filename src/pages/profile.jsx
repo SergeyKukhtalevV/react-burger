@@ -3,7 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import styles from './profile.module.css'
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {getFreshToken, getLogOutUser, getUserInfo, setUserInfo} from "../services/actions/user";
+import {getLogOutUser, getUserInfo, setUserInfo} from "../services/actions/user";
 import {getCookie} from "../utils/utils";
 
 const ProfilePage = () => {
@@ -22,11 +22,7 @@ const ProfilePage = () => {
   const editUserInfo = useCallback(e => {
       e.preventDefault();
       dispatch(setUserInfo(form));
-      if (userInfoFailed) {
-        dispatch(getFreshToken(data));
-        form.accessToken = accessToken;
-        dispatch(setUserInfo(form));
-      }
+      form.accessToken = accessToken;
       setIsInfoChanged(false);
     }, [form]
   );
@@ -44,21 +40,17 @@ const ProfilePage = () => {
     dispatch(getLogOutUser(data));
   }
   useEffect(() => {
-     dispatch(getUserInfo({'accessToken': accessToken}));
-     if (userInfoFailed) {
-      dispatch(getFreshToken(data));
-      dispatch(getUserInfo({'accessToken': accessToken}));
-    }
-     if(!accessToken) {
-       navigate('/login');
-     }
-    if (token) {
-      setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
-    } else {
+    dispatch(getUserInfo({'accessToken': accessToken}));
+    if (!token) {
       navigate('/login');
     }
+    if (accessToken) {
+      setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
+      // } else {
+      //   navigate('/login');
+    }
 
-  }, [accessToken, token]);
+  }, [accessToken]);
 
   return (
     <main className={styles.wrapper}>
@@ -66,7 +58,7 @@ const ProfilePage = () => {
         <ul className={styles.menu}>
           <li>
             <NavLink to="/profile" className={setActive}
-                     >Профиль</NavLink>
+            >Профиль</NavLink>
           </li>
           <li>
             <NavLink to={"/profile/orders"} className={`${styles.link} text text_type_main-medium`}>История
