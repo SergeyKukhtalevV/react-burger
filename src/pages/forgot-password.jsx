@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
   const location = useLocation();
 
   const [form, setValue] = useState({email: ''});
-  const forgotPassword = useCallback(e => {
+  const handleFormForgotPassword = useCallback(e => {
       e.preventDefault();
       dispatch(getUserNewPassword(form))
     }, [dispatch]
@@ -31,10 +31,10 @@ const ForgotPasswordPage = () => {
   }
   return (
     <div className={styles.container}>
-      <form className={`${styles.form}`}>
+      <form className={`${styles.form}`} onSubmit={handleFormForgotPassword}>
         <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
         <EmailInput extraClass={`mt-6`} placeholder={'Укажите e-mail'} value={form.email} name={"email"}
-                    onChange={onChange}/>
+                    onChange={onChange} required={true}/>
         {userInfoAnswer
           ? <div className={styles.container__login}>
             <p className={`mt-20 text text_type_main-default text_color_active`}>На введенную почту отправлена
@@ -44,7 +44,7 @@ const ForgotPasswordPage = () => {
           </div>
           : <div className={styles.container__login}>
             <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
-                    onClick={forgotPassword}>Восстановить</Button>
+                    >Восстановить</Button>
             <p className={`mt-20 text text_type_main-default text_color_inactive`}>Вспомнили пароль?&nbsp;
               <Link to={"/login"}>Войти</Link>
             </p>
