@@ -15,6 +15,8 @@ import NotFoundPage from "../../pages/not-found";
 import {ProtectedRouteElement} from "../protected-route/protected-route";
 import {UnprotectedRouteElement} from "../unprotected-route/unprotected-route";
 import IngredientPage from "../../pages/ingredient";
+import ProfileMenu from "../profile-menu/ProfileMenu";
+import OrdersPage from "../../pages/orders";
 
 function App() {
 
@@ -41,9 +43,12 @@ function App() {
         <Route path="/register" element={<UnprotectedRouteElement element={<RegisterPage/>}/>}/>
         <Route path="/forgot-password" element={<UnprotectedRouteElement element={<ForgotPassword/>}/>}/>
         <Route path="/reset-password" element={<UnprotectedRouteElement element={<ResetPasswordPage/>}/>}/>
-        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
-        <Route path="/profile/orders" element={<ProtectedRouteElement element={<h1> /profile/orders </h1>}/>}/>
-        <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={<h1> /profile/orders/:id </h1>}/>}/>
+        <Route path="/profile" element={<ProtectedRouteElement element={<ProfileMenu/>}/>}>
+          <Route index element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
+          <Route path="orders" element={<ProtectedRouteElement element={<OrdersPage />}/>}/>
+          <Route path="orders/:id"
+                 element={<ProtectedRouteElement element={<h1> /profile/orders/:id </h1>}/>}/>
+        </Route>
         <Route path="/ingredients/:id"
                element={<IngredientPage isActive={modalIngredientActive} setModalActive={setModalIngredientActive}/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
