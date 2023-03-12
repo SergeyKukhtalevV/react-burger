@@ -80,6 +80,7 @@ export function setRegisterUser(info) {
 
 
 export function getUserInfo(data) {
+  const token = getCookie('token');
   return function (dispatch) {
     dispatch({
       type: GET_USER_INFO_REQUEST
@@ -90,7 +91,9 @@ export function getUserInfo(data) {
         data: res
       });
     }).catch(err => {
-      dispatch(getFreshToken({token: getCookie('token')}));
+      if(token) {
+        dispatch(getFreshToken({token}));
+      }
       dispatch({
         type: GET_USER_INFO_FAILED
       });

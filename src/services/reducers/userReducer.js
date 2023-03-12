@@ -116,7 +116,7 @@ export const userReducer = (state = initialStateUser, action) => {
       };
     }
     case GET_REFRESH_TOKEN_FAILED: {
-      //deleteCookie('token');
+      deleteCookie('token');
       return {
         ...state, userInfoFailed: true, userInfoRequest: false, userInfoAnswer: false
       };

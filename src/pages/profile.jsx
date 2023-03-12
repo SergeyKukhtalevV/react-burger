@@ -12,10 +12,14 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [form, setValue] = useState({name: '', email: '', password: '', accessToken: ''});
+  const [form, setValue] = useState({
+    name: userInfo.name,
+    email: userInfo.email,
+    password: '',
+    accessToken
+  });
 
   const token = getCookie('token');
-  const [data, setData] = useState({token});
   const setActive = ({isActive}) => isActive ? `${styles.link} text text_type_main-medium ${styles.link_active}`
     : `${styles.link} text text_type_main-medium`;
 
@@ -37,20 +41,24 @@ const ProfilePage = () => {
     setIsInfoChanged(true);
   }
   const getOut = () => {
-    dispatch(getLogOutUser(data));
+    dispatch(getLogOutUser({token}));
   }
   useEffect(() => {
-    dispatch(getUserInfo({'accessToken': accessToken}));
     if (!token) {
       navigate('/login');
     }
-    if (accessToken) {
-      setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
-      // } else {
-      //   navigate('/login');
-    }
+    dispatch(getUserInfo({accessToken}));
+    // if (accessToken) {
+    //   setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
+    //   // } else {
+    //   //   navigate('/login');
+    // }
 
   }, [accessToken]);
+
+  useEffect(() => {
+    setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
+  }, [userInfo]);
 
   return (
     <main className={styles.wrapper}>
@@ -72,26 +80,30 @@ const ProfilePage = () => {
               изменить свои персональные данные</p>
           </li>
         </ul>
-        <form className={`${styles.form}`}>
-          <Input type={"text"} extraClass={``} placeholder={'Имя'} value={form.name} name={"name"}
-                 onChange={onChange} icon={"EditIcon"}/>
-          <EmailInput extraClass={`mt-6`} placeholder={'Логин'} value={form.email} name={"email"}
-                      onChange={onChange}
-                      icon={"EditIcon"}/>
-          <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"}
-                         onChange={onChange}
-                         icon={"EditIcon"}/>
-          {isInfoChanged
-            ? <div className={styles.buttons}>
-              <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"} onClick={editUserInfo}
-              >Сохранить</Button>
-              <Button extraClass={`mt-6`} htmlType={"reset"} type={"primary"} size={"medium"} onClick={resetUserInfo}
-              >Отмена</Button>
-            </div>
-            : null
-          }
-        </form>
-        {!accessToken
+        {userInfoAnswer
+          ? <form className={`${styles.form}`} onSubmit={editUserInfo} onReset={resetUserInfo}>
+            <Input type={"text"} extraClass={``} placeholder={'Имя'} value={form.name} name={"name"}
+                   onChange={onChange} icon={"EditIcon"}/>
+            <EmailInput extraClass={`mt-6`} placeholder={'Логин'} value={form.email} name={"email"}
+                        onChange={onChange}
+                        icon={"EditIcon"}/>
+            <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"}
+                           onChange={onChange}
+                           icon={"EditIcon"}/>
+            {isInfoChanged
+              ? <div className={styles.buttons}>
+                <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
+                >Сохранить</Button>
+                <Button extraClass={`mt-6`} htmlType={"reset"} type={"primary"} size={"medium"}
+                >Отмена</Button>
+              </div>
+              : null
+            }
+          </form>
+          : <p className="mt-20 mb-20 text text_type_main-medium">Пожалуйста, подождите. Идет загрузка...</p>
+        }
+
+        {!token
           ? <p className={`${styles.menu} mt-20 text text_type_main-default text_color_active`}>Вы успешно вышли из
             профиля.</p>
           : null}
