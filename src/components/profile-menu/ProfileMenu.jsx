@@ -21,7 +21,7 @@ const ProfileMenu = () => {
     }
     dispatch(getUserInfo({accessToken}));
 
-  }, [accessToken]);
+  }, [accessToken, token]);
 
   const setActive = ({isActive}) => isActive ? `${styles.link} text text_type_main-medium ${styles.link_active}`
     : `${styles.link} text text_type_main-medium`;
@@ -31,15 +31,15 @@ const ProfileMenu = () => {
       <div className={styles.container}>
         <ul className={styles.menu}>
           <li>
-            <NavLink to="/profile" className={setActive}
+            <NavLink to="/profile" className={setActive} end
             >Профиль</NavLink>
           </li>
           <li>
-            <NavLink to={"/profile/orders"} className={`${styles.link} text text_type_main-medium`}>История
+            <NavLink to={"/profile/orders"} className={setActive}>История
               заказов</NavLink>
           </li>
           <li>
-            <NavLink className={`${styles.link} text text_type_main-medium`} onClick={getOut}>Выход</NavLink>
+            <NavLink to={"/login"} className={setActive} onClick={getOut}>Выход</NavLink>
           </li>
           <li className={"mt-20 "}>
             <p className={"text text_type_main-default text_color_inactive"}>В этом разделе вы можете

@@ -46,9 +46,9 @@ function App() {
         <Route path="/reset-password" element={<UnprotectedRouteElement element={<ResetPasswordPage/>}/>}/>
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfileMenu/>}/>}>
           <Route index element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
-          <Route path="orders" element={<ProtectedRouteElement element={<OrdersPage />}/>}/>
+          <Route path="orders" element={<ProtectedRouteElement element={<OrdersPage/>}/>}/>
           <Route path="orders/:id"
-                 element={<ProtectedRouteElement element={<OrderPage />}/>}/>
+                 element={<ProtectedRouteElement element={<OrderPage/>}/>}/>
         </Route>
         <Route path="/ingredients/:id"
                element={<IngredientPage isActive={modalIngredientActive} setModalActive={setModalIngredientActive}/>}/>
