@@ -20,7 +20,7 @@ const RegisterPage = () => {
     }
   }, [accessToken]);
 
-  const register = useCallback(e => {
+  const handleRegister = useCallback(e => {
       e.preventDefault();
       dispatch(setRegisterUser(form));
     }, [form]
@@ -30,7 +30,7 @@ const RegisterPage = () => {
   }
   return (
     <div className={styles.container}>
-      <form className={`${styles.form}`}>
+      <form className={`${styles.form}`} onSubmit={handleRegister}>
         <h1 className={`text text_type_main-medium`}> Регистрация </h1>
         <Input type={"text"} extraClass={`mt-6`} placeholder={'Имя'} value={form.name} name={"name"}
                onChange={onChange}/>
@@ -47,7 +47,7 @@ const RegisterPage = () => {
           </div>
           : <div>
             <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
-                    onClick={register}>Зарегистрироваться</Button>
+                    >Зарегистрироваться</Button>
             <p className={`mt-20 text text_type_main-default text_color_inactive`}>Уже зарегистрированы?&nbsp;
               <Link to={"/login"}>Войти</Link>
             </p>

@@ -31,7 +31,7 @@ const ForgotPasswordPage = () => {
   }
   return (
     <div className={styles.container}>
-      <form className={`${styles.form}`} onSubmit={handleFormForgotPassword}>
+      <form className={`${styles.form}`} onSubmit={handleFormForgotPassword} >
         <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
         <EmailInput extraClass={`mt-6`} placeholder={'Укажите e-mail'} value={form.email} name={"email"}
                     onChange={onChange} required={true}/>

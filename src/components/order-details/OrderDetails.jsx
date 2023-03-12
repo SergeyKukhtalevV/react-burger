@@ -18,14 +18,14 @@ const OrderDetails = ({orderNum}) => {
             станции</p>
         </div>
       }
-        </div>
+    </div>
 
-      );
-      };
+  );
+};
 
-      export default OrderDetails;
+export default OrderDetails;
 
-      OrderDetails.propTypes = {
-      orderNum: PropTypes.any
-    }
+OrderDetails.propTypes = {
+  orderNum: PropTypes.any
+}
 

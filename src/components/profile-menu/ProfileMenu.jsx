@@ -1,17 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from "./profile-menu.module.css";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {Outlet} from "react-router";
-import {getLogOutUser} from "../../services/actions/user";
-import {useDispatch} from "react-redux";
+import {getLogOutUser, getUserInfo} from "../../services/actions/user";
+import {useDispatch, useSelector} from "react-redux";
 import {getCookie} from "../../utils/utils";
 
 const ProfileMenu = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = getCookie('token');
+  const {accessToken} = useSelector(store => store.user);
   const getOut = () => {
     dispatch(getLogOutUser({token}));
   }
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+    dispatch(getUserInfo({accessToken}));
+
+  }, [accessToken]);
 
   const setActive = ({isActive}) => isActive ? `${styles.link} text text_type_main-medium ${styles.link_active}`
     : `${styles.link} text text_type_main-medium`;

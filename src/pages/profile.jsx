@@ -10,7 +10,7 @@ const ProfilePage = () => {
   const {userInfo, accessToken, userInfoAnswer} = useSelector(store => store.user);
   const [isInfoChanged, setIsInfoChanged] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
 
   const [form, setValue] = useState({
     name: userInfo.name,
@@ -21,7 +21,7 @@ const ProfilePage = () => {
 
   const token = getCookie('token');
 
-  const editUserInfo = useCallback(e => {
+  const handleEditUserInfo = useCallback(e => {
       e.preventDefault();
       dispatch(setUserInfo(form));
       form.accessToken = accessToken;
@@ -29,7 +29,7 @@ const ProfilePage = () => {
     }, [form]
   );
 
-  const resetUserInfo = useCallback(() => {
+  const handleResetUserInfo = useCallback(() => {
     setValue({...form, name: userInfo.name, email: userInfo.email});
     setIsInfoChanged(false);
   }, [form]);
@@ -40,21 +40,13 @@ const ProfilePage = () => {
   }
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login');
-    }
-    dispatch(getUserInfo({accessToken}));
-
-  }, [accessToken]);
-
-  useEffect(() => {
     setValue({...form, name: userInfo.name, email: userInfo.email, password: '', accessToken: accessToken})
   }, [userInfo]);
 
   return (
     <>
         {userInfoAnswer
-          ? <form className={`${styles.form}`} onSubmit={editUserInfo} onReset={resetUserInfo}>
+          ? <form className={`${styles.form}`} onSubmit={handleEditUserInfo} onReset={handleResetUserInfo}>
             <Input type={"text"} extraClass={``} placeholder={'Имя'} value={form.name} name={"name"}
                    onChange={onChange} icon={"EditIcon"}/>
             <EmailInput extraClass={`mt-6`} placeholder={'Логин'} value={form.email} name={"email"}

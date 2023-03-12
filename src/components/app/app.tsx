@@ -17,6 +17,7 @@ import {UnprotectedRouteElement} from "../unprotected-route/unprotected-route";
 import IngredientPage from "../../pages/ingredient";
 import ProfileMenu from "../profile-menu/ProfileMenu";
 import OrdersPage from "../../pages/orders";
+import OrderPage from "../../pages/order";
 
 function App() {
 
@@ -47,7 +48,7 @@ function App() {
           <Route index element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
           <Route path="orders" element={<ProtectedRouteElement element={<OrdersPage />}/>}/>
           <Route path="orders/:id"
-                 element={<ProtectedRouteElement element={<h1> /profile/orders/:id </h1>}/>}/>
+                 element={<ProtectedRouteElement element={<OrderPage />}/>}/>
         </Route>
         <Route path="/ingredients/:id"
                element={<IngredientPage isActive={modalIngredientActive} setModalActive={setModalIngredientActive}/>}/>

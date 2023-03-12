@@ -13,7 +13,7 @@ const ResetPasswordPage = () => {
   const  fromPage = location.state?.from?.pathname || '';
 
   const [form, setValue] = useState({password: '', token: ''});
-  const resetPassword = useCallback(e => {
+  const handleResetPassword = useCallback(e => {
       e.preventDefault();
       dispatch(setUserNewPassword(form));
     }, [form]
@@ -34,7 +34,7 @@ const ResetPasswordPage = () => {
   }
   return (
     <div className={styles.container}>
-      <form className={`${styles.form}`}>
+      <form className={`${styles.form}`} onSubmit={handleResetPassword}>
         <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
         <PasswordInput extraClass={`mt-6`} placeholder={'Введите новый пароль'} value={form.password} name={"password"}
                        onChange={onChange}
@@ -49,7 +49,7 @@ const ResetPasswordPage = () => {
           </div>
         : <div className={styles.container__login}>
             <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
-                  onClick={resetPassword}>Сохранить</Button>
+                  >Сохранить</Button>
             <p className={`mt-20 text text_type_main-default text_color_inactive`}>Вспомнили пароль?&nbsp;
               <Link to={"/login"}>Войти</Link>
             </p>
