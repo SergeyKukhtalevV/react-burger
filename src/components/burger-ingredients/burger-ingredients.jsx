@@ -32,7 +32,7 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
       () => {
         dispatch(getIngredients());
       },
-      []
+      [dispatch]
     );
 
     useEffect(() => {

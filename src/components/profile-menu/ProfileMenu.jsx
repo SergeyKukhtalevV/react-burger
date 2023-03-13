@@ -47,7 +47,7 @@ const ProfileMenu = () => {
           </li>
         </ul>
 
-        <Outlet />
+        <Outlet/>
 
       </div>
     </main>

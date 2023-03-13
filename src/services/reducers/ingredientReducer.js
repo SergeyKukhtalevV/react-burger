@@ -119,8 +119,10 @@ export const ingredientReducer = (state = initialState, action) => {
         ...state,
         orderNumberRequest: true,
         orderNumber: null,
-        ingredientsConstructor: [...state.ingredientsConstructor, [...state.ingredientsConstructor]
-          .filter(info => info.type === 'bun')[0]]
+        ingredientsConstructor: [[...state.ingredientsConstructor]
+          .filter(info => info.type === 'bun')[0],
+          ...state.ingredientsConstructor.filter(info => info.type !== 'bun'),
+          [...state.ingredientsConstructor].filter(info => info.type === 'bun')[0]]
       };
     }
     case GET_ORDER_NUMBER_SUCCESS: {
