@@ -12,6 +12,7 @@ import {
   SET_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT
 } from '../../services/actions/ingredients';
 import {useNavigate} from "react-router-dom";
+import {getCookie} from "../../utils/utils";
 
 
 const BurgerIngredients = ({isActive, setModalActive}) => {
@@ -26,11 +27,12 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     } = useSelector(store => store.ingredients);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const token = getCookie('token');
     useEffect(
       () => {
         dispatch(getIngredients());
       },
-      [dispatch]
+      []
     );
 
     useEffect(() => {

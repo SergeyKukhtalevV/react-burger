@@ -26,7 +26,7 @@ const IngredientPage = ({isActive, setModalActive}) => {
       setModalActive(true);
       setTimeout(init, 500, [id]);
     },
-    []
+    [id]
   );
 
   return (
