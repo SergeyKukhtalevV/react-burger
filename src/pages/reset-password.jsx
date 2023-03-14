@@ -10,7 +10,7 @@ const ResetPasswordPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const  fromPage = location.state?.from?.pathname || '';
+  const fromPage = location.state?.from?.pathname || '';
 
   const [form, setValue] = useState({password: '', token: ''});
   const handleResetPassword = useCallback(e => {
@@ -19,7 +19,7 @@ const ResetPasswordPage = () => {
     }, [form]
   );
   useEffect(() => {
-    if(fromPage !== '/forgot-password'){
+    if (fromPage !== '/forgot-password') {
       navigate('/login');
     }
     if (userInfoAnswer) {
@@ -38,22 +38,22 @@ const ResetPasswordPage = () => {
         <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
         <PasswordInput extraClass={`mt-6`} placeholder={'Введите новый пароль'} value={form.password} name={"password"}
                        onChange={onChange}
-                       icon={"ShowIcon"}/>
+                       icon={"ShowIcon"} required={true}/>
         <Input type={"text"} extraClass={`mt-6`} placeholder={'Введите код из письма'} value={form.code} name={"code"}
-               onChange={onChange}/>
+               onChange={onChange} required={true}/>
         {userInfoAnswer
-        ? <div className={styles.container__login}>
+          ? <div className={styles.container__login}>
             <p className={`mt-20 text text_type_main-default text_color_active`}>Пароль успешно изменён.</p>
             <p className={`mt-20 text text_type_main-default text_color_active`}>Вы будете перенаправлены на
               страницу авторизации через 3 секунды </p>
           </div>
-        : <div className={styles.container__login}>
+          : <div className={styles.container__login}>
             <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}
-                  >Сохранить</Button>
+            >Сохранить</Button>
             <p className={`mt-20 text text_type_main-default text_color_inactive`}>Вспомнили пароль?&nbsp;
               <Link to={"/login"}>Войти</Link>
             </p>
-        </div>}
+          </div>}
       </form>
     </div>
   );

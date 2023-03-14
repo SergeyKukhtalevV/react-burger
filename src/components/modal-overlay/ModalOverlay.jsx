@@ -4,10 +4,10 @@ import modalOverlayStyles from "../modal-overlay/modal-overlay.module.css";
 import {useNavigate} from "react-router-dom";
 
 const ModalOverlay = ({activeModalOverlay, setActiveModalOverlay, children}) => {
-const location = useNavigate();
+const navigate = useNavigate();
   const closeModalOverlay = () => {
     setActiveModalOverlay(false);
-    location('/');
+    navigate('/');
   }
   return (
     <div className={activeModalOverlay

@@ -36,10 +36,11 @@ const LoginPage = () => {
     <div className={styles.container}>
       <form className={`${styles.form}`} onSubmit={handleLogin}>
         <h1 className={`text text_type_main-medium`}> Вход </h1>
-        <EmailInput extraClass={`mt-6`} placeholder={'E-mail'} value={form.email} name={"email"} onChange={onChange}/>
+        <EmailInput extraClass={`mt-6`} placeholder={'E-mail'} value={form.email} name={"email"} onChange={onChange}
+                    required={true}/>
         <PasswordInput extraClass={`mt-6`} placeholder={'пароль'} value={form.password} name={"password"}
                        onChange={onChange}
-                       icon={"ShowIcon"}/>
+                       icon={"ShowIcon"} required={true}/>
         {accessToken
           ? <div className={styles.container__login}>
             <p className={`mt-20 text text_type_main-default text_color_active`}>Авторизация пользователя успешна
@@ -47,20 +48,20 @@ const LoginPage = () => {
             <p className={`mt-20 text text_type_main-default text_color_active`}>Вы будете перенаправлены через 3
               секунды </p></div>
           : <div className={styles.container__login}>
-              <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}>Войти</Button>
-              <p className={`mt-20 text text_type_main-default text_color_inactive`}>Вы - новый пользователь?&nbsp;
-                <Link to={"/register"}>Зарегистрироваться</Link>
-              </p>
-              <p className={`mt-4 text text_type_main-default text_color_inactive`}>Забыли пароль?&nbsp;
-                <Link to={"/forgot-password"}>Восстановить пароль</Link>
-              </p>
-             </div>
+            <Button extraClass={`mt-6`} htmlType={"submit"} type={"primary"} size={"medium"}>Войти</Button>
+            <p className={`mt-20 text text_type_main-default text_color_inactive`}>Вы - новый пользователь?&nbsp;
+              <Link to={"/register"}>Зарегистрироваться</Link>
+            </p>
+            <p className={`mt-4 text text_type_main-default text_color_inactive`}>Забыли пароль?&nbsp;
+              <Link to={"/forgot-password"}>Восстановить пароль</Link>
+            </p>
+          </div>
         }
         {userInfoFailed
           ? <div className={styles.container__login}>
-              <p className={`mt-20 text text_type_main-default text_color_active`}>Не правильно введена электронная почта
+            <p className={`mt-20 text text_type_main-default text_color_active`}>Не правильно введена электронная почта
               или пароль</p>
-            </div>
+          </div>
           : null}
       </form>
     </div>
