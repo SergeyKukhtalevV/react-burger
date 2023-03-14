@@ -11,7 +11,7 @@ import {
   getIngredients,
   SET_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT
 } from '../../services/actions/ingredients';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const BurgerIngredients = ({isActive, setModalActive}) => {
 
@@ -25,10 +25,15 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     } = useSelector(store => store.ingredients);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const fromPage = location.state?.from?.pathname || '';
 
     useEffect(
       () => {
+        console.log(fromPage);
+        if (fromPage === '') {
           dispatch(getIngredients());
+        }
       },
       // eslint-disable-next-line
       []
@@ -63,8 +68,8 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
         type: SET_CURRENT_INGREDIENT,
         id
       });
-      navigate(`/ingredients/${id}`);
-    }, [dispatch, navigate, setModalActive]);
+      navigate(`/ingredients/${id}`, {state: {from: location}});
+    }, [dispatch, navigate, setModalActive, location]);
 
     return (
       <section>
