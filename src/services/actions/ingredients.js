@@ -77,7 +77,6 @@ export function getIngredients() {
 
 
 export function getOrderNumber(accessToken, data) {
-  console.log(data);
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST

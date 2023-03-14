@@ -30,7 +30,6 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
 
     useEffect(
       () => {
-        console.log(fromPage);
         if (fromPage === '') {
           dispatch(getIngredients());
         }

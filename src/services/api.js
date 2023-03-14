@@ -1,4 +1,4 @@
-import {request} from "../utils/utils";
+import {fetchWithRefresh, request} from "../utils/utils";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
@@ -14,7 +14,7 @@ export const getIngredientsRequest = async () => {
 }
 
 export const getOrderNumberRequest = async (accessToken, orderInfo) => {
-  return await request(urlOrder, {
+  return await fetchWithRefresh(urlOrder, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const getUserNewPasswordRequest = async (data) => {
 }
 
 export const setUserNewPasswordRequest = async (data) => {
-  return await request(urlPasReset, {
+  return await fetchWithRefresh(urlPasReset, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ export const setUserNewPasswordRequest = async (data) => {
 }
 
 export const getUserInfoRequest = async (data) => {
-  return await request(urlUser, {
+  return await fetchWithRefresh(urlUser, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export const getUserInfoRequest = async (data) => {
 }
 
 export const setUserInfoRequest = async (data) => {
-  return await request(urlUser, {
+  return await fetchWithRefresh(urlUser, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -103,7 +103,6 @@ export const setUserInfoRequest = async (data) => {
   });
 }
 
-
 export const getTokenRequest = async (url, data) => {
   return await request(url, {
     method: 'POST',
@@ -115,3 +114,4 @@ export const getTokenRequest = async (url, data) => {
     })
   });
 }
+

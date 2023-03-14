@@ -78,7 +78,6 @@ export function setRegisterUser(info) {
   };
 }
 
-
 export function getUserInfo(data) {
   const token = getCookie('token');
   return function (dispatch) {
@@ -158,7 +157,7 @@ export function getLogOutUser(data) {
     });
   };
 }
- function getFreshToken(data) {
+export function getFreshToken(data) {
   return function (dispatch) {
     dispatch({
       type: GET_REFRESH_TOKEN_REQUEST
@@ -176,6 +175,7 @@ export function getLogOutUser(data) {
     });
   };
 }
+
 
 export function setUserInfo(info) {
   return function (dispatch) {

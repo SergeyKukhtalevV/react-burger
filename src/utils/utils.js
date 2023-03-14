@@ -1,5 +1,5 @@
 import {URL_API} from "../constants/constants";
-
+import {getTokenRequest, urlToken} from "../services/api";
 
 export const checkResponse = (res) => {
   if (res.ok) {
@@ -13,8 +13,30 @@ export const  request = (endPoint, options) => {
   return fetch(URL_API+endPoint, options).then(checkResponse);
 }
 
+//******
+export const fetchWithRefresh = async (url, options) => {
+  try {
+    return await request(url, options);
+  } catch (err) {
+    if (err.message === 'jwt expired') {
+      const refreshData = await getTokenRequest(urlToken, {token: getCookie('token')});
+      if (!refreshData.success) {
+        await Promise.reject(refreshData);
+      }
+      setCookie('token', refreshData.refreshToken);
+      setCookie('accessToken', refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+      return await request(url, options);
+    } else {
+      return Promise.reject(err);
+    }
+  }
+};
+//*******
+
 export function getCookie(name) {
   const matches = document.cookie.match(
+    // eslint-disable-next-line
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
