@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
 import BurgerTabs from "../burger-tabs/burger-tabs";
 import BurgerElement from "../burger-element/burger-element";
@@ -12,7 +12,6 @@ import {
   SET_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT
 } from '../../services/actions/ingredients';
 import {useNavigate} from "react-router-dom";
-import {deleteCookie, getCookie, setCookie} from "../../utils/utils";
 
 const BurgerIngredients = ({isActive, setModalActive}) => {
 
@@ -26,19 +25,13 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
     } = useSelector(store => store.ingredients);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    setCookie('isLoaded', false);
 
     useEffect(
       () => {
-        console.log(getCookie('isLoaded'));
-        if (getCookie('isLoaded')) {
           dispatch(getIngredients());
-          deleteCookie('isLoaded');
-          setCookie('isLoaded', true);
-          console.log(getCookie('isLoaded'));
-        }
       },
-      [dispatch]
+      // eslint-disable-next-line
+      []
     );
 
     useEffect(() => {
@@ -49,7 +42,7 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
           });
         }, 500);
       }
-    }, [isActive]);
+    }, [dispatch, isActive]);
 
     const handleScroll = (e) => {
       const j = tabsNames.map((item, index) => {
@@ -64,14 +57,14 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
       }
     }
 
-    const setCurrentIngredient = (id) => {
+    const setCurrentIngredient = useCallback((id) => {
       setModalActive(true);
       dispatch({
         type: SET_CURRENT_INGREDIENT,
         id
       });
       navigate(`/ingredients/${id}`);
-    }
+    }, [dispatch, navigate, setModalActive]);
 
     return (
       <section>
@@ -98,6 +91,7 @@ const BurgerIngredients = ({isActive, setModalActive}) => {
                                                setCurrIngr={setCurrentIngredient}/>
                               )
                             }
+                            return null;
                           })
                         }
                       </ul>

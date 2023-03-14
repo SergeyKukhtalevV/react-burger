@@ -7,7 +7,7 @@ import {setRegisterUser} from "../services/actions/user";
 
 const RegisterPage = () => {
 
-  const {accessToken, isUserAuth} = useSelector(store => store.user);
+  const {accessToken} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,12 +18,12 @@ const RegisterPage = () => {
         navigate('/');
       }, 3000);
     }
-  }, [accessToken]);
+  }, [accessToken, navigate]);
 
   const handleRegister = useCallback(e => {
       e.preventDefault();
       dispatch(setRegisterUser(form));
-    }, [form]
+    }, [form, dispatch]
   );
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});
