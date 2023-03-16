@@ -9,7 +9,7 @@ const OrderDetails = ({orderNum}) => {
     <div className={`${orderDetailsStyles.modal_order}`}>
       {!orderNum
         ? <p className="mt-20 mb-20 text text_type_main-medium">Пожалуйста, подождите. Идет загрузка...</p>
-        : <div>
+        : <div className={`${orderDetailsStyles.modal_order}`}>
           <p className="mt-30 text text_type_digits-large">{orderNum}</p>
           <p className="mt-8 text text_type_main-medium">идентификатор заказа</p>
           <img className={"mt-15"} src={OrderDoneSvg} alt={"иконка принятия заказа"}/>

@@ -4,6 +4,7 @@ import styles from './authorization.module.css'
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuthUser} from "../services/actions/user";
+import {getCookie} from "../utils/utils";
 
 const LoginPage = () => {
 
@@ -16,17 +17,20 @@ const LoginPage = () => {
   const [form, setValue] = useState({email: '', password: ''});
 
   useEffect(() => {
-    if (accessToken) {
+    const token = getCookie('token');
+    if (token) {
       setTimeout(() => {
         navigate(fromPage);
       }, 3000);
     }
-  }, [accessToken]);
+  }, // eslint-disable-next-line
+    [accessToken]);
 
   const handleLogin = useCallback(e => {
       e.preventDefault();
       dispatch(getAuthUser(form));
-    }, [form]
+    }, // eslint-disable-next-line
+    [form]
   );
   const onChange = (e) => {
     setValue({...form, [e.target.name]: e.target.value});

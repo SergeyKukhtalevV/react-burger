@@ -81,7 +81,7 @@ export function getOrderNumber(accessToken, data) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST
     });
-    getOrderNumberRequest(accessToken, data.map(ingredient => ingredient._id)).then(res => {
+    getOrderNumberRequest(accessToken, data).then(res => {
       if (res) {
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,

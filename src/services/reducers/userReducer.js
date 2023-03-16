@@ -33,6 +33,7 @@ const initialStateUser = {
   userInfoRequest: false,
   userInfoFailed: false,
   userInfoAnswer: false,
+  setNewPassword: false,
   accessToken: '',
   isUserAuth: false
 }
@@ -138,7 +139,8 @@ export const userReducer = (state = initialStateUser, action) => {
         userInfoAnswer: true,
         accessToken: "",
         userInfo: {},
-        isUserAuth: false
+        isUserAuth: false,
+        setNewPassword: false
       };
     }
     case GET_LOGOUT_USER_FAILED: {
@@ -169,7 +171,6 @@ export const userReducer = (state = initialStateUser, action) => {
       };
     }
     case GET_USER_INFO_FAILED: {
-      //deleteCookie('token');
       return {
         ...state,
         userInfoFailed: true,
@@ -205,7 +206,8 @@ export const userReducer = (state = initialStateUser, action) => {
       return {
         ...state,
         userInfoRequest: true,
-        userInfoAnswer: false
+        userInfoAnswer: false,
+        setNewPassword: false
       };
     }
     case GET_USER_NEW_PASSWORD_SUCCESS: {
@@ -213,7 +215,8 @@ export const userReducer = (state = initialStateUser, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
-        userInfoAnswer: true
+        userInfoAnswer: true,
+        setNewPassword: true
       };
     }
     case GET_USER_NEW_PASSWORD_FAILED: {
@@ -221,7 +224,8 @@ export const userReducer = (state = initialStateUser, action) => {
         ...state,
         userInfoFailed: true,
         userInfoRequest: false,
-        userInfoAnswer: false
+        userInfoAnswer: false,
+        setNewPassword: false
       };
     }
     case SET_USER_NEW_PASSWORD_REQUEST: {
@@ -236,7 +240,8 @@ export const userReducer = (state = initialStateUser, action) => {
         ...state,
         userInfoRequest: false,
         userInfoFailed: false,
-        userInfoAnswer: true
+        userInfoAnswer: true,
+        setNewPassword: false
       };
     }
     case SET_USER_NEW_PASSWORD_FAILED: {
@@ -244,7 +249,8 @@ export const userReducer = (state = initialStateUser, action) => {
         ...state,
         userInfoFailed: true,
         userInfoRequest: false,
-        userInfoAnswer: false
+        userInfoAnswer: false,
+        setNewPassword: true
       };
     }
     case GET_USER_NEW_PASSWORD_INIT: {
@@ -253,6 +259,7 @@ export const userReducer = (state = initialStateUser, action) => {
         userInfoRequest: false,
         userInfoFailed: false,
         userInfoAnswer: false,
+        setNewPassword: false,
         accessToken: "",
         userInfo: {}
       };

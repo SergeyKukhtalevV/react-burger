@@ -23,6 +23,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     const {ingredientsData, ingredientsConstructor, orderNumber, orderNumberRequest} =
       useSelector(store => store.ingredients);
     const {accessToken} = useSelector(store => store.user);
+    // eslint-disable-next-line
     const [{isHover}, drop] = useDrop({
       accept: "ingredient",
       collect: monitor => ({
@@ -41,7 +42,12 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
 
     const getOrder = () => {
       if (accessToken) {
-        dispatch(getOrderNumber(accessToken, ingredientsConstructor));
+        const data = [[...ingredientsConstructor]
+          .filter(info => info.type === 'bun')[0],
+          ...ingredientsConstructor.filter(info => info.type !== 'bun'),
+          [...ingredientsConstructor].filter(info => info.type === 'bun')[0]];
+
+        dispatch(getOrderNumber(accessToken, data.map(ingredient => ingredient._id)));
         setModalActive(true);
       } else {
         navigate('/login');
@@ -49,6 +55,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     }
     let total = 0;
     const getTotalOrder = useCallback(() => {
+      // eslint-disable-next-line
       total = ingredientsConstructor.reduce((total, i) => {
           if (!orderNumberRequest) {
             if (i.type !== 'bun') {
@@ -62,12 +69,12 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     }, [ingredientsConstructor]);
 
     useEffect(() => {
-      // if (!token) {
-      //   navigate('/login');
-      // }
-      dispatch(getUserInfo({accessToken}));
+      if(token)
+      {
+        dispatch(getUserInfo({accessToken}));
+      }
 
-    }, [accessToken, token]);
+    }, [accessToken, token, dispatch]);
 
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`} ref={drop}>
@@ -93,6 +100,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                         <ElementConstructor key={info.uuid} info={info} index={index}/>
                       )
                     }
+                    return null;
                   })
                 }
               </ul>

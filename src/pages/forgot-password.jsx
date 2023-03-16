@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,7 +11,7 @@ const initialFormState = {
 
 const ForgotPasswordPage = () => {
 
-  const {userInfoAnswer} = useSelector(store => store.user);
+  const {setNewPassword} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,13 +23,16 @@ const ForgotPasswordPage = () => {
   }
 
   useEffect(() => {
-    if (userInfoAnswer) {
+    console.log(setNewPassword);
+    if (setNewPassword) {
       setTimeout(() => {
         dispatch({type: GET_USER_NEW_PASSWORD_INIT});
         navigate('/reset-password', {state: {from: location}});
       }, 3000);
     }
-  }, [dispatch, userInfoAnswer]);
+  },
+  // eslint-disable-next-line
+  [dispatch, setNewPassword]);
   const onChange = (e) => {
     setFormValue({...formValues, [e.target.name]: e.target.value});
   }
@@ -38,8 +41,8 @@ const ForgotPasswordPage = () => {
       <form className={`${styles.form}`} onSubmit={handleFormForgotPassword}>
         <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
         <EmailInput extraClass={`mt-6`} placeholder={'Укажите e-mail'} value={formValues.email} name={"email"}
-                    onChange={onChange} required={true}/>
-        {userInfoAnswer
+                    onChange={(e) => {onChange(e)}} required={true}/>
+        {setNewPassword
           ? <div className={styles.container__login}>
             <p className={`mt-20 text text_type_main-default text_color_active`}>На введенную почту отправлена
               инструкция по восстановлению.</p>

@@ -16,12 +16,14 @@ const ProfileMenu = () => {
   }
 
   useEffect(() => {
+    const token = getCookie('token');
     if (!token) {
       navigate('/login');
     }
     dispatch(getUserInfo({accessToken}));
 
-  }, [accessToken, token]);
+  }, // eslint-disable-next-line
+    [accessToken]);
 
   const setActive = ({isActive}) => isActive ? `${styles.link} text text_type_main-medium ${styles.link_active}`
     : `${styles.link} text text_type_main-medium`;
