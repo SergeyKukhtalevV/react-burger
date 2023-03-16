@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,14 +10,20 @@ import {
   getOrderNumber
 } from "../../services/actions/ingredients";
 import {useDrop} from "react-dnd";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import ElementConstructor from "../element-constructor/element-constructor";
+import {useNavigate} from "react-router-dom";
+import {getCookie} from "../../utils/utils";
+import {getUserInfo} from "../../services/actions/user";
 
 
 const BurgerConstructor = ({setModalActive, isActive}) => {
-    const {ingredientsData, ingredientsConstructor, orderNumber} =
+    const token = getCookie('token');
+    const navigate = useNavigate();
+    const {ingredientsData, ingredientsConstructor, orderNumber, orderNumberRequest} =
       useSelector(store => store.ingredients);
-
+    const {accessToken} = useSelector(store => store.user);
+    // eslint-disable-next-line
     const [{isHover}, drop] = useDrop({
       accept: "ingredient",
       collect: monitor => ({
@@ -35,14 +41,46 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     }
 
     const getOrder = () => {
-      dispatch(getOrderNumber(ingredientsData.map(ingredient => ingredient._id)));
+      if (accessToken) {
+        const data = [[...ingredientsConstructor]
+          .filter(info => info.type === 'bun')[0],
+          ...ingredientsConstructor.filter(info => info.type !== 'bun'),
+          [...ingredientsConstructor].filter(info => info.type === 'bun')[0]];
+
+        dispatch(getOrderNumber(accessToken, data.map(ingredient => ingredient._id)));
+        setModalActive(true);
+      } else {
+        navigate('/login');
+      }
     }
+    let total = 0;
+    const getTotalOrder = useCallback(() => {
+      // eslint-disable-next-line
+      total = ingredientsConstructor.reduce((total, i) => {
+          if (!orderNumberRequest) {
+            if (i.type !== 'bun') {
+              return total + i.price;
+            } else return total + i.price * 2;
+          }
+        },
+        0
+      )
+      return total;
+    }, [ingredientsConstructor]);
+
+    useEffect(() => {
+      if(token)
+      {
+        dispatch(getUserInfo({accessToken}));
+      }
+
+    }, [accessToken, token, dispatch]);
 
     return (
       <section className={`mt-25 ${burgerConstructorStyles.burgerConstructor}`} ref={drop}>
         {
           ingredientsConstructor.length === 0
-            ? <p className="text text_type_main-medium">Конструктор бургера пуст. Создайте свой бургер!</p>
+            ? <p className="text text_type_main-medium">Конструктор пуст. Создайте свой бургер!</p>
             : <div>
               <div className={`mr-4 mb-4 ${burgerConstructorStyles.cell} ${burgerConstructorStyles.cell_no_scroll}`}>
                 {!getBunInConstructor()
@@ -59,9 +97,10 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                   ingredientsConstructor.map((info, index) => {
                     if (info.type !== 'bun') {
                       return (
-                        <ElementConstructor key={info.uuid} info={info} index={index} />
+                        <ElementConstructor key={info.uuid} info={info} index={index}/>
                       )
                     }
+                    return null;
                   })
                 }
               </ul>
@@ -79,13 +118,8 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
 
               <div className={`mt-10 ${burgerConstructorStyles.total}`}>
                 <div className={`text text_type_main-large ${burgerConstructorStyles.price}`}>
-                  <p className="text text_type_digits-medium">{ingredientsConstructor.reduce((total, i) => {
-                      if (i.type !== 'bun') {
-                        return total + i.price;
-                      } else return total + i.price * 2;
-                    },
-                    0
-                  )}
+                  <p className="text text_type_digits-medium">{
+                    getTotalOrder()}
                   </p>
                   <CurrencyIcon type="primary"/>
                 </div>
@@ -95,20 +129,19 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
                     : <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4 buttonOrder"
                               onClick={() => {
                                 getOrder();
-                                setModalActive(true);
                               }}>Оформить заказ
                     </Button>
                 }
               </div>
               {
                 !getBunInConstructor()
-                  ? <p className="text text_type_main-medium">Для оформления заказа бургера нужно добавить булку!</p>
+                  ? <p className="text text_type_main-medium">Для оформления заказа нужно добавить булку!</p>
                   : <div></div>
               }
             </div>
         }
         <Modal active={isActive} setActive={setModalActive}>
-          <OrderDetails orderNum={orderNumber ? orderNumber : 'Loading...'}/>
+          <OrderDetails orderNum={orderNumber}/>
         </Modal>
       </section>
     );

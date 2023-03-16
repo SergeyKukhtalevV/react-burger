@@ -76,12 +76,12 @@ export function getIngredients() {
 }
 
 
-export function getOrderNumber(data) {
+export function getOrderNumber(accessToken, data) {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST
     });
-    getOrderNumberRequest(data).then(res => {
+    getOrderNumberRequest(accessToken, data).then(res => {
       if (res) {
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,

@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/ModalOverlay";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Modal = ({active, setActive, children}) => {
 
-  function closePopup() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const closePopup = useCallback(() => {
     setActive(false);
-  }
+    navigate('/', {state: {from: location}});
+  }, [setActive, navigate, location]);
 
   React.useEffect(() => {
 
@@ -25,7 +30,9 @@ const Modal = ({active, setActive, children}) => {
         document.removeEventListener('keydown', closeModalByEscape);
       }
     }
-  }, [active]);
+  },
+  // eslint-disable-next-line
+  [active]);
 
   return ReactDOM.createPortal(
     <ModalOverlay activeModalOverlay={active} setActiveModalOverlay={setActive}>

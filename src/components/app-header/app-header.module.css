@@ -29,7 +29,13 @@
 }
 
 .header__link {
+  text-decoration: none;
+  color: #8585AD;
   align-items: center;
   display: flex;
   flex-direction: row;
+}
+.header__link_active {
+  text-decoration: none;
+  color: #F2F2F3;
 }

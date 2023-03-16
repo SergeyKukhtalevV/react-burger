@@ -1,0 +1,31 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 180px;
+}
+.container__login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 480px;
+  width: 100%;
+}
+
+.link {
+  align-items: center;
+  color: #8585AD;
+  display: flex;
+  justify-content: left;
+  min-height: 64px;
+  text-decoration: none;
+}

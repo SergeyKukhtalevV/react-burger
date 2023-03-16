@@ -5,7 +5,6 @@ import {useSelector} from "react-redux";
 
 const BurgerTabs = () => {
   const { currentTab } = useSelector(store => store.ingredients);
-  //console.log(currentTab);
   return (
     <div className={`mt-5 ${burgerTabsStyles.tabs}`}>
       <Tab value="Булки" active={currentTab === 'Булки'} >

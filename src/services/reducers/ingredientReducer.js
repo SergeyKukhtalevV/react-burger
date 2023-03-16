@@ -1,5 +1,3 @@
-import {combineReducers} from 'redux';
-
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -119,7 +117,12 @@ export const ingredientReducer = (state = initialState, action) => {
     case GET_ORDER_NUMBER_REQUEST: {
       return {
         ...state,
-        orderNumberRequest: true
+        orderNumberRequest: true,
+        orderNumber: null,
+        ingredientsConstructor: [[...state.ingredientsConstructor]
+          .filter(info => info.type === 'bun')[0],
+          ...state.ingredientsConstructor.filter(info => info.type !== 'bun'),
+          [...state.ingredientsConstructor].filter(info => info.type === 'bun')[0]]
       };
     }
     case GET_ORDER_NUMBER_SUCCESS: {
@@ -146,7 +149,3 @@ export const ingredientReducer = (state = initialState, action) => {
     }
   }
 }
-
-export const rootReducer = combineReducers({
-  ingredients: ingredientReducer
-})
