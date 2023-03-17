@@ -18,6 +18,7 @@ import IngredientPage from "../../pages/ingredient";
 import ProfileMenu from "../profile-menu/ProfileMenu";
 import OrdersPage from "../../pages/orders";
 import OrderPage from "../../pages/order";
+import FeedOrdersPage from "../../pages/feed-orders";
 
 function App() {
 
@@ -52,6 +53,8 @@ function App() {
         </Route>
         <Route path="/ingredients/:id"
                element={<IngredientPage isActive={modalIngredientActive} setModalActive={setModalIngredientActive}/>}/>
+        <Route path="/feed" element={<FeedOrdersPage />} />
+        <Route path="/feed/:id" element={<h1>feed/:id</h1>} />
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>

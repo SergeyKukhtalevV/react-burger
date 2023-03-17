@@ -1,0 +1,37 @@
+.feedOrder {
+  background: #1C1C21;
+  border-radius: 40px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  max-width: 584px;
+  width: 100%;
+  row-gap: 24px;
+  list-style: none;
+  padding: 0;
+  padding: 24px;
+}
+
+.orderNumberDate {
+
+}
+
+.orderName {
+
+}
+
+.iconsAndTotal {
+
+}
+
+.icons {
+
+}
+
+.icon {
+
+}
+
+.price {
+
+}

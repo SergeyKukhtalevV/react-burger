@@ -18,9 +18,9 @@ const AppHeader = () => {
               </NavLink>
             </li>
             <li className={`ml-2 pl-5 pr-5`}>
-              <a className={`${appHeaderStyles.header__link}`}>
+              <NavLink to={"/feed"} className={setActive}>
                 <ListIcon type="secondary"/><span className="pl-2 text text_type_main-default text_color_inactive">Лента заказов</span>
-              </a>
+              </NavLink>
             </li>
             <li className={`ml-25 pl-3`}>
               <Logo/>
