@@ -8,10 +8,10 @@ const FeedOrdersPage = () => {
     "orders": [
       {
         "ingredients": [
-          "60d3463f7034a000269f45e7",
-          "60d3463f7034a000269f45e9",
-          "60d3463f7034a000269f45e8",
-          "60d3463f7034a000269f45ea"
+          "60d3b41abdacab0026a733c7",
+          "60d3b41abdacab0026a733cd",
+          "60d3b41abdacab0026a733c9",
+          "60d3b41abdacab0026a733cd"
         ],
         "_id": "",
         "status": "done",
@@ -27,7 +27,7 @@ const FeedOrdersPage = () => {
   return (
     <main className={styles.wrapper}>
       <h1 className={`mt-10 text text_type_main-large`}>Лента заказов</h1>
-      <div className={styles.conteiner}>
+      <div className={styles.container}>
       <section>
         <ul className={styles.orderCards}>
           <OrderCard />
