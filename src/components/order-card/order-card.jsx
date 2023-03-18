@@ -34,7 +34,7 @@ const OrderCard = () => {
       </li>
       <li className={`text text_type_main-medium`}>{info.orders[0].name}</li>
       <li className={styles.iconsAndTotal}>
-        <ul className={styles.icons}>
+        <div className={styles.icons}>
           <img className={`${styles.icon} ${styles.icon_1}`}
                src={"https://code.s3.yandex.net/react/code/bun-01-mobile.png"} alt={"Флюоресцентная булка R2-D3"}/>
           <img className={`${styles.icon} ${styles.icon_2}`}
@@ -50,7 +50,7 @@ const OrderCard = () => {
           <img className={`${styles.icon} ${styles.icon_6}`}
                src={"https://code.s3.yandex.net/react/code/sauce-04-mobile.png"} alt={"Соус фирменный Space Sauce"}/>
           <div className={`text text_type_main-medium ${styles.icon_count}`}>+3</div>
-        </ul>
+        </div>
 
         <div className={styles.price}>
           <p className="text text_type_digits-medium">480</p>
