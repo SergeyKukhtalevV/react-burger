@@ -49,11 +49,23 @@ const FeedOrdersPage = () => {
                 <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
                 <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
                 <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
               </ul>
             </div>
           <div>
             <h2 className={`text text_type_main-medium pb-6`}>В работе:</h2>
             <ul className={styles.ordersBoard_done}>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
               <li className={`text text_type_digits-default`}>045678</li>
               <li className={`text text_type_digits-default`}>045678</li>
               <li className={`text text_type_digits-default`}>045678</li>
