@@ -28,17 +28,48 @@ const FeedOrdersPage = () => {
     <main className={styles.wrapper}>
       <h1 className={`mt-10 text text_type_main-large`}>Лента заказов</h1>
       <div className={styles.container}>
-      <section >
-        <ul className={styles.orderCards}>
-          <OrderCard />
-          <OrderCard />
-          <OrderCard />
-          <OrderCard />
-        </ul>
-      </section>
-      <section>
-
-      </section>
+        <section>
+          <ul className={styles.orderCards}>
+            <OrderCard/>
+            <OrderCard/>
+            <OrderCard/>
+            <OrderCard/>
+          </ul>
+        </section>
+        <section className={styles.sectionOrders}>
+          <div className={styles.ordersBoard}>
+            <div>
+              <h2 className={`text text_type_main-medium pb-6`}>Готовы:</h2>
+              <ul className={styles.ordersBoard_done}>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+              </ul>
+            </div>
+          <div>
+            <h2 className={`text text_type_main-medium pb-6`}>В работе:</h2>
+            <ul className={styles.ordersBoard_done}>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+              <li className={`text text_type_digits-default`}>045678</li>
+            </ul>
+          </div>
+          </div>
+          <div className={styles.ordersTotal}>
+            <h2 className={`text text_type_main-medium`}>Выполнено за все время:</h2>
+            <p className={`text text_type_digits-large`}>28 752</p>
+          </div>
+          <div className={styles.ordersTotal}>
+            <h2 className={`text text_type_main-medium`}>Выполнено за сегодня:</h2>
+            <p className={`text text_type_digits-large`}>123</p>
+          </div>
+        </section>
       </div>
     </main>
   );

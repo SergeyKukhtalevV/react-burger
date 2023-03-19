@@ -5,7 +5,7 @@
 }
 
 .container {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -18,7 +18,6 @@
   display: flex;
   flex-direction: column;
   row-gap: 16px;
-
   max-height: 812px;
   overflow-y: scroll;
   scrollbar-color: #8585AD #2F2F37;
@@ -26,11 +25,13 @@
   width: 100%;
   max-width: 600px;
 }
+
 .orderCards::-webkit-scrollbar {
   background: #2F2F37;
   max-height: 640px;
   width: 8px;
 }
+
 .orderCards::-webkit-scrollbar-thumb {
   background: #8585AD;
   border: 3px solid #8585AD;
@@ -40,4 +41,42 @@
 
 .orderCards::-webkit-scrollbar-track {
   background: #2F2F37;
+}
+
+.sectionOrders {
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
+  align-items: start;
+  max-width: 600px;
+  width: 100%;
+}
+
+.orderStatus {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  row-gap: 36px;
+}
+.ordersBoard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 580px;
+  width: 100%;
+}
+.ordersBoard_done {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+.ordersBoardList_done {
+  color: #00CCCC;
+}
+.ordersTotal {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
