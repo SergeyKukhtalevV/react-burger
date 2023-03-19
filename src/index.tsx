@@ -6,6 +6,7 @@ import {compose, createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {rootReducer} from './services/reducers/rootReducer.js';
 import thunk from 'redux-thunk';
+import { initStore } from './services/store';
 
 declare global {
   interface Window {
@@ -13,10 +14,9 @@ declare global {
   }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk));
 
-const store = createStore(rootReducer, enhancer);
+
+const store = initStore();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -25,7 +25,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <App/>
     </Provider>
   </React.StrictMode>
 );
