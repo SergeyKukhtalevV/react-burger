@@ -10,7 +10,6 @@ const FeedOrdersPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const {orders, ordersDone, ordersPending, ordersTotal, totalToday} = useSelector(store => store.feed);
-
   const {
     ingredientsData,
     dataRequest,
@@ -18,78 +17,57 @@ const FeedOrdersPage = () => {
   } = useSelector(store => store.ingredients);
 
   useEffect(() => {
-    if (!ingredientsData) {
+    if (ingredientsData.length === 0) {
       dispatch(getIngredients());
     }
     dispatch({type: WS_FEED_CONNECTION_START});
   }, []);
 
-  console.log(ordersDone);
-
-  const info = {
-    "success": true,
-    "orders": [
-      {
-        "ingredients": [
-          "60d3b41abdacab0026a733c7",
-          "60d3b41abdacab0026a733cd",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733cd"
-        ],
-        "_id": "",
-        "status": "done",
-        "number": 0,
-        "createdAt": "2021-06-23T14:43:22.587Z",
-        "updatedAt": "2021-06-23T14:43:22.603Z"
-      }
-    ],
-    "total": 1,
-    "totalToday": 1
-  };
-
   return (
     <main className={styles.wrapper}>
       <h1 className={`mt-10 text text_type_main-large`}>Лента заказов</h1>
-      <div className={styles.container}>
-        <section>
-          <ul className={styles.orderCards}>
-            <OrderCard/>
-            <OrderCard/>
-            <OrderCard/>
-            <OrderCard/>
-          </ul>
-        </section>
-        <section className={styles.sectionOrders}>
-          <div className={styles.ordersBoard}>
-            <div>
-              <h2 className={`text text_type_main-medium pb-6`}>Готовы:</h2>
-              <ul className={styles.ordersBoard_done}>
-                {ordersDone.map((order, index) => {
-                  return <li key={index}
-                             className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>{order}</li>
-                })}
-              </ul>
+      {dataRequest && !dataFailed
+        ? <p className="text text_type_main-medium">Идет загрузка...</p>
+        : <div className={styles.container}>
+          <section>
+            <ul className={styles.orderCards}>
+              {orders.map(order => {
+                return <OrderCard order={order} key={order.number}/>
+              })}
+            </ul>
+          </section>
+          <section className={styles.sectionOrders}>
+            <div className={styles.ordersBoard}>
+              <div>
+                <h2 className={`text text_type_main-medium pb-6`}>Готовы:</h2>
+                <ul className={styles.ordersBoard_done}>
+                  {ordersDone.map((order, index) => {
+                    return <li key={index}
+                               className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>{order}</li>
+                  })}
+                </ul>
+              </div>
+              <div>
+                <h2 className={`text text_type_main-medium pb-6`}>В работе:</h2>
+                <ul className={styles.ordersBoard_done}>
+                  {ordersPending.map((order, index) => {
+                    return <li key={index}
+                               className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>{order}</li>
+                  })}
+                </ul>
+              </div>
             </div>
-            <div>
-              <h2 className={`text text_type_main-medium pb-6`}>В работе:</h2>
-              <ul className={styles.ordersBoard_done}>
-                {ordersPending.map((order, index) => {
-                  return <li key={index}
-                             className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>{order}</li>
-                })}
-              </ul>
+            <div className={styles.ordersTotal}>
+              <h2 className={`text text_type_main-medium`}>Выполнено за все время:</h2>
+              <p className={`text text_type_digits-large`}>{ordersTotal}</p>
             </div>
-          </div>
-          <div className={styles.ordersTotal}>
-            <h2 className={`text text_type_main-medium`}>Выполнено за все время:</h2>
-            <p className={`text text_type_digits-large`}>{ordersTotal}</p>
-          </div>
-          <div className={styles.ordersTotal}>
-            <h2 className={`text text_type_main-medium`}>Выполнено за сегодня:</h2>
-            <p className={`text text_type_digits-large`}>{totalToday}</p>
-          </div>
-        </section>
-      </div>
+            <div className={styles.ordersTotal}>
+              <h2 className={`text text_type_main-medium`}>Выполнено за сегодня:</h2>
+              <p className={`text text_type_digits-large`}>{totalToday}</p>
+            </div>
+          </section>
+        </div>
+      }
     </main>
   );
 };
