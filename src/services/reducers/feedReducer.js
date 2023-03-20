@@ -16,7 +16,9 @@ const initialStateFeed = {
     order: {},
     ingredients: [],
     total: 0
-  }
+  },
+  ordersDone: [],
+  ordersPending: []
 }
 
 export const feedReducer = (state = initialStateFeed, action) => {
@@ -46,8 +48,10 @@ export const feedReducer = (state = initialStateFeed, action) => {
       return {
         ...state,
         orders: action.payload.orders,
+        ordersDone: action.payload.orders.map(item => item.status === 'done' ? item.number : null),
+        ordersPending: action.payload.orders.map(item => item.status === 'pending' ? item.number : null),
         ordersTotal: action.payload.total,
-        totalToday: action.payload.totalToday
+        totalToday: action.payload.totalToday,
       };
     }
     case SET_CURRENT_ORDER_FEED: {

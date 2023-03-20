@@ -1,8 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import OrderCard from "../components/order-card/order-card";
 import styles from "./feed-orders.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import {useLocation} from "react-router-dom";
+import {getIngredients} from "../services/actions";
+import {WS_FEED_CONNECTION_START} from "../services/action-types";
 
 const FeedOrdersPage = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const {orders, ordersDone, ordersPending, ordersTotal, totalToday} = useSelector(store => store.feed);
+
+  const {
+    ingredientsData,
+    dataRequest,
+    dataFailed
+  } = useSelector(store => store.ingredients);
+
+  useEffect(() => {
+    if (!ingredientsData) {
+      dispatch(getIngredients());
+    }
+    dispatch({type: WS_FEED_CONNECTION_START});
+  }, []);
+
+  console.log(ordersDone);
+
   const info = {
     "success": true,
     "orders": [
@@ -41,45 +64,29 @@ const FeedOrdersPage = () => {
             <div>
               <h2 className={`text text_type_main-medium pb-6`}>Готовы:</h2>
               <ul className={styles.ordersBoard_done}>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
-                <li className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>034533</li>
+                {ordersDone.map((order, index) => {
+                  return <li key={index}
+                             className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>{order}</li>
+                })}
               </ul>
             </div>
-          <div>
-            <h2 className={`text text_type_main-medium pb-6`}>В работе:</h2>
-            <ul className={styles.ordersBoard_done}>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-              <li className={`text text_type_digits-default`}>045678</li>
-            </ul>
-          </div>
+            <div>
+              <h2 className={`text text_type_main-medium pb-6`}>В работе:</h2>
+              <ul className={styles.ordersBoard_done}>
+                {ordersPending.map((order, index) => {
+                  return <li key={index}
+                             className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>{order}</li>
+                })}
+              </ul>
+            </div>
           </div>
           <div className={styles.ordersTotal}>
             <h2 className={`text text_type_main-medium`}>Выполнено за все время:</h2>
-            <p className={`text text_type_digits-large`}>28 752</p>
+            <p className={`text text_type_digits-large`}>{ordersTotal}</p>
           </div>
           <div className={styles.ordersTotal}>
             <h2 className={`text text_type_main-medium`}>Выполнено за сегодня:</h2>
-            <p className={`text text_type_digits-large`}>123</p>
+            <p className={`text text_type_digits-large`}>{totalToday}</p>
           </div>
         </section>
       </div>

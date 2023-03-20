@@ -6,9 +6,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-      const { user } = getState().user;
-      if (type === wsInit && user) {
-        socket = new WebSocket(`${wsUrl}?token=${user.token}`);
+      if (type === wsInit) {
+        socket = new WebSocket(wsUrl);
       }
       if (socket) {
         socket.onopen = event => {
@@ -32,8 +31,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         if (type === wsSendMessage) {
-          const message = { ...payload, token: user.token };
-          socket.send(JSON.stringify(message));
+
         }
       }
 
