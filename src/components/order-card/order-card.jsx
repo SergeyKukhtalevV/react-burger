@@ -4,7 +4,7 @@ import styles from './order-card.module.css'
 import {useSelector} from "react-redux";
 import OrderIngredientsImage from "../order-ingredients-image/order-ingredients-image";
 
-const OrderCard = ({order}) => {
+const OrderCard = ({order, setCurrOrder}) => {
 
   const {ingredientsData} = useSelector(store => store.ingredients);
 
@@ -19,8 +19,9 @@ const OrderCard = ({order}) => {
         return total + i.price;
     }, 0)
   }, [ingredientsOrder]);
+
   return (
-    <ul className={`${styles.feedOrder} `}>
+    <ul className={`${styles.feedOrder} `} onClick={() =>{setCurrOrder(order._id)}} >
       <li className={styles.orderNumberDate}>
         <p className={`text text_type_digits-default`}>#{order.number}</p>
         <FormattedDate className={`text text_type_main-default text_color_inactive`}

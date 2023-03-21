@@ -2,7 +2,8 @@ import React from 'react';
 import styles from "./order-info.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
-const OrderInfo = () => {
+const OrderInfo = ({info}) => {
+  //console.log({info});
   return (
     <div className={styles.modal_orderInfo}>
       <h1 className={`text text_type_digits-default ${styles.id}`}>#34533</h1>

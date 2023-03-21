@@ -1,14 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import OrderCard from "../components/order-card/order-card";
 import styles from "./feed-orders.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {useLocation} from "react-router-dom";
-import {getIngredients} from "../services/actions";
+import {useLocation, useNavigate} from "react-router-dom";
+import {
+  getIngredients,
+  REMOVE_CURRENT_ORDER_FEED,
+  SET_CURRENT_ORDER_FEED
+} from "../services/actions";
 import {WS_FEED_CONNECTION_START} from "../services/action-types";
 
-const FeedOrdersPage = () => {
+const FeedOrdersPage = ({isActive, setModalActive}) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const fromPage = location.state?.from?.pathname || '';
+  const navigate = useNavigate();
   const {orders, ordersDone, ordersPending, ordersTotal, totalToday} = useSelector(store => store.feed);
   const {
     ingredientsData,
@@ -23,6 +29,26 @@ const FeedOrdersPage = () => {
     dispatch({type: WS_FEED_CONNECTION_START});
   }, []);
 
+  useEffect(() => {
+    if (!isActive) {
+      setTimeout(() => {
+        dispatch({
+          type: REMOVE_CURRENT_ORDER_FEED,
+        });
+      }, 500);
+    }
+  }, [dispatch, isActive]);
+
+  const setCurrentOrder = useCallback((id) => {
+    setModalActive(true);
+    console.log(id);
+    dispatch({
+      type: SET_CURRENT_ORDER_FEED,
+      id
+    });
+    navigate(`/feed/${id}`, {state: {from: location}});
+  }, [dispatch, navigate, setModalActive, location]);
+
   return (
     <main className={styles.wrapper}>
       <h1 className={`mt-10 text text_type_main-large`}>Лента заказов</h1>
@@ -32,7 +58,7 @@ const FeedOrdersPage = () => {
           <section>
             <ul className={styles.orderCards}>
               {orders.map(order => {
-                return <OrderCard order={order} key={order.number}/>
+                return <OrderCard order={order} key={order.number} setCurrOrder={setCurrentOrder}/>
               })}
             </ul>
           </section>
@@ -52,7 +78,7 @@ const FeedOrdersPage = () => {
                 <ul className={styles.ordersBoard_done}>
                   {ordersPending.map((order, index) => {
                     return <li key={index}
-                               className={`text text_type_digits-default ${styles.ordersBoardList_done}`}>{order}</li>
+                               className={`text text_type_digits-default`}>{order}</li>
                   })}
                 </ul>
               </div>

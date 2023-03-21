@@ -19,11 +19,12 @@ import ProfileMenu from "../profile-menu/ProfileMenu";
 import OrdersPage from "../../pages/orders";
 import OrderPage from "../../pages/order";
 import FeedOrdersPage from "../../pages/feed-orders";
-
+import FeedOrderPage from "../../pages/feed-order";
 function App() {
 
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
+  const [modalFeedOrderActive, setModalFeedOrderActive] = useState(false);
 
   return (
     <BrowserRouter>
@@ -53,8 +54,11 @@ function App() {
         </Route>
         <Route path="/ingredients/:id"
                element={<IngredientPage isActive={modalIngredientActive} setModalActive={setModalIngredientActive}/>}/>
-        <Route path="/feed" element={<FeedOrdersPage />} />
-        <Route path="/feed/:id" element={<h1>feed/:id</h1>} />
+        <Route path="/feed" element={<FeedOrdersPage isActive={modalFeedOrderActive}
+                                                     setModalActive={setModalFeedOrderActive}/>}
+        />
+        <Route path="/feed/:id" element={<FeedOrderPage isActive={modalFeedOrderActive}
+                                                         setModalActive={setModalFeedOrderActive}/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>

@@ -12,11 +12,7 @@ const initialStateFeed = {
   orders: [],
   ordersTotal: 0,
   totalToday: 0,
-  currentOrder: {
-    order: {},
-    ingredients: [],
-    total: 0
-  },
+  currentOrder: {},
   ordersDone: [],
   ordersPending: []
 }
@@ -57,21 +53,13 @@ export const feedReducer = (state = initialStateFeed, action) => {
     case SET_CURRENT_ORDER_FEED: {
       return {
         ...state,
-        currentOrder: {
-          order: action.selectedOrder,
-          ingredients: action.selectedIngrtdients,
-          total: action.selectedTotal
-        }
+        currentOrder: [...state.orders].filter(item => item._id === action.id)[0]
       };
     }
     case REMOVE_CURRENT_ORDER_FEED: {
       return {
         ...state,
-        currentOrder: {
-          order: {},
-          ingredients: [],
-          total: 0
-        }
+        currentOrder: {}
       };
     }
     default: {
