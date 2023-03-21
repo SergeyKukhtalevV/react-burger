@@ -41,7 +41,7 @@ const FeedOrdersPage = ({isActive, setModalActive}) => {
 
   const setCurrentOrder = useCallback((id) => {
     setModalActive(true);
-    console.log(id);
+
     dispatch({
       type: SET_CURRENT_ORDER_FEED,
       id

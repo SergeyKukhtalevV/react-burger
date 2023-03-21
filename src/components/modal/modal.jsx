@@ -10,10 +10,11 @@ const Modal = ({active, setActive, children}) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const fromPage = location.state?.from?.pathname || '/';
 
   const closePopup = useCallback(() => {
     setActive(false);
-    navigate('/', {state: {from: location}});
+    navigate(fromPage, {state: {from: location}});
   }, [setActive, navigate, location]);
 
   React.useEffect(() => {
@@ -36,12 +37,12 @@ const Modal = ({active, setActive, children}) => {
 
   return ReactDOM.createPortal(
     <ModalOverlay activeModalOverlay={active} setActiveModalOverlay={setActive}>
-      <div className={`${modalStyles.modal__content}`} onClick={e => e.stopPropagation()}>
-        <div className={modalStyles.modal__iconClose}>
-          <CloseIcon type="primary" onClick={closePopup}/>
-        </div>
+      {/*<div className={`${modalStyles.modal__content}`} onClick={e => e.stopPropagation()}>*/}
+      {/*  <div className={modalStyles.modal__iconClose}>*/}
+      {/*    <CloseIcon type="primary" onClick={closePopup}/>*/}
+      {/*  </div>*/}
         {children}
-      </div>
+      {/*</div>*/}
     </ModalOverlay>, document.getElementById('react-modals')
   );
 };

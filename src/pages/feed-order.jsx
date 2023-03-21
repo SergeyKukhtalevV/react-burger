@@ -30,7 +30,6 @@ const FeedOrderPage = ({isActive, setModalActive}) => {
         return ingredientsData.filter(ingredient => ingredient._id === item)[0];
       });
     }, [currentOrder, ingredientsData]);
-  console.log(ingredientsOrder);
 
     //   return orders.ingredients.map((item, index) => {
     //     return ingredientsData.filter(ingredient => ingredient._id === item)[0];
@@ -71,7 +70,7 @@ const FeedOrderPage = ({isActive, setModalActive}) => {
     <Modal active={isActive} setActive={setModalActive}>
       {isLoaded
         ? <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка...</p>
-        : <OrderInfo info={currentOrder}/>
+        : <OrderInfo info={currentOrder} ingredientsOrder={ingredientsOrder}/>
       }
     </Modal>
 
