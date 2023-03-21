@@ -16,9 +16,7 @@ const OrderInfo = ({info, ingredientsOrder}) => {
     acc[el._id] = (acc[el._id] || 0) + 1;
     return acc;
   }, {})}, [ingredientsOrder]);
-  console.log(countIngredients);
-  //console.log(Object.keys(countIngredients));
-  let count = 1;
+
   return (
     <div className={styles.modal_orderInfo}>
       <h1 className={`text text_type_digits-default ${styles.id}`}>#{info.number}</h1>
@@ -41,7 +39,7 @@ const OrderInfo = ({info, ingredientsOrder}) => {
                 <p className={`${styles.name} text text_type_main-small`}>{ingredient.name}</p>
               </div>
               <div className={`text text_type_main-large ${styles.ingredientPrice}`}>
-                <p className="text text_type_digits-default">{countIngredients[ingredient._id]} x {ingredient.price}</p>
+                <p className="text text_type_digits-default">1 x {ingredient.price}</p>
                 <CurrencyIcon type="primary"/>
               </div>
             </li>

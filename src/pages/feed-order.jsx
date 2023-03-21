@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {
   getIngredients,
-  REMOVE_CURRENT_ORDER_FEED, SET_CURRENT_INGREDIENT,
+  REMOVE_CURRENT_ORDER_FEED,
   SET_CURRENT_ORDER_FEED
 } from "../services/actions";
 import {WS_FEED_CONNECTION_START} from "../services/action-types";
@@ -21,54 +21,42 @@ const FeedOrderPage = ({isActive, setModalActive}) => {
   const {ingredientsData} = useSelector(store => store.ingredients);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
 
-  }, [])
+
+  const init = useCallback(() => {
+      dispatch({
+        type: SET_CURRENT_ORDER_FEED,
+        id
+      });
+    setIsLoaded(true);
+    setModalActive(true);
+    }, [dispatch, id]
+  )
+
+  useEffect(
+    () => {
+      if (ingredientsData.length === 0) {
+        dispatch(getIngredients());
+      }
+      if (orders.length === 0) {
+        dispatch({type: WS_FEED_CONNECTION_START});
+      }
+
+      setTimeout(init, 500, [id]);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const ingredientsOrder = useMemo(() => {
+    console.log(currentOrder.ingredients);
       return currentOrder.ingredients.map((item) => {
         return ingredientsData.filter(ingredient => ingredient._id === item)[0];
       });
-    }, [currentOrder, ingredientsData]);
-
-    //   return orders.ingredients.map((item, index) => {
-    //     return ingredientsData.filter(ingredient => ingredient._id === item)[0];
-    //   });
-    // }, [order, ingredientsData]);
-
-  // const init = useCallback(() => {
-  //     dispatch({
-  //       type: SET_CURRENT_ORDER_FEED,
-  //       id
-  //     });
-  //   }, [dispatch, id]
-  // )
-  //
-  // useEffect(
-  //   () => {
-  //     dispatch(getIngredients());
-  //     dispatch({type: WS_FEED_CONNECTION_START});
-  //     setIsLoaded(true);
-  //     setModalActive(true);
-  //     setTimeout(init, 500, [id]);
-  //   },
-  //   // eslint-disable-next-line
-  //   []
-  // );
-  //
-
-  //
-  //
-  //
-  //   return orders.ingredients.map((item, index) => {
-  //     return ingredientsData.filter(ingredient => ingredient._id === item)[0];
-  //   });
-  // }, [order, ingredientsData]);
-
+  }, [currentOrder, ingredientsData]);
   return (
-
     <Modal active={isActive} setActive={setModalActive}>
-      {isLoaded
+      {!isLoaded
         ? <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка...</p>
         : <OrderInfo info={currentOrder} ingredientsOrder={ingredientsOrder}/>
       }

@@ -9,7 +9,7 @@ const OrderCard = ({order, setCurrOrder}) => {
   const {ingredientsData} = useSelector(store => store.ingredients);
 
   const ingredientsOrder = useMemo(() => {
-    return order.ingredients.map((item, index) => {
+    return order.ingredients.map((item) => {
       return ingredientsData.filter(ingredient => ingredient._id === item)[0];
     });
   }, [order, ingredientsData]);
