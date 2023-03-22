@@ -1,16 +1,12 @@
-import React, {useEffect, useCallback, useState, useMemo} from 'react';
-import OrderCard from "../components/order-card/order-card";
-import styles from "./feed-orders.module.css"
+import React, {useEffect, useState, useMemo} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router-dom";
 import {
   getIngredients,
   REMOVE_CURRENT_ORDER_FEED,
   SET_CURRENT_ORDER_FEED
 } from "../services/actions";
-import {WS_FEED_CONNECTION_START} from "../services/action-types";
+import {WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_START} from "../services/action-types";
 import {useParams} from "react-router";
-import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import Modal from "../components/modal/modal";
 import OrderInfo from "../components/order-info/OrderInfo";
 
@@ -39,6 +35,7 @@ const FeedOrderPage = ({isActive, setModalActive}) => {
       }
       setIsLoaded(true);
       setModalActive(true);
+
     },
     // eslint-disable-next-line
     [orders]

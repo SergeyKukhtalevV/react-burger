@@ -8,7 +8,7 @@ import {
   REMOVE_CURRENT_ORDER_FEED,
   SET_CURRENT_ORDER_FEED
 } from "../services/actions";
-import {WS_FEED_CONNECTION_START} from "../services/action-types";
+import {WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_START} from "../services/action-types";
 
 const FeedOrdersPage = ({isActive, setModalActive}) => {
   const dispatch = useDispatch();
@@ -27,6 +27,10 @@ const FeedOrdersPage = ({isActive, setModalActive}) => {
       dispatch(getIngredients());
     }
     dispatch({type: WS_FEED_CONNECTION_START});
+
+    return () => {
+      dispatch({type: WS_FEED_CONNECTION_CLOSED});
+    }
   }, []);
 
   useEffect(() => {
