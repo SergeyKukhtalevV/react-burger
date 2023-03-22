@@ -12,6 +12,12 @@
   column-gap: 60px;
 }
 
+.sectionCards {
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
 .orderCards {
   list-style: none;
   padding: 0;
@@ -23,7 +29,7 @@
   scrollbar-color: #8585AD #2F2F37;
   scrollbar-width: thin;
   width: 100%;
-  max-width: 600px;
+  max-width: 584px;
 }
 
 .orderCards::-webkit-scrollbar {
@@ -58,6 +64,7 @@
   justify-content: space-between;
   row-gap: 36px;
 }
+
 .ordersBoard {
   display: flex;
   flex-direction: row;
@@ -65,6 +72,7 @@
   max-width: 580px;
   width: 100%;
 }
+
 .ordersBoard_done {
   list-style: none;
   padding: 0;
@@ -75,9 +83,11 @@
   grid-auto-flow: column;
 
 }
+
 .ordersBoardList_done {
   color: #00CCCC;
 }
+
 .ordersTotal {
   display: flex;
   flex-direction: column;

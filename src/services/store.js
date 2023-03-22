@@ -11,7 +11,9 @@ import {
   WS_FEED_CONNECTION_START,
   WS_FEED_CONNECTION_SUCCESS,
   WS_FEED_GET_MESSAGE,
-  WS_FEED_SEND_MESSAGE, WS_USER_FEED_CONNECTION_CLOSED, WS_USER_FEED_CONNECTION_ERROR,
+  WS_FEED_SEND_MESSAGE,
+  WS_USER_FEED_CONNECTION_CLOSED,
+  WS_USER_FEED_CONNECTION_ERROR,
   WS_USER_FEED_CONNECTION_START,
   WS_USER_FEED_CONNECTION_SUCCESS,
   WS_USER_FEED_GET_MESSAGE,
@@ -20,6 +22,7 @@ import {
 import {getCookie} from "../utils/utils";
 
 const accessToken = getCookie('accessToken');
+
 
 const wsUrlFeed = WS_URL + '/all';
 const wsUrlUserFeed = WS_URL + `?token=${accessToken}`;
