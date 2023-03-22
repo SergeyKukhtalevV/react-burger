@@ -17,21 +17,10 @@ import OrderInfo from "../components/order-info/OrderInfo";
 const FeedOrderPage = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
-  const {orders, currentOrder} = useSelector(store => store.feed);
+  const {orders, currentOrder, wsConnected} = useSelector(store => store.feed);
   const {ingredientsData} = useSelector(store => store.ingredients);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-
-
-  const init = useCallback(() => {
-      dispatch({
-        type: SET_CURRENT_ORDER_FEED,
-        id
-      });
-    setIsLoaded(true);
-    setModalActive(true);
-    }, [dispatch, id]
-  )
 
   useEffect(
     () => {
@@ -41,18 +30,26 @@ const FeedOrderPage = ({isActive, setModalActive}) => {
       if (orders.length === 0) {
         dispatch({type: WS_FEED_CONNECTION_START});
       }
-
-      setTimeout(init, 500, [id]);
+      if(orders.length !== 0)
+      {
+        dispatch({
+          type: SET_CURRENT_ORDER_FEED,
+          id
+        });
+      }
+      setIsLoaded(true);
+      setModalActive(true);
     },
     // eslint-disable-next-line
-    []
+    [orders]
   );
 
   const ingredientsOrder = useMemo(() => {
-    console.log(currentOrder.ingredients);
+    if (wsConnected) {
       return currentOrder.ingredients.map((item) => {
         return ingredientsData.filter(ingredient => ingredient._id === item)[0];
       });
+    }
   }, [currentOrder, ingredientsData]);
   return (
     <Modal active={isActive} setActive={setModalActive}>
