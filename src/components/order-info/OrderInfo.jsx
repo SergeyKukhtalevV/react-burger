@@ -21,6 +21,7 @@ const OrderInfo = ({info, ingredientsOrder}) => {
         acc[el._id] = (acc[el._id] || 0) + 1;
         return acc;
       }, []));
+
       setIsLoaded(true);
     }
   }, [ingredientsOrder]);
@@ -41,16 +42,19 @@ const OrderInfo = ({info, ingredientsOrder}) => {
         <p className={`text_type_main-medium mt-15`}>Состав:</p>
         <ul className={`${styles.ingredientsList} mt-6 pr-6`}>
           {
-            ingredientsOrder.map((ingredient, index) => {
+            Object.keys(countIngredients).map((key, index) => {
               return (
                 <li className={styles.ingredient} key={index}>
                   <div className={styles.ingredientContainer}>
-                    <img className={styles.ingredientImage} src={ingredient.image_mobile}
-                         alt={ingredient.name}/>
-                    <p className={`${styles.name} text text_type_main-small`}>{ingredient.name}</p>
+                    <img className={styles.ingredientImage}
+                         src={ingredientsOrder.find(ingredient => ingredient._id === key).image_mobile}
+                         alt={ingredientsOrder.find(ingredient => ingredient._id === key).name}/>
+                    <p
+                      className={`${styles.name} text text_type_main-small`}>{ingredientsOrder.find(ingredient => ingredient._id === key).name}</p>
                   </div>
                   <div className={`text text_type_main-large ${styles.ingredientPrice}`}>
-                    <p className="text text_type_digits-default">1 x {ingredient.price}</p>
+                    <p
+                      className="text text_type_digits-default">{countIngredients[key]} x {ingredientsOrder.find(ingredient => ingredient._id === key).price}</p>
                     <CurrencyIcon type="primary"/>
                   </div>
                 </li>
