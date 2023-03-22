@@ -17,11 +17,9 @@ const OrdersPage = ({isActive, setModalActive}) => {
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '';
   const navigate = useNavigate();
-  const {orders} = useSelector(store => store.userFeed);
+  const {ordersUserFeed} = useSelector(store => store.userFeed);
   const {
-    ingredientsData,
-    dataRequest,
-    dataFailed
+    ingredientsData
   } = useSelector(store => store.ingredients);
 
   useEffect(() => {
@@ -32,7 +30,7 @@ const OrdersPage = ({isActive, setModalActive}) => {
     // return () => {
     //   dispatch({type: WS_USER_FEED_CONNECTION_CLOSED});
     // }
-  }, []);
+  }, [ingredientsData]);
 
   useEffect(() => {
     if (!isActive) {
@@ -42,28 +40,27 @@ const OrdersPage = ({isActive, setModalActive}) => {
         });
       }, 500);
     }
-  }, [dispatch, isActive]);
+  }, [isActive]);
 
   const setCurrentOrder = useCallback((id) => {
     setModalActive(true);
-
     dispatch({
       type: SET_CURRENT_ORDER_USER_FEED,
       id
     });
-    navigate(`/orders/${id}`, {state: {from: location}});
+    navigate(`/profile/orders/${id}`, {state: {from: location}});
   }, [dispatch, navigate, setModalActive, location]);
-  
+
   return (
-      dataRequest && !dataFailed
-        ? <p className="text text_type_main-medium">Идет загрузка...</p>
-        : <div className={styles.container}>
-            <ul className={styles.orderCards}>
-              {orders.map(order => {
-                return <OrderCard order={order} key={order.number} setCurrOrder={setCurrentOrder}/>
-              })}
-            </ul>
-        </div>
+    ordersUserFeed.length === 0
+      ? <p className="text text_type_main-medium">Идет загрузка...</p>
+      : <div className={styles.container}>
+        <ul className={styles.orderCards}>
+          {ordersUserFeed.map(order => {
+            return <OrderCard order={order} key={order.number} setCurrOrder={setCurrentOrder}/>
+          })}
+        </ul>
+      </div>
   );
 };
 

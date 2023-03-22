@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "./order-info.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useSelector} from "react-redux";
@@ -7,13 +7,15 @@ import {useSelector} from "react-redux";
 const OrderInfo = ({info, ingredientsOrder}) => {
 
   const {wsConnected} = useSelector(store => store.feed);
+  const {wsConnectedUserFeed} = useSelector(store => store.userFeed);
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [orderSum, setOrderSum] = useState(0);
   const [countIngredients, setCountIngredients] = useState([]);
 
   useEffect(() => {
 
-    if (wsConnected && ingredientsOrder.length !== 0) {
+    if ((wsConnected || wsConnectedUserFeed) && ingredientsOrder.length !== 0) {
       setOrderSum(ingredientsOrder.reduce((total, i) => {
         return total + i.price;
       }, 0));
@@ -21,10 +23,9 @@ const OrderInfo = ({info, ingredientsOrder}) => {
         acc[el._id] = (acc[el._id] || 0) + 1;
         return acc;
       }, []));
-
       setIsLoaded(true);
     }
-  }, [ingredientsOrder]);
+  }, [ingredientsOrder, wsConnected, wsConnectedUserFeed]);
 
   return (
     !isLoaded

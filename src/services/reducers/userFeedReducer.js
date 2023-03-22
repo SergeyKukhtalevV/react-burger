@@ -7,10 +7,10 @@ import {
 import {REMOVE_CURRENT_ORDER_USER_FEED, SET_CURRENT_ORDER_USER_FEED} from "../actions/user-feed";
 
 const initialStateUserFeed = {
-  wsConnected: false,
-  isError: false,
-  orders: [],
-  currentOrder: {}
+  wsConnectedUserFeed: false,
+  isErrorUserFeed: false,
+  ordersUserFeed: [],
+  currentOrderUserFeed: {}
 }
 
 export const userFeedReducer = (state = initialStateUserFeed, action) => {
@@ -18,40 +18,40 @@ export const userFeedReducer = (state = initialStateUserFeed, action) => {
     case WS_USER_FEED_CONNECTION_SUCCESS: {
       return {
         ...state,
-        wsConnected: true,
-        isError: false
+        wsConnectedUserFeed: true,
+        isErrorUserFeed: false
       };
     }
     case WS_USER_FEED_CONNECTION_ERROR: {
       return {
         ...state,
-        wsConnected: false,
-        isError: true
+        wsConnectedUserFeed: false,
+        isErrorUserFeed: true
       };
     }
     case WS_USER_FEED_CONNECTION_CLOSED: {
       return {
         ...state,
-        wsConnected: false,
-        isError: false
+        wsConnectedUserFeed: false,
+        isErrorUserFeed: false
       };
     }
     case WS_USER_FEED_GET_MESSAGE: {
       return {
         ...state,
-        orders: action.payload.orders
+        ordersUserFeed: action.payload.orders.reverse()
       };
     }
     case SET_CURRENT_ORDER_USER_FEED: {
       return {
         ...state,
-        currentOrder: [...state.orders].filter(item => item._id === action.id)[0]
+        currentOrderUserFeed: [...state.ordersUserFeed].filter(item => item._id === action.id)[0]
       };
     }
     case REMOVE_CURRENT_ORDER_USER_FEED: {
       return {
         ...state,
-        currentOrder: {}
+        currentOrderUserFeed: {}
       };
     }
     default: {
