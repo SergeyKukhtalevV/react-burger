@@ -27,9 +27,9 @@ const OrdersPage = ({isActive, setModalActive}) => {
       dispatch(getIngredients());
     }
     dispatch({type: WS_USER_FEED_CONNECTION_START});
-    // return () => {
-    //   dispatch({type: WS_USER_FEED_CONNECTION_CLOSED});
-    // }
+    return () => {
+      dispatch({type: WS_USER_FEED_CONNECTION_CLOSED});
+    }
   }, [ingredientsData]);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const OrdersPage = ({isActive, setModalActive}) => {
 
   return (
     ordersUserFeed.length === 0
-      ? <p className="text text_type_main-medium">Идет загрузка...</p>
+      ? <p className="text text_type_main-medium">Идет загрузка Orders.jsx...</p>
       : <div className={styles.container}>
         <ul className={styles.orderCards}>
           {ordersUserFeed.map(order => {

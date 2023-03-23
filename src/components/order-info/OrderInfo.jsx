@@ -29,7 +29,7 @@ const OrderInfo = ({info, ingredientsOrder}) => {
 
   return (
     !isLoaded
-      ? <p className="text text_type_main-medium">Идет загрузка...</p>
+      ? <p className="text text_type_main-medium">Идет загрузка OrderInfo.jsx...</p>
       : <div className={styles.modal_orderInfo}>
 
         <h1 className={`text text_type_digits-default ${styles.id}`}>#{info.number}</h1>

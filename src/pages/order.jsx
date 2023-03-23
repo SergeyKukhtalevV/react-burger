@@ -46,7 +46,7 @@ const OrderPage = ({isActive, setModalActive}) => {
   return (
     <Modal active={isActive} setActive={setModalActive}>
       {!isLoaded
-        ? <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка...</p>
+        ? <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка Order.jsx...</p>
         : <OrderInfo info={currentOrderUserFeed} ingredientsOrder={ingredientsOrder}/>
       }
     </Modal>

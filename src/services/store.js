@@ -23,7 +23,6 @@ import {getCookie} from "../utils/utils";
 
 const accessToken = getCookie('accessToken');
 
-
 const wsUrlFeed = WS_URL + '/all';
 const wsUrlUserFeed = WS_URL + `?token=${accessToken}`;
 

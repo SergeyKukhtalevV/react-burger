@@ -17,7 +17,6 @@ const FeedOrderPage = ({isActive, setModalActive}) => {
   const {ingredientsData} = useSelector(store => store.ingredients);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-  //const [ingredientsOrder, setIngredientsOrder] = useState([]);
 
   useEffect(
     () => {
@@ -35,15 +34,6 @@ const FeedOrderPage = ({isActive, setModalActive}) => {
           id
         });
       }
-      // if (currentOrder.length !== 0 && ingredientsData.length !== 0) {
-      //   setIngredientsOrder(currentOrder.ingredients.map((item) => {
-      //     return ingredientsData.filter(ingredient => ingredient._id === item)[0]
-      //   }));
-      // }
-      // if(wsConnected) {
-      //   setIsLoaded(true);
-      //   setModalActive(true);
-      // }
     },
     // eslint-disable-next-line
     [orders, currentOrder, ingredientsData]
