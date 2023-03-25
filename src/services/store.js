@@ -1,6 +1,6 @@
-import { applyMiddleware, createStore, compose } from 'redux';
-import { rootReducer } from './reducers/rootReducer';
-import { socketMiddleware } from './middleware/index';
+import {applyMiddleware, createStore, compose} from 'redux';
+import {rootReducer} from './reducers/rootReducer';
+import {socketMiddleware} from './middleware/index';
 import thunkMiddleware from 'redux-thunk';
 import {WS_URL} from "../constants/constants";
 
@@ -19,12 +19,7 @@ import {
   WS_USER_FEED_GET_MESSAGE,
   WS_USER_FEED_SEND_MESSAGE
 } from './action-types';
-import {getCookie} from "../utils/utils";
 
-const accessToken = getCookie('accessToken');
-
-const wsUrlFeed = WS_URL + '/all';
-const wsUrlUserFeed = WS_URL + `?token=${accessToken}`;
 
 const wsFeedActions = {
   wsInit: WS_FEED_CONNECTION_START,
@@ -43,6 +38,11 @@ const wsUserFeedActions = {
   onMessage: WS_USER_FEED_GET_MESSAGE
 };
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const initStore = (initialState = {}) =>
-  createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(thunkMiddleware, socketMiddleware(wsUrlFeed, wsFeedActions),
-    socketMiddleware(wsUrlUserFeed, wsUserFeedActions))));
+  createStore(rootReducer, initialState, composeEnhancers(
+    applyMiddleware(
+      thunkMiddleware,
+      socketMiddleware(`${WS_URL}/all`, wsFeedActions),
+      socketMiddleware(WS_URL, wsUserFeedActions)
+    )));

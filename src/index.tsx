@@ -2,19 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
-import {compose, createStore, applyMiddleware} from 'redux';
+import {compose} from 'redux';
 import {Provider} from 'react-redux';
-import {rootReducer} from './services/reducers/rootReducer.js';
-import thunk from 'redux-thunk';
-import { initStore } from './services/store';
+import {initStore} from './services/store';
 
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }
-
-
 
 const store = initStore();
 

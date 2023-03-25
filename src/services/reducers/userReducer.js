@@ -49,8 +49,8 @@ export const userReducer = (state = initialStateUser, action) => {
       };
     }
     case SET_REGISTER_USER_SUCCESS: {
-      setCookie('token', action.data.refreshToken);
-      setCookie('accessToken', action.data.accessToken.split('Bearer ')[1]);
+      setCookie('token', action.data.refreshToken, {path: '/'});
+      setCookie('accessToken', action.data.accessToken.split('Bearer ')[1], {path: '/'});
       return {
         ...state,
         userInfoRequest: false,
@@ -80,8 +80,8 @@ export const userReducer = (state = initialStateUser, action) => {
       };
     }
     case GET_AUTHORIZATION_USER_SUCCESS: {
-      setCookie('token', action.data.refreshToken);
-      setCookie('accessToken', action.data.accessToken.split('Bearer ')[1]);
+      setCookie('token', action.data.refreshToken, {path: '/'});
+      setCookie('accessToken', action.data.accessToken.split('Bearer ')[1], {path: '/'});
       return {
         ...state,
         userInfoRequest: false,
@@ -109,8 +109,8 @@ export const userReducer = (state = initialStateUser, action) => {
       };
     }
     case GET_REFRESH_TOKEN_SUCCESS: {
-      setCookie('token', action.data.refreshToken);
-      setCookie('accessToken', action.data.accessToken.split('Bearer ')[1]);
+      setCookie('token', action.data.refreshToken, {path: '/'});
+      setCookie('accessToken', action.data.accessToken.split('Bearer ')[1], {path: '/'});
       return {
         ...state,
         userInfoRequest: false,

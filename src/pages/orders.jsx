@@ -4,6 +4,7 @@ import styles from "./orders.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {
+  getFreshToken,
   getIngredients
 } from "../services/actions";
 import {
@@ -11,26 +12,39 @@ import {
   WS_USER_FEED_CONNECTION_START
 } from "../services/action-types";
 import {REMOVE_CURRENT_ORDER_USER_FEED, SET_CURRENT_ORDER_USER_FEED} from "../services/actions/user-feed";
+import {getCookie} from "../utils/utils";
 
 const OrdersPage = ({isActive, setModalActive}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '';
   const navigate = useNavigate();
-  const {ordersUserFeed} = useSelector(store => store.userFeed);
+  const {ordersUserFeed, wsTakeMessageUserFeed, wsConnectedUserFeed} = useSelector(store => store.userFeed);
   const {
     ingredientsData
   } = useSelector(store => store.ingredients);
+  const token = getCookie('token');
+  const accessToken = getCookie('accessToken');
 
   useEffect(() => {
+
     if (ingredientsData.length === 0) {
       dispatch(getIngredients());
     }
-    dispatch({type: WS_USER_FEED_CONNECTION_START});
+    if (ordersUserFeed.length === 0) {
+
+      dispatch({type: WS_USER_FEED_CONNECTION_START});
+    }
+    if (wsTakeMessageUserFeed === 'Invalid or missing token') {
+
+      dispatch(getFreshToken({token}));
+      dispatch({type: WS_USER_FEED_CONNECTION_START});
+    }
     return () => {
       dispatch({type: WS_USER_FEED_CONNECTION_CLOSED});
     }
-  }, [ingredientsData]);
+  }, [dispatch, ingredientsData, wsTakeMessageUserFeed, wsConnectedUserFeed, ordersUserFeed]);
+
 
   useEffect(() => {
     if (!isActive) {

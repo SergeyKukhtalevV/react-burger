@@ -15,12 +15,12 @@ const OrderCard = ({order, setCurrOrder}) => {
         return ingredientsData.filter(ingredient => ingredient._id === item)[0]
       }))
       if (ingredientsOrder.length !== 0) {
-        setIsLoaded(true);
         setOrderSum(ingredientsOrder.reduce((total, i) => {
           return total + i.price;
         }, 0))
       }
-    }, [order]);
+      setIsLoaded(true);
+    }, [order, setCurrOrder, ingredientsData]);
 
     return (
       isLoaded

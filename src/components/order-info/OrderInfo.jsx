@@ -6,16 +6,13 @@ import {useSelector} from "react-redux";
 
 const OrderInfo = ({info, ingredientsOrder}) => {
 
-  const {wsConnected} = useSelector(store => store.feed);
-  const {wsConnectedUserFeed} = useSelector(store => store.userFeed);
-
   const [isLoaded, setIsLoaded] = useState(false);
   const [orderSum, setOrderSum] = useState(0);
   const [countIngredients, setCountIngredients] = useState([]);
 
   useEffect(() => {
 
-    if ((wsConnected || wsConnectedUserFeed) && ingredientsOrder.length !== 0) {
+    if (ingredientsOrder.length !== 0) {
       setOrderSum(ingredientsOrder.reduce((total, i) => {
         return total + i.price;
       }, 0));
@@ -25,7 +22,7 @@ const OrderInfo = ({info, ingredientsOrder}) => {
       }, []));
       setIsLoaded(true);
     }
-  }, [ingredientsOrder, wsConnected, wsConnectedUserFeed]);
+  }, [ingredientsOrder]);
 
   return (
     !isLoaded

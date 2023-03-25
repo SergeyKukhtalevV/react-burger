@@ -5,10 +5,12 @@ import {
   WS_USER_FEED_GET_MESSAGE
 } from "../action-types";
 import {REMOVE_CURRENT_ORDER_USER_FEED, SET_CURRENT_ORDER_USER_FEED} from "../actions/user-feed";
+import {getCookie} from "../../utils/utils";
 
 const initialStateUserFeed = {
   wsConnectedUserFeed: false,
   isErrorUserFeed: false,
+  wsTakeMessageUserFeed: '',
   ordersUserFeed: [],
   currentOrderUserFeed: {}
 }
@@ -39,6 +41,7 @@ export const userFeedReducer = (state = initialStateUserFeed, action) => {
     case WS_USER_FEED_GET_MESSAGE: {
       return {
         ...state,
+        wsTakeMessageUserFeed: action.payload.message,
         ordersUserFeed: action.payload.orders.reverse()
       };
     }
