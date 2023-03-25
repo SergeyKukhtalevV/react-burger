@@ -67,7 +67,7 @@ const OrdersPage = ({isActive, setModalActive}) => {
 
   return (
     ordersUserFeed.length === 0
-      ? <p className="text text_type_main-medium">Идет загрузка Orders.jsx...</p>
+      ? <p className="text text_type_main-medium">Идет загрузка...</p>
       : <div className={styles.container}>
         <ul className={styles.orderCards}>
           {ordersUserFeed.map(order => {

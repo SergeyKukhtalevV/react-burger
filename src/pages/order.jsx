@@ -13,6 +13,7 @@ const OrderPage = ({isActive, setModalActive}) => {
   const {ordersUserFeed, currentOrderUserFeed, wsConnectedUserFeed} = useSelector(store => store.userFeed);
   const {ingredientsData} = useSelector(store => store.ingredients);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [ingredientsOrder, setIngredientsOrder] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(
@@ -20,33 +21,34 @@ const OrderPage = ({isActive, setModalActive}) => {
       if (ingredientsData.length === 0) {
         dispatch(getIngredients());
       }
-      if (ordersUserFeed.length === 0) {
-        dispatch({type: WS_USER_FEED_CONNECTION_START});
-      }
-      if (ordersUserFeed.length !== 0) {
-        setIsLoaded(true);
-        setModalActive(true);
+      if(ordersUserFeed.length !== 0) {
         dispatch({
           type: SET_CURRENT_ORDER_USER_FEED,
           id
         });
       }
+      if (ordersUserFeed.length === 0) {
+        dispatch({type: WS_USER_FEED_CONNECTION_START});
+      }
+      if (currentOrderUserFeed) {
+        setIsLoaded(true);
+        setModalActive(true);
+        if(currentOrderUserFeed.ingredients) {
+          setIngredientsOrder(currentOrderUserFeed.ingredients.map((item) => {
+            return ingredientsData.filter(ingredient => ingredient._id === item)[0];
+          }));
+        }
+
+      }
     },
     // eslint-disable-next-line
-    [ordersUserFeed, currentOrderUserFeed]
+    [ordersUserFeed, ingredientsData, currentOrderUserFeed, wsConnectedUserFeed]
   );
 
-  const ingredientsOrder = useMemo(() => {
-    if (wsConnectedUserFeed) {
-      return currentOrderUserFeed.ingredients.map((item) => {
-        return ingredientsData.filter(ingredient => ingredient._id === item)[0];
-      });
-    }
-  }, [currentOrderUserFeed, ingredientsData]);
   return (
     <Modal active={isActive} setActive={setModalActive}>
       {!isLoaded
-        ? <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка Order.jsx...</p>
+        ? <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка...</p>
         : <OrderInfo info={currentOrderUserFeed} ingredientsOrder={ingredientsOrder}/>
       }
     </Modal>

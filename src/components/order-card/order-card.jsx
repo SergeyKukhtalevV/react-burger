@@ -41,7 +41,7 @@ const OrderCard = ({order, setCurrOrder}) => {
             </div>
           </li>
         </ul>
-        : <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка order-card.jsx...</p>
+        : <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка...</p>
     );
   }
 ;

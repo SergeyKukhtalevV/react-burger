@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./order-info.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
 
 
 const OrderInfo = ({info, ingredientsOrder}) => {
@@ -26,7 +25,7 @@ const OrderInfo = ({info, ingredientsOrder}) => {
 
   return (
     !isLoaded
-      ? <p className="text text_type_main-medium">Идет загрузка OrderInfo.jsx...</p>
+      ? <p className="text text_type_main-medium">Идет загрузка...</p>
       : <div className={styles.modal_orderInfo}>
 
         <h1 className={`text text_type_digits-default ${styles.id}`}>#{info.number}</h1>

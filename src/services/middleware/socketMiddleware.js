@@ -5,12 +5,10 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     let socket = null;
 
     return next => action => {
-      const { dispatch, getState } = store;
+      const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-      const { user } = getState().user;
       const accessToken = getCookie('accessToken');
-      console.log(accessToken);
 
       if(type === wsInit) {
         if(accessToken) {
