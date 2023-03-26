@@ -14,13 +14,17 @@ const OrderCard = ({order, setCurrOrder}) => {
       setIngredientsOrder(order.ingredients.map((item) => {
         return ingredientsData.filter(ingredient => ingredient._id === item)[0]
       }))
+
+    }, [ingredientsData]);
+
+    useEffect(() => {
       if (ingredientsOrder.length !== 0) {
+        setIsLoaded(true);
         setOrderSum(ingredientsOrder.reduce((total, i) => {
           return total + i.price;
         }, 0))
       }
-      setIsLoaded(true);
-    }, [order, setCurrOrder, ingredientsData]);
+    }, [ingredientsOrder]);
 
     return (
       isLoaded
