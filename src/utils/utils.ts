@@ -1,25 +1,25 @@
 import {URL_API} from "../constants/constants";
 import {getTokenRequest, urlToken} from "../services/api";
 
-export const checkResponse = (res) => {
+export const checkResponse = (res: any) => {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export const  request = (endPoint, options) => {
+export const request = (endPoint: string, options: any): Promise<Response> => {
   // принимает два аргумента: урл и объект опций, как и `fetch`
-  return fetch(URL_API+endPoint, options).then(checkResponse);
+  return fetch(URL_API + endPoint, options).then(checkResponse);
 }
 
 //******
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: any): Promise<Response> => {
   try {
     return await request(url, options);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === 'jwt expired') {
-      const refreshData = await getTokenRequest(urlToken, {token: getCookie('token')});
+      const refreshData: any = await getTokenRequest(urlToken, {token: getCookie('token')});
       if (!refreshData.success) {
         await Promise.reject(refreshData);
       }
@@ -32,9 +32,10 @@ export const fetchWithRefresh = async (url, options) => {
     }
   }
 };
+
 //*******
 
-export function getCookie(name) {
+export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
     // eslint-disable-next-line
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
@@ -42,7 +43,7 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: any, props?: any): void {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -65,6 +66,6 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export function deleteCookie(name: string): void {
+  setCookie(name, null, {expires: -1});
 }
