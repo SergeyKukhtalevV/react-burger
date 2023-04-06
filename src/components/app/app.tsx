@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import appStyles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -18,11 +18,16 @@ import IngredientPage from "../../pages/ingredient";
 import ProfileMenu from "../profile-menu/ProfileMenu";
 import OrdersPage from "../../pages/orders";
 import OrderPage from "../../pages/order";
+import FeedOrdersPage from "../../pages/feed-orders";
+import FeedOrderPage from "../../pages/feed-order";
+import {getCookie} from "../../utils/utils";
 
 function App() {
 
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
+  const [modalFeedOrderActive, setModalFeedOrderActive] = useState(false);
+  const [modalUserFeedOrderActive, setModalUserFeedOrderActive] = useState(false);
 
   return (
     <BrowserRouter>
@@ -46,12 +51,19 @@ function App() {
         <Route path="/reset-password" element={<UnprotectedRouteElement element={<ResetPasswordPage/>}/>}/>
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfileMenu/>}/>}>
           <Route index element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
-          <Route path="orders" element={<ProtectedRouteElement element={<OrdersPage/>}/>}/>
+          <Route path="orders" element={<ProtectedRouteElement element={<OrdersPage isActive={modalUserFeedOrderActive}
+                                                    setModalActive={setModalUserFeedOrderActive}/>}/>}/>
           <Route path="orders/:id"
-                 element={<ProtectedRouteElement element={<OrderPage/>}/>}/>
+                 element={<OrderPage isActive={modalUserFeedOrderActive}
+                                     setModalActive={setModalUserFeedOrderActive}/>}/>
         </Route>
         <Route path="/ingredients/:id"
                element={<IngredientPage isActive={modalIngredientActive} setModalActive={setModalIngredientActive}/>}/>
+        <Route path="/feed" element={<FeedOrdersPage isActive={modalFeedOrderActive}
+                                                     setModalActive={setModalFeedOrderActive}/>}
+        />
+        <Route path="/feed/:id" element={<FeedOrderPage isActive={modalFeedOrderActive}
+                                                        setModalActive={setModalFeedOrderActive}/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
