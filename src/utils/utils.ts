@@ -1,6 +1,17 @@
 import {URL_API} from "../constants/constants";
 import {getTokenRequest, urlToken} from "../services/api";
 
+export type TOptionHeaders = {
+  readonly 'Content-Type': string;
+  Authorization?: string;
+};
+
+export type TOption<TOptionHeaders> = {
+  readonly method: string;
+  headers: TOptionHeaders;
+  readonly body?: string;
+};
+
 export const checkResponse = (res: any) => {
   if (res.ok) {
     return res.json();
@@ -8,13 +19,13 @@ export const checkResponse = (res: any) => {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export const request = (endPoint: string, options: any): Promise<Response> => {
+export const request = (endPoint: string, options: TOption<TOptionHeaders>): Promise<Response> => {
   // принимает два аргумента: урл и объект опций, как и `fetch`
   return fetch(URL_API + endPoint, options).then(checkResponse);
 }
 
 //******
-export const fetchWithRefresh = async (url: string, options: any): Promise<Response> => {
+export const fetchWithRefresh = async (url: string, options: TOption<TOptionHeaders>): Promise<Response> => {
   try {
     return await request(url, options);
   } catch (err: any) {
@@ -25,7 +36,7 @@ export const fetchWithRefresh = async (url: string, options: any): Promise<Respo
       }
       setCookie('token', refreshData.refreshToken);
       setCookie('accessToken', refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
+      options.headers.Authorization = refreshData.accessToken;
       return await request(url, options);
     } else {
       return Promise.reject(err);
