@@ -19,7 +19,7 @@ export const checkResponse = (res: any) => {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export const request = (endPoint: string, options: TOption<TOptionHeaders>): Promise<Response> => {
+export const request = (endPoint: string, options?: TOption<TOptionHeaders>): Promise<Response> => {
   // принимает два аргумента: урл и объект опций, как и `fetch`
   return fetch(URL_API + endPoint, options).then(checkResponse);
 }

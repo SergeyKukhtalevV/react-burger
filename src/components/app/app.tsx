@@ -20,7 +20,6 @@ import OrdersPage from "../../pages/orders";
 import OrderPage from "../../pages/order";
 import FeedOrdersPage from "../../pages/feed-orders";
 import FeedOrderPage from "../../pages/feed-order";
-import {getCookie} from "../../utils/utils";
 
 function App() {
 

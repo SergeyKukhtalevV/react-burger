@@ -4,7 +4,11 @@ import appHeaderStyles from './app-header.module.css'
 import {NavLink} from "react-router-dom";
 
 const AppHeader = () => {
-  const setActive = ({isActive}) => isActive ? `${appHeaderStyles.header__link} ${appHeaderStyles.header__link_active}`
+
+  type TisActive = {
+    isActive: boolean;
+  }
+  const setActive = ( {isActive}: TisActive ): string => isActive ? `${appHeaderStyles.header__link} ${appHeaderStyles.header__link_active}`
     : `${appHeaderStyles.header__link} `;
   return (
     <header className={appHeaderStyles.header}>
