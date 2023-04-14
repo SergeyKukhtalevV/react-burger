@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import PropTypes from "prop-types";
 import modalOverlayStyles from "../modal-overlay/modal-overlay.module.css";
 import {useLocation, useNavigate} from "react-router-dom";
 
