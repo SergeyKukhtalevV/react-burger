@@ -2,14 +2,12 @@ import React, {useCallback, FC} from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 import {useLocation, useNavigate} from "react-router-dom";
+import {TModal} from "../../services/types/data";
 
-type TModal = {
-  active: boolean;
-  setActive: (arg: boolean) => void;
-} & React.ButtonHTMLAttributes<HTMLBodyElement>;
+type TModalWindow = TModal & React.ButtonHTMLAttributes<HTMLBodyElement>;
 
 
-const Modal: FC<TModal> = ({active, setActive, children}) => {
+const Modal: FC<TModalWindow> = ({active, setActive, children}) => {
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,7 +38,7 @@ const Modal: FC<TModal> = ({active, setActive, children}) => {
   [active]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay activeModalOverlay={active} setActiveModalOverlay={setActive}>
+    <ModalOverlay active={active} setActive={setActive}>
         {children}
 
     </ModalOverlay>, document.getElementById('react-modals')!
