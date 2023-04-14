@@ -38,7 +38,7 @@ const OrderCard = ({order, setCurrOrder}) => {
           </li>
           <li className={`text text_type_main-medium`}>{order.name}</li>
           <li className={styles.iconsAndTotal}>
-            <OrderIngredientsImage ingredientsOrder={ingredientsOrder}/>
+            <OrderIngredientsImage ingredients={ingredientsOrder}/>
             <div className={styles.price}>
               <p className="text text_type_digits-medium">{orderSum}</p>
               <CurrencyIcon type="primary"/>

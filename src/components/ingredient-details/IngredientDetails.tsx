@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import ingredientDetailsStyles from "./ingredient-details.module.css";
-import PropTypes from "prop-types";
+import {TIngredient} from '../../services/types/ingredientTypes';
 
-const IngredientDetails = ({info}) => {
+type TInfo<TIngredient> = {
+  info: TIngredient;
+}
+
+const IngredientDetails: FC<TInfo<TIngredient>> = ({info}) => {
   return (
     <div className={`${ingredientDetailsStyles.modal_ingredient}`}>
       <p className="mt-10 ml-10 pt-3 text text_type_main-large">Детали ингредиента</p>
@@ -33,7 +37,3 @@ const IngredientDetails = ({info}) => {
 };
 
 export default IngredientDetails;
-
-IngredientDetails.propTypes = {
-  info: PropTypes.object.isRequired
-}

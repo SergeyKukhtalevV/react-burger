@@ -3,6 +3,7 @@ import styles from "./order-info.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
 
+
 const OrderInfo = ({info, ingredientsOrder}) => {
 
   const [isLoaded, setIsLoaded] = useState(false);

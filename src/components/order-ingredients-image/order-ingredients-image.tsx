@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
 import styles from "./order-ingredients-image.module.css";
+import {TIngredient, TIngredients} from '../../services/types/ingredientTypes';
 
-const OrderIngredientsImage = ({ingredientsOrder}) => {
-  const [countIngredients, setCountIngredients] = useState(0);
-  const [listIngredients, setListIngredients] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+const OrderIngredientsImage: FC<TIngredients<TIngredient>> = ({ingredients}) => {
+  const [countIngredients, setCountIngredients] = useState<number>(0);
+  const [listIngredients, setListIngredients] = useState<TIngredient[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   useEffect(() => {
-    if (ingredientsOrder) {
+    if (ingredients) {
       setIsLoaded(true);
-      if (ingredientsOrder.length > 6) {
-        setCountIngredients(ingredientsOrder.length - 6);
-        setListIngredients(ingredientsOrder.slice(0, 6));
+      if (ingredients.length > 6) {
+        setCountIngredients(ingredients.length - 6);
+        setListIngredients(ingredients.slice(0, 6));
       } else {
-        setListIngredients(ingredientsOrder);
+        setListIngredients(ingredients);
       }
     }
-  }, [ingredientsOrder]);
+  }, [ingredients]);
   return (
     isLoaded
     ? <div className={styles.icons}>
