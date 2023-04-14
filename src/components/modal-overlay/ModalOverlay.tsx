@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
 import PropTypes from "prop-types";
 import modalOverlayStyles from "../modal-overlay/modal-overlay.module.css";
 import {useLocation, useNavigate} from "react-router-dom";
 
-const ModalOverlay = ({activeModalOverlay, setActiveModalOverlay, children}) => {
+type TModalOverlay = {
+  activeModalOverlay: boolean;
+  setActiveModalOverlay: (arg: boolean) => void;
+} & React.ButtonHTMLAttributes<HTMLDivElement>;
+
+const ModalOverlay: FC<TModalOverlay> = ({activeModalOverlay, setActiveModalOverlay, children}) => {
 const navigate = useNavigate();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '/';
@@ -23,9 +28,3 @@ const navigate = useNavigate();
 };
 
 export default ModalOverlay;
-
-ModalOverlay.propTypes = {
-  activeModalOverlay: PropTypes.bool.isRequired,
-  setActiveModalOverlay: PropTypes.func.isRequired,
-  children: PropTypes.any.isRequired
-}

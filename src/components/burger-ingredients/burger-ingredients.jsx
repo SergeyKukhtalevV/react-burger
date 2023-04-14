@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, FC} from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
 import BurgerTabs from "../burger-tabs/burger-tabs";
 import BurgerElement from "../burger-element/burger-element";
@@ -13,8 +13,14 @@ import {
 } from '../../services/actions/ingredients';
 import {useLocation, useNavigate} from "react-router-dom";
 
-const BurgerIngredients = ({isActive, setModalActive}) => {
 
+// type TBurgerIngredients = {
+//   isActive: boolean;
+//   setModalActive: () => void
+// }
+
+//const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) => {
+  const BurgerIngredients = ({isActive, setModalActive}) => {
     const {
       ingredientsData,
       dataRequest,

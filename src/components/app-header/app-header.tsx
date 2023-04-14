@@ -1,14 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import appHeaderStyles from './app-header.module.css'
 import {NavLink} from "react-router-dom";
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
 
   type TisActive = {
     isActive: boolean;
   }
-  const setActive = ( {isActive}: TisActive ): string => isActive ? `${appHeaderStyles.header__link} ${appHeaderStyles.header__link_active}`
+  const setActive = ({isActive}: TisActive): string => isActive ? `${appHeaderStyles.header__link} ${appHeaderStyles.header__link_active}`
     : `${appHeaderStyles.header__link} `;
   return (
     <header className={appHeaderStyles.header}>

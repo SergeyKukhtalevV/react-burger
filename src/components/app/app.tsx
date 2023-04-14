@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, FC} from 'react';
 import appStyles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -21,12 +21,12 @@ import OrderPage from "../../pages/order";
 import FeedOrdersPage from "../../pages/feed-orders";
 import FeedOrderPage from "../../pages/feed-order";
 
-function App() {
+const App: FC = () => {
 
-  const [modalOrderActive, setModalOrderActive] = useState(false);
-  const [modalIngredientActive, setModalIngredientActive] = useState(false);
-  const [modalFeedOrderActive, setModalFeedOrderActive] = useState(false);
-  const [modalUserFeedOrderActive, setModalUserFeedOrderActive] = useState(false);
+  const [modalOrderActive, setModalOrderActive] = useState<boolean>(false);
+  const [modalIngredientActive, setModalIngredientActive] = useState<boolean>(false);
+  const [modalFeedOrderActive, setModalFeedOrderActive] = useState<boolean>(false);
+  const [modalUserFeedOrderActive, setModalUserFeedOrderActive] = useState<boolean>(false);
 
   return (
     <BrowserRouter>
