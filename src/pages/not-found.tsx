@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './authorization.module.css'
 import {Link, NavLink} from "react-router-dom";
 
-const NotFoundPage = () => {
+const NotFoundPage: FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.form}>
