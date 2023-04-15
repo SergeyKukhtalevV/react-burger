@@ -21,7 +21,7 @@ export type TIngredientsOrder = {
   ingredients: string[];
 }
 
-export type TOrders = {
+export type TOrder = {
   _id: string;
   status: 'done' | 'pending' | 'created';
   name: 'string';
@@ -30,3 +30,6 @@ export type TOrders = {
   updateAt?: string;
 } & TIngredientsOrder;
 
+export type TOrders<TOrder> = {
+  orders: TOrder[];
+}

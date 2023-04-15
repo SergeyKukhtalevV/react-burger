@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import OrderDoneSvg from "../../images/graphics.svg";
 import orderDetailsStyles from "./order-details.module.css";
-import PropTypes from "prop-types";
 
-const OrderDetails = ({orderNum}) => {
+type TOrderNum = {
+  orderNum: number;
+}
+const OrderDetails: FC<TOrderNum> = ({orderNum}) => {
   return (
 
     <div className={`${orderDetailsStyles.modal_order}`}>
@@ -24,8 +26,3 @@ const OrderDetails = ({orderNum}) => {
 };
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-  orderNum: PropTypes.any
-}
-

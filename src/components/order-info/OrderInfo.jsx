@@ -2,10 +2,9 @@ import React, {useEffect, useState} from 'react';
 import styles from "./order-info.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
-
-
 const OrderInfo = ({info, ingredientsOrder}) => {
-
+  console.log(info);
+  console.log(ingredientsOrder);
   const [isLoaded, setIsLoaded] = useState(false);
   const [orderSum, setOrderSum] = useState(0);
   const [countIngredients, setCountIngredients] = useState([]);
