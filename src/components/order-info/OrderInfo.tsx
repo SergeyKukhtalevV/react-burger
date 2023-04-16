@@ -1,13 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
 import styles from "./order-info.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {TIngredient} from '../../services/types/ingredientTypes';
+import {TOrder} from '../../services/types/orderTypes';
 
-const OrderInfo = ({info, ingredientsOrder}) => {
+type TOrderInfo = {
+  info: TOrder;
+  ingredientsOrder: TIngredient[];
+  children?: React.ReactNode
+}
+
+type TAcc = {
+  [key: string]: number;
+};
+
+
+const OrderInfo: FC<TOrderInfo> = ({info, ingredientsOrder}) => {
   console.log(info);
   console.log(ingredientsOrder);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [orderSum, setOrderSum] = useState(0);
-  const [countIngredients, setCountIngredients] = useState([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [orderSum, setOrderSum] = useState<number>(0);
+  const [countIngredients, setCountIngredients] = useState<TAcc[]>([]);
 
   useEffect(() => {
 
@@ -15,7 +28,8 @@ const OrderInfo = ({info, ingredientsOrder}) => {
       setOrderSum(ingredientsOrder.reduce((total, i) => {
         return total + i.price;
       }, 0));
-      setCountIngredients(ingredientsOrder.reduce((acc, el) => {
+      setCountIngredients(ingredientsOrder.reduce((acc: TAcc[], el): TAcc[] => {
+        // @ts-ignore
         acc[el._id] = (acc[el._id] || 0) + 1;
         return acc;
       }, []));
@@ -39,19 +53,21 @@ const OrderInfo = ({info, ingredientsOrder}) => {
         <p className={`text_type_main-medium mt-15`}>Состав:</p>
         <ul className={`${styles.ingredientsList} mt-6 pr-6`}>
           {
-            Object.keys(countIngredients).map((key, index) => {
+            Object.keys(countIngredients).map((key:string, index) => {
               return (
                 <li className={styles.ingredient} key={index}>
                   <div className={styles.ingredientContainer}>
                     <img className={styles.ingredientImage}
-                         src={ingredientsOrder.find(ingredient => ingredient._id === key).image_mobile}
-                         alt={ingredientsOrder.find(ingredient => ingredient._id === key).name}/>
+                         src={ingredientsOrder.find(ingredient => ingredient._id === key)!.image_mobile}
+                         alt={ingredientsOrder.find(ingredient => ingredient._id === key)!.name}/>
                     <p
-                      className={`${styles.name} text text_type_main-small`}>{ingredientsOrder.find(ingredient => ingredient._id === key).name}</p>
+                      className={`${styles.name} text text_type_main-small`}>{ingredientsOrder.find(ingredient => ingredient._id === key)!.name}</p>
                   </div>
                   <div className={`text text_type_main-large ${styles.ingredientPrice}`}>
                     <p
-                      className="text text_type_digits-default">{countIngredients[key]} x {ingredientsOrder.find(ingredient => ingredient._id === key).price}</p>
+                      className="text text_type_digits-default">
+                      {// @ts-ignore
+                        countIngredients[key]} x {ingredientsOrder.find(ingredient => ingredient._id === key)!.price}</p>
                     <CurrencyIcon type="primary"/>
                   </div>
                 </li>
