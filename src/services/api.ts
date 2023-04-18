@@ -1,4 +1,5 @@
 import {fetchWithRefresh, request} from "../utils/utils";
+import {TIngredient} from "./types/ingredientTypes";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
@@ -9,7 +10,15 @@ const urlUser = 'auth/user';
 export const urlLogout = 'auth/logout';
 export const urlToken = 'auth/token';
 
-export const getIngredientsRequest = async () => {
+type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
+  [key in TDataKey]: TDataType
+} & {
+  success: boolean;
+  message?: string;
+  headers?: Headers;
+};
+
+export const getIngredientsRequest = async (): Promise<TResponseBody<'data', ReadonlyArray<TIngredient>>> => {
   return await request(urlData);
 }
 

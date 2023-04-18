@@ -1,4 +1,10 @@
 import {getIngredientsRequest, getOrderNumberRequest} from "../api";
+import {AppThunk, AppDispatch} from '../types';
+import {
+  IGetIngredientsAction,
+  IGetIngredientsFailedAction,
+  IGetIngredientsSuccessAction
+} from "../types/action-types/ingredientsActionsTypes";
 import {TIngredient} from "../types/ingredientTypes";
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
@@ -21,6 +27,32 @@ export const GET_ORDER_NUMBER_FAILED: 'GET_ORDER_NUMBER_FAILED' = 'GET_ORDER_NUM
 export const GET_POSITION_TITLE: 'GET_POSITION_TITLE' = 'GET_POSITION_TITLE';
 export const GET_CURRENT_TAB: 'GET_CURRENT_TAB' = 'GET_CURRENT_TAB';
 
+export const getIngredientsAction = (): IGetIngredientsAction => ({
+  type: GET_INGREDIENTS_REQUEST
+});
+
+export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
+  type: GET_INGREDIENTS_FAILED
+});
+
+export const getIngredientsSuccessAction = ( ingredientsData: ReadonlyArray<TIngredient>): IGetIngredientsSuccessAction => ({
+  type: GET_INGREDIENTS_SUCCESS,
+  ingredientsData
+});
+
+export const getIngredients:  AppThunk = () => (dispatch: AppDispatch) => {
+    dispatch(getIngredientsAction());
+    getIngredientsRequest().then(res => {
+      if (res) {
+        dispatch(getIngredientsSuccessAction(res.data));
+      } else {
+        dispatch(getIngredientsFailedAction());
+      }
+    }).catch(err => {
+      console.log('Ошибка, запрос на получение списка ингредиентов не выполнен', err);
+    });
+}
+////////////////////////////////////////////////////////////////////////////////////////
 
 export function setCurrentTab(activeTab) {
   return function (dispatch) {
@@ -55,27 +87,27 @@ export function addIngredient(type, id, uuid) {
     }
   }
 }
-export function getIngredients() {
-  return function (dispatch) {
-    dispatch({
-      type: GET_INGREDIENTS_REQUEST
-    });
-    getIngredientsRequest().then(res => {
-      if (res) {
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          items: res.data
-        });
-      } else {
-        dispatch({
-          type: GET_INGREDIENTS_FAILED
-        });
-      }
-    }).catch(err => {
-      console.log('Ошибка, запрос на получение списка ингредиентов не выполнен', err);
-    });
-  };
-}
+// export function getIngredients() {
+//   return function (dispatch) {
+//     dispatch({
+//       type: GET_INGREDIENTS_REQUEST
+//     });
+//     getIngredientsRequest().then(res => {
+//       if (res) {
+//         dispatch({
+//           type: GET_INGREDIENTS_SUCCESS,
+//           items: res.data
+//         });
+//       } else {
+//         dispatch({
+//           type: GET_INGREDIENTS_FAILED
+//         });
+//       }
+//     }).catch(err => {
+//       console.log('Ошибка, запрос на получение списка ингредиентов не выполнен', err);
+//     });
+//   };
+// }
 
 
 export function getOrderNumber(accessToken, data) {

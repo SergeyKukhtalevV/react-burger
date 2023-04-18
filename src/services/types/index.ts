@@ -7,7 +7,7 @@ type TAllActions = TIngredientActions;
 
 export type RootState = ReturnType<typeof store.getState>;
 
-export type dispatch = <ReturnType = void>(action: AllActions | AppThunk) => ReturnType;
+export type dispatch = <ReturnType = void>(action: TAllActions | AppThunk) => ReturnType;
 
 export type AppThunk<ReturnType = void> = ActionCreator<ThunkAction<ReturnType, Action, RootState, TAllActions>>;
 
