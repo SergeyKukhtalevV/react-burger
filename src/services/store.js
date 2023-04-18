@@ -1,4 +1,4 @@
-import {applyMiddleware, createStore, compose} from 'redux';
+import {applyMiddleware, legacy_createStore as createStore, compose} from 'redux';
 import {rootReducer} from './reducers/rootReducer';
 import {socketMiddleware} from './middleware/index';
 import thunkMiddleware from 'redux-thunk';
@@ -39,7 +39,7 @@ const wsUserFeedActions = {
 };
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const initStore = (initialState = {}) =>
+  export const initStore = (initialState = {}) =>
   createStore(rootReducer, initialState, composeEnhancers(
     applyMiddleware(
       thunkMiddleware,

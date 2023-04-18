@@ -21,20 +21,6 @@ export const GET_ORDER_NUMBER_FAILED: 'GET_ORDER_NUMBER_FAILED' = 'GET_ORDER_NUM
 export const GET_POSITION_TITLE: 'GET_POSITION_TITLE' = 'GET_POSITION_TITLE';
 export const GET_CURRENT_TAB: 'GET_CURRENT_TAB' = 'GET_CURRENT_TAB';
 
-export interface IGetIngredientsAction {
-  readonly type: typeof GET_INGREDIENTS_REQUEST;
-}
-
-export interface IGetIngredientsSuccessAction {
-  readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly ingredientsData: TIngredient[];
-
-}
-
-export interface IGetIngredientsFailedAction {
-  readonly type: typeof GET_INGREDIENTS_FAILED;
-}
-
 
 export function setCurrentTab(activeTab) {
   return function (dispatch) {
