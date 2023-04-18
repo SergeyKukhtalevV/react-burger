@@ -1,5 +1,6 @@
 import {fetchWithRefresh, request} from "../utils/utils";
 import {TIngredient} from "./types/ingredientTypes";
+import {TOrder} from "./types/orderTypes";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
@@ -22,7 +23,8 @@ export const getIngredientsRequest = async (): Promise<TResponseBody<'data', Rea
   return await request(urlData);
 }
 
-export const getOrderNumberRequest = async (accessToken, orderInfo) => {
+export const getOrderNumberRequest = async (accessToken:string, orderInfo: string[]):
+  Promise<TResponseBody<'order', TOrder>> => {
   return await fetchWithRefresh(urlOrder, {
       method: 'POST',
       headers: {

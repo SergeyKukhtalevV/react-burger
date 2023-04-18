@@ -13,6 +13,7 @@ export type TIngredient = {
   __v: number;
   uuid?: string;
 }
+export type TtypeIngredient = 'Булки' | 'Соусы' | 'Начинки';
 
 export type TIngredients<TIngredient> = {
   ingredients: TIngredient[];

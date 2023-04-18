@@ -3,9 +3,12 @@ import {AppThunk, AppDispatch} from '../types';
 import {
   IGetIngredientsAction,
   IGetIngredientsFailedAction,
-  IGetIngredientsSuccessAction
+  IGetIngredientsSuccessAction, IGetOrderNumberAction, IGetOrderNumberFailedAction, IGetOrderNumberSuccessAction,
+  IRemoveBunFromConstructor, ISetBunInConstructor,
+  ISetCurrentTabAction,
+  ISetIngredientInConstructor
 } from "../types/action-types/ingredientsActionsTypes";
-import {TIngredient} from "../types/ingredientTypes";
+import {TIngredient, TtypeIngredient} from "../types/ingredientTypes";
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -53,40 +56,78 @@ export const getIngredients:  AppThunk = () => (dispatch: AppDispatch) => {
     });
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+export const setCurrentTabAction = ( item: TtypeIngredient): ISetCurrentTabAction => ({
+  type: GET_CURRENT_TAB,
+  item
+});
 
-export function setCurrentTab(activeTab) {
-  return function (dispatch) {
-    dispatch({
-      type: GET_CURRENT_TAB,
-      item: activeTab
-    })
-  }
+export const setCurrentTab: AppThunk = (activeTab: TtypeIngredient) => (dispatch: AppDispatch) => {
+  dispatch(setCurrentTabAction(activeTab));
 }
 
-export function addIngredient(type, id, uuid) {
-  return function (dispatch) {
+// export function setCurrentTab(activeTab) {
+//   return function (dispatch) {
+//     dispatch({
+//       type: GET_CURRENT_TAB,
+//       item: activeTab
+//     })
+//   }
+// }
+///////////////////////////////////////////////////////////////////////////////////////
+export const setIngredientInConstructorAction = (id: string, uuid: string): ISetIngredientInConstructor => ({
+  type: SET_INGREDIENT_IN_CONSTRUCTOR,
+  id,
+  uuid
+});
+
+export const removeBunFromConstructorAction = (id: string, uuid: string, type: string): IRemoveBunFromConstructor => ({
+  type: REMOVE_BUN_FROM_CONSTRUCTOR,
+  id,
+  uuid,
+  ingr: type
+});
+
+export const setBunInConstructorAction = ( id: string, uuid: string, type: string): ISetBunInConstructor => ({
+  type: SET_BUN_IN_CONSTRUCTOR,
+  id,
+  uuid,
+  ingr: type
+});
+
+
+export const addIngredient: AppThunk = (id: string, uuid: string, type: string) => (dispatch: AppDispatch) =>  {
     if (type !== 'bun') {
-      dispatch({
-        type: SET_INGREDIENT_IN_CONSTRUCTOR,
-        id,
-        uuid
-      })
+      dispatch(setIngredientInConstructorAction(id, uuid));
     } else {
-      dispatch({
-        type: REMOVE_BUN_FROM_CONSTRUCTOR,
-        id,
-        uuid,
-        ingr: type
-      });
-      dispatch({
-        type: SET_BUN_IN_CONSTRUCTOR,
-        id,
-        uuid,
-        ingr: type
-      });
+      dispatch(removeBunFromConstructorAction(id, uuid,type));
+      dispatch(setBunInConstructorAction(id, uuid,type));
     }
   }
-}
+// export function addIngredient(type, id, uuid) {
+//   return function (dispatch) {
+//     if (type !== 'bun') {
+//       dispatch({
+//         type: SET_INGREDIENT_IN_CONSTRUCTOR,
+//         id,
+//         uuid
+//       })
+//     } else {
+//       dispatch({
+//         type: REMOVE_BUN_FROM_CONSTRUCTOR,
+//         id,
+//         uuid,
+//         ingr: type
+//       });
+//       dispatch({
+//         type: SET_BUN_IN_CONSTRUCTOR,
+//         id,
+//         uuid,
+//         ingr: type
+//       });
+//     }
+//   }
+// }
+////////////////////////////////////////////////////////////////////////
 // export function getIngredients() {
 //   return function (dispatch) {
 //     dispatch({
@@ -109,12 +150,20 @@ export function addIngredient(type, id, uuid) {
 //   };
 // }
 
+export const getOrderNumberAction = (): IGetOrderNumberAction => ({
+  type: GET_ORDER_NUMBER_REQUEST
+});
 
-export function getOrderNumber(accessToken, data) {
-  return function (dispatch) {
-    dispatch({
-      type: GET_ORDER_NUMBER_REQUEST
-    });
+export const getOrderNumberFailedAction = (): IGetOrderNumberFailedAction => ({
+  type: GET_ORDER_NUMBER_FAILED
+});
+
+export const getOrderNumberSuccessAction = ( item: number): IGetOrderNumberSuccessAction => ({
+  type: GET_ORDER_NUMBER_SUCCESS,
+  item
+});
+export const getOrderNumber: AppThunk = (accessToken: string, data: string[]) => (dispatch: AppDispatch) =>  {
+    dispatch(getOrderNumberAction());
     getOrderNumberRequest(accessToken, data).then(res => {
       if (res) {
         dispatch({
@@ -122,9 +171,7 @@ export function getOrderNumber(accessToken, data) {
           item: res.order.number
         });
       } else {
-        dispatch({
-          type: GET_ORDER_NUMBER_FAILED
-        });
+        dispatch(getOrderNumberFailedAction());
       }
     })
       .catch(err => {
@@ -132,3 +179,29 @@ export function getOrderNumber(accessToken, data) {
       });
   };
 }
+
+
+
+
+// export function getOrderNumber(accessToken, data) {
+//   return function (dispatch) {
+//     dispatch({
+//       type: GET_ORDER_NUMBER_FAILED
+//     });
+//     getOrderNumberRequest(accessToken, data).then(res => {
+//       if (res) {
+//         dispatch({
+//           type: GET_ORDER_NUMBER_SUCCESS,
+//           item: res.order.number
+//         });
+//       } else {
+//         dispatch({
+//           type: GET_ORDER_NUMBER_FAILED
+//         });
+//       }
+//     })
+//       .catch(err => {
+//         console.log('Ошибка, запрос на получение номера заказа не выполнен', err);
+//       });
+//   };
+// }

@@ -1,4 +1,4 @@
-import {TIngredient} from "../ingredientTypes";
+import {TIngredient, TtypeIngredient} from "../ingredientTypes";
 import {
   GET_CURRENT_TAB,
   GET_INGREDIENTS_FAILED,
@@ -7,7 +7,8 @@ import {
   GET_ORDER_NUMBER_FAILED,
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
-  REMOVE_BUN_FROM_CONSTRUCTOR, SET_BUN_IN_CONSTRUCTOR,
+  REMOVE_BUN_FROM_CONSTRUCTOR,
+  SET_BUN_IN_CONSTRUCTOR,
   SET_INGREDIENT_IN_CONSTRUCTOR
 } from "../../actions";
 
@@ -27,7 +28,7 @@ export interface IGetIngredientsFailedAction {
 
 export interface ISetCurrentTabAction {
   readonly type: typeof GET_CURRENT_TAB;
-  readonly item: 'Булки' | 'Соусы' | 'Начинки';
+  readonly item: TtypeIngredient;
 }
 
 export interface ISetIngredientInConstructor {
@@ -43,7 +44,7 @@ export interface IRemoveBunFromConstructor {
   readonly ingr: string;
 }
 
-export interface ISetBunFromConstructor {
+export interface ISetBunInConstructor {
   readonly type: typeof SET_BUN_IN_CONSTRUCTOR;
   readonly id: string;
   readonly uuid: string;
@@ -67,7 +68,7 @@ export interface IGetOrderNumberFailedAction {
 export type TIngredientActions =
   | IGetIngredientsAction
   | IGetOrderNumberAction
-  | ISetBunFromConstructor
+  | ISetBunInConstructor
   | IRemoveBunFromConstructor
   | IGetOrderNumberFailedAction
   | IGetIngredientsSuccessAction
