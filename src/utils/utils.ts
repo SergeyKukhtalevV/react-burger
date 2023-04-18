@@ -25,7 +25,7 @@ export const request = (endPoint: string, options?: TOption<TOptionHeaders>): Pr
 }
 
 //******
-export const fetchWithRefresh = async (url: string, options: TOption<TOptionHeaders>): Promise<Response> => {
+export const fetchWithRefresh = async (url: string, options: TOption<TOptionHeaders>)=> {
   try {
     return await request(url, options);
   } catch (err: any) {

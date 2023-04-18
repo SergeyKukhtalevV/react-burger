@@ -166,10 +166,7 @@ export const getOrderNumber: AppThunk = (accessToken: string, data: string[]) =>
     dispatch(getOrderNumberAction());
     getOrderNumberRequest(accessToken, data).then(res => {
       if (res) {
-        dispatch({
-          type: GET_ORDER_NUMBER_SUCCESS,
-          item: res.order.number
-        });
+        dispatch(getOrderNumberSuccessAction(res.order.number));
       } else {
         dispatch(getOrderNumberFailedAction());
       }
@@ -177,8 +174,7 @@ export const getOrderNumber: AppThunk = (accessToken: string, data: string[]) =>
       .catch(err => {
         console.log('Ошибка, запрос на получение номера заказа не выполнен', err);
       });
-  };
-}
+  }
 
 
 
