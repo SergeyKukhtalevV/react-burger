@@ -1,6 +1,15 @@
 import {fetchWithRefresh, request} from "../utils/utils";
 import {TIngredient} from "./types/ingredientTypes";
 import {TOrder} from "./types/orderTypes";
+import {
+  TAuthUser,
+  TForgotPassUser,
+  TGettingInfoUser,
+  TNewPassUser,
+  TNewToken,
+  TRegisterUser,
+  TSettingInfoUser
+} from "./types/userTypes";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
@@ -37,7 +46,7 @@ export const getOrderNumberRequest = async (accessToken:string, orderInfo: strin
   });
 }
 
-export const setRegisterUserRequest = async (data) => {
+export const setRegisterUserRequest = async (data: TRegisterUser) => {
   return await request(urlRegister, {
     method: 'POST',
     headers: {
@@ -51,7 +60,7 @@ export const setRegisterUserRequest = async (data) => {
   });
 }
 
-export const getAuthUserRequest = async (data) => {
+export const getAuthUserRequest = async (data: TAuthUser) => {
   return await request(urlLogin, {
     method: 'POST',
     headers: {
@@ -64,7 +73,7 @@ export const getAuthUserRequest = async (data) => {
   });
 }
 
-export const getUserNewPasswordRequest = async (data) => {
+export const getUserNewPasswordRequest = async (data: TForgotPassUser) => {
   return await request(urlPasReset, {
     method: 'POST',
     headers: {
@@ -76,7 +85,7 @@ export const getUserNewPasswordRequest = async (data) => {
   });
 }
 
-export const setUserNewPasswordRequest = async (data) => {
+export const setUserNewPasswordRequest = async (data: TNewPassUser) => {
   return await fetchWithRefresh(urlPasReset, {
     method: 'POST',
     headers: {
@@ -89,7 +98,7 @@ export const setUserNewPasswordRequest = async (data) => {
   });
 }
 
-export const getUserInfoRequest = async (data) => {
+export const getUserInfoRequest = async (data: TGettingInfoUser) => {
   return await fetchWithRefresh(urlUser, {
     method: 'GET',
     headers: {
@@ -99,7 +108,7 @@ export const getUserInfoRequest = async (data) => {
   });
 }
 
-export const setUserInfoRequest = async (data) => {
+export const setUserInfoRequest = async (data: TSettingInfoUser) => {
   return await fetchWithRefresh(urlUser, {
     method: 'PATCH',
     headers: {
@@ -114,7 +123,7 @@ export const setUserInfoRequest = async (data) => {
   });
 }
 
-export const getTokenRequest = async (url, data) => {
+export const getTokenRequest = async (url: string, data: TNewToken) => {
   return await request(url, {
     method: 'POST',
     headers: {

@@ -64,15 +64,6 @@ export const setCurrentTabAction = ( item: TtypeIngredient): ISetCurrentTabActio
 export const setCurrentTab: AppThunk = (activeTab: TtypeIngredient) => (dispatch: AppDispatch) => {
   dispatch(setCurrentTabAction(activeTab));
 }
-
-// export function setCurrentTab(activeTab) {
-//   return function (dispatch) {
-//     dispatch({
-//       type: GET_CURRENT_TAB,
-//       item: activeTab
-//     })
-//   }
-// }
 ///////////////////////////////////////////////////////////////////////////////////////
 export const setIngredientInConstructorAction = (id: string, uuid: string): ISetIngredientInConstructor => ({
   type: SET_INGREDIENT_IN_CONSTRUCTOR,
@@ -103,52 +94,6 @@ export const addIngredient: AppThunk = (id: string, uuid: string, type: string) 
       dispatch(setBunInConstructorAction(id, uuid,type));
     }
   }
-// export function addIngredient(type, id, uuid) {
-//   return function (dispatch) {
-//     if (type !== 'bun') {
-//       dispatch({
-//         type: SET_INGREDIENT_IN_CONSTRUCTOR,
-//         id,
-//         uuid
-//       })
-//     } else {
-//       dispatch({
-//         type: REMOVE_BUN_FROM_CONSTRUCTOR,
-//         id,
-//         uuid,
-//         ingr: type
-//       });
-//       dispatch({
-//         type: SET_BUN_IN_CONSTRUCTOR,
-//         id,
-//         uuid,
-//         ingr: type
-//       });
-//     }
-//   }
-// }
-////////////////////////////////////////////////////////////////////////
-// export function getIngredients() {
-//   return function (dispatch) {
-//     dispatch({
-//       type: GET_INGREDIENTS_REQUEST
-//     });
-//     getIngredientsRequest().then(res => {
-//       if (res) {
-//         dispatch({
-//           type: GET_INGREDIENTS_SUCCESS,
-//           items: res.data
-//         });
-//       } else {
-//         dispatch({
-//           type: GET_INGREDIENTS_FAILED
-//         });
-//       }
-//     }).catch(err => {
-//       console.log('Ошибка, запрос на получение списка ингредиентов не выполнен', err);
-//     });
-//   };
-// }
 
 export const getOrderNumberAction = (): IGetOrderNumberAction => ({
   type: GET_ORDER_NUMBER_REQUEST
@@ -175,29 +120,3 @@ export const getOrderNumber: AppThunk = (accessToken: string, data: string[]) =>
         console.log('Ошибка, запрос на получение номера заказа не выполнен', err);
       });
   }
-
-
-
-
-// export function getOrderNumber(accessToken, data) {
-//   return function (dispatch) {
-//     dispatch({
-//       type: GET_ORDER_NUMBER_FAILED
-//     });
-//     getOrderNumberRequest(accessToken, data).then(res => {
-//       if (res) {
-//         dispatch({
-//           type: GET_ORDER_NUMBER_SUCCESS,
-//           item: res.order.number
-//         });
-//       } else {
-//         dispatch({
-//           type: GET_ORDER_NUMBER_FAILED
-//         });
-//       }
-//     })
-//       .catch(err => {
-//         console.log('Ошибка, запрос на получение номера заказа не выполнен', err);
-//       });
-//   };
-// }

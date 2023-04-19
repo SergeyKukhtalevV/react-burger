@@ -19,7 +19,7 @@ export const checkResponse = (res: any) => {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export const request = (endPoint: string, options?: TOption<TOptionHeaders>): Promise<any> => {
+export const request = (endPoint: string, options?: TOption<TOptionHeaders>) => {
   // принимает два аргумента: урл и объект опций, как и `fetch`
   return fetch(URL_API + endPoint, options).then(checkResponse);
 }
@@ -30,7 +30,7 @@ export const fetchWithRefresh = async (url: string, options: TOption<TOptionHead
     return await request(url, options);
   } catch (err: any) {
     if (err.message === 'jwt expired') {
-      const refreshData: any = await getTokenRequest(urlToken, {token: getCookie('token')});
+      const refreshData: any = await getTokenRequest(urlToken, {token: getCookie('token')!});
       if (!refreshData.success) {
         await Promise.reject(refreshData);
       }
