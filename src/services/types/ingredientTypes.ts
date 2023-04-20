@@ -13,13 +13,13 @@ export type TIngredient = {
   __v: number;
   uuid?: string;
 }
-export type TtypeIngredient = 'Булки' | 'Соусы' | 'Начинки';
+export type TTypeIngredient = 'Булки' | 'Соусы' | 'Начинки';
 
 export type TIngredients<TIngredient> = {
   ingredients: TIngredient[];
 }
 
-export type TIngredientState<TIngredient> = {
+export type TIngredientState = {
   ingredientsData: TIngredient[];
   dataRequest: boolean;
   dataFailed: boolean;
@@ -34,7 +34,7 @@ export type TIngredientState<TIngredient> = {
   orderNumberRequest: boolean;
   orderNumberFailed: boolean;
 
-  tabsNames: {id: number, name: 'Булки' | 'Соусы' | 'Начинки', type: 'bun' | 'sauce' | 'main'}[];
+  tabsNames: {id: number, name: TTypeIngredient, type: 'bun' | 'sauce' | 'main'}[];
   scrollPosition: number | null;
-  currentTab: 'Булки' | 'Соусы' | 'Начинки';
+  currentTab: TTypeIngredient;
 }

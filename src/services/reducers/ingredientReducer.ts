@@ -18,7 +18,7 @@ import {
 import {TIngredient, TIngredientState} from "../types/ingredientTypes";
 import {TIngredientActions} from "../types/action-types/ingredientsActionsTypes";
 
-const initialState: TIngredientState<TIngredient> = {
+const initialState: TIngredientState = {
   ingredientsData: [],
   dataRequest: false,
   dataFailed: false,
@@ -39,7 +39,7 @@ const initialState: TIngredientState<TIngredient> = {
   scrollPosition: null,
   currentTab: 'Булки'
 };
-export const ingredientReducer = (state = initialState, action: TIngredientActions) => {
+export const ingredientReducer = (state = initialState, action: TIngredientActions): TIngredientState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -62,8 +62,10 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
           item._id === action.id ? {...item, __v: ++item.__v} : item),
-        ingredientsConstructor: [...state.ingredientsConstructor, {...[...state.ingredientsData].filter(item =>
-          item._id === action.id)[0], uuid: action.uuid}]
+        ingredientsConstructor: [...state.ingredientsConstructor, {
+          ...[...state.ingredientsData].filter(item =>
+            item._id === action.id)[0], uuid: action.uuid
+        }]
       }
     }
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
@@ -115,7 +117,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
     case REMOVE_CURRENT_INGREDIENT: {
       return {
         ...state,
-        currentIngredient: {}
+        currentIngredient: {} as TIngredient
       }
     }
     case GET_ORDER_NUMBER_REQUEST: {

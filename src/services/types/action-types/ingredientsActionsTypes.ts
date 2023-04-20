@@ -1,4 +1,4 @@
-import {TIngredient, TtypeIngredient} from "../ingredientTypes";
+import {TIngredient, TTypeIngredient} from "../ingredientTypes";
 import {
   DRAG_CURRENT_ELEMENT,
   GET_CURRENT_TAB,
@@ -19,7 +19,7 @@ export interface IGetIngredientsAction {
 
 export interface IGetIngredientsSuccessAction {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly items: ReadonlyArray<TIngredient>;
+  readonly items: TIngredient[];
 
 }
 
@@ -29,7 +29,7 @@ export interface IGetIngredientsFailedAction {
 
 export interface ISetCurrentTabAction {
   readonly type: typeof GET_CURRENT_TAB;
-  readonly item: TtypeIngredient;
+  readonly item: TTypeIngredient;
 }
 
 export interface ISetIngredientInConstructor {

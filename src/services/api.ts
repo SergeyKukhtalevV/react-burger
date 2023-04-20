@@ -28,7 +28,7 @@ type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
   headers?: Headers;
 };
 
-export const getIngredientsRequest = async (): Promise<TResponseBody<'data', ReadonlyArray<TIngredient>>> => {
+export const getIngredientsRequest = async (): Promise<TResponseBody<'data', Array<TIngredient>>> => {
   return await request(urlData);
 }
 

@@ -8,7 +8,7 @@ import {
   ISetCurrentTabAction,
   ISetIngredientInConstructor
 } from "../types/action-types/ingredientsActionsTypes";
-import {TIngredient, TtypeIngredient} from "../types/ingredientTypes";
+import {TIngredient, TTypeIngredient} from "../types/ingredientTypes";
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -38,9 +38,9 @@ export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
   type: GET_INGREDIENTS_FAILED
 });
 
-export const getIngredientsSuccessAction = ( ingredientsData: ReadonlyArray<TIngredient>): IGetIngredientsSuccessAction => ({
+export const getIngredientsSuccessAction = (items: TIngredient[]): IGetIngredientsSuccessAction => ({
   type: GET_INGREDIENTS_SUCCESS,
-  ingredientsData
+  items
 });
 
 export const getIngredients:  AppThunk = () => (dispatch: AppDispatch) => {
@@ -56,12 +56,12 @@ export const getIngredients:  AppThunk = () => (dispatch: AppDispatch) => {
     });
 }
 ////////////////////////////////////////////////////////////////////////////////////////
-export const setCurrentTabAction = ( item: TtypeIngredient): ISetCurrentTabAction => ({
+export const setCurrentTabAction = ( item: TTypeIngredient): ISetCurrentTabAction => ({
   type: GET_CURRENT_TAB,
   item
 });
 
-export const setCurrentTab: AppThunk = (activeTab: TtypeIngredient) => (dispatch: AppDispatch) => {
+export const setCurrentTab: AppThunk = (activeTab: TTypeIngredient) => (dispatch: AppDispatch) => {
   dispatch(setCurrentTabAction(activeTab));
 }
 ///////////////////////////////////////////////////////////////////////////////////////

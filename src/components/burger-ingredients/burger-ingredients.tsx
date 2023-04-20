@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, FC, SyntheticEvent} from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
 import BurgerTabs from "../burger-tabs/burger-tabs";
 import BurgerElement from "../burger-element/burger-element";
-import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import {useDispatch, useSelector} from '../../services/hooks';
@@ -12,6 +11,7 @@ import {
   SET_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT
 } from '../../services/actions/ingredients';
 import {useLocation, useNavigate} from "react-router-dom";
+import {TIngredient} from "../../services/types/ingredientTypes";
 
 
 type TBurgerIngredients = {
@@ -54,10 +54,10 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
       }
     }, [dispatch, isActive]);
 
-    const handleScroll = (e: SyntheticEvent) => {
-      const j = tabsNames.map((item, index) => {
-        return e.target.childNodes[index].getBoundingClientRect().top - e.target.getBoundingClientRect().top;
-      }).findIndex((element) => {
+    const handleScroll = (event: SyntheticEvent<Element, Event> & { target: Element; }) => {
+      const j = tabsNames.map((item: any, index: number) => {
+        return (event.target.childNodes[index] as Element).getBoundingClientRect().top - event.target.getBoundingClientRect().top;
+      }).findIndex((element: number) => {
         return element >= 0
       });
       if (j >= 0) {
@@ -67,7 +67,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
       }
     }
 
-    const setCurrentIngredient = useCallback((id) => {
+    const setCurrentIngredient = useCallback((id: string) => {
       setModalActive(true);
       dispatch({
         type: SET_CURRENT_INGREDIENT,
@@ -76,7 +76,8 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
       navigate(`/ingredients/${id}`, {state: {from: location}});
     }, [dispatch, navigate, setModalActive, location]);
 
-    return (
+
+  return (
       <section>
         <h1 className={`mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
         <BurgerTabs/>
@@ -84,9 +85,11 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
           dataRequest && !dataFailed
             ? <p className="text text_type_main-medium">Идет загрузка...</p>
             :
-            <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`} onScroll={handleScroll}>
+            <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`}
+              // @ts-ignore
+              onScroll={handleScroll}>
               {
-                tabsNames.map(type => {
+                tabsNames.map((type: any) => {
                   return (
                     <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
                       <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
@@ -94,7 +97,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
                       </p>
                       <ul className={`mt-6 mb-10 ${burgerIngredientsStyles.cards}`}>
                         {
-                          ingredientsData.map(info => {
+                          ingredientsData.map((info: TIngredient) => {
                             if (type.type === info.type) {
                               return (
                                 <BurgerElement props={info} key={info._id}
@@ -121,7 +124,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
 
 export default BurgerIngredients;
 
-BurgerIngredients.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  setModalActive: PropTypes.func.isRequired
-}
+// BurgerIngredients.propTypes = {
+//   isActive: PropTypes.bool.isRequired,
+//   setModalActive: PropTypes.func.isRequired
+// }
