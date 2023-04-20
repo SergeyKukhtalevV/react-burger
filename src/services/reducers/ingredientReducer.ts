@@ -11,19 +11,23 @@ import {
   GET_CURRENT_TAB,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   SET_BUN_IN_CONSTRUCTOR,
-  REMOVE_BUN_FROM_CONSTRUCTOR, DRAG_CURRENT_ELEMENT, SET_DRAGGING_ELEMENT
+  REMOVE_BUN_FROM_CONSTRUCTOR,
+  DRAG_CURRENT_ELEMENT,
+  SET_DRAGGING_ELEMENT
 } from '../actions/ingredients';
+import {TIngredient, TIngredientState} from "../types/ingredientTypes";
+import {TIngredientActions} from "../types/action-types/ingredientsActionsTypes";
 
-const initialState = {
+const initialState: TIngredientState<TIngredient> = {
   ingredientsData: [],
   dataRequest: false,
   dataFailed: false,
 
   ingredientsConstructor: [],
-  dragIngredientInConstructor: {},
-  currentIngredient: {},
+  dragIngredientInConstructor: {} as TIngredient,
+  currentIngredient: {} as TIngredient,
 
-  createdOrder: {},
+  createdOrder: {} as TIngredient,
 
   orderNumber: null,
   orderNumberRequest: false,
@@ -35,7 +39,7 @@ const initialState = {
   scrollPosition: null,
   currentTab: 'Булки'
 };
-export const ingredientReducer = (state = initialState, action) => {
+export const ingredientReducer = (state = initialState, action: TIngredientActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

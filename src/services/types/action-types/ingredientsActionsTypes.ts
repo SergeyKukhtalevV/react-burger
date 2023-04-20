@@ -1,5 +1,6 @@
 import {TIngredient, TtypeIngredient} from "../ingredientTypes";
 import {
+  DRAG_CURRENT_ELEMENT,
   GET_CURRENT_TAB,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
@@ -7,8 +8,8 @@ import {
   GET_ORDER_NUMBER_FAILED,
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
-  REMOVE_BUN_FROM_CONSTRUCTOR,
-  SET_BUN_IN_CONSTRUCTOR,
+  REMOVE_BUN_FROM_CONSTRUCTOR, REMOVE_CURRENT_INGREDIENT, REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+  SET_BUN_IN_CONSTRUCTOR, SET_CURRENT_INGREDIENT, SET_DRAGGING_ELEMENT,
   SET_INGREDIENT_IN_CONSTRUCTOR
 } from "../../actions";
 
@@ -18,7 +19,7 @@ export interface IGetIngredientsAction {
 
 export interface IGetIngredientsSuccessAction {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly ingredientsData: ReadonlyArray<TIngredient>;
+  readonly items: ReadonlyArray<TIngredient>;
 
 }
 
@@ -33,6 +34,12 @@ export interface ISetCurrentTabAction {
 
 export interface ISetIngredientInConstructor {
   readonly type: typeof SET_INGREDIENT_IN_CONSTRUCTOR;
+  readonly id: string;
+  readonly uuid: string;
+}
+
+export interface IRemoveIngredientFromConstructor {
+  readonly type: typeof REMOVE_INGREDIENT_FROM_CONSTRUCTOR;
   readonly id: string;
   readonly uuid: string;
 }
@@ -65,6 +72,25 @@ export interface IGetOrderNumberFailedAction {
   readonly type: typeof GET_ORDER_NUMBER_FAILED;
 }
 
+export interface IDragCurrentElementAction {
+  readonly type: typeof DRAG_CURRENT_ELEMENT;
+  readonly dragIndex: number;
+}
+
+export interface ISetDragElementAction {
+  readonly type: typeof SET_DRAGGING_ELEMENT;
+  readonly hoverIndex: number;
+}
+
+export interface ISetCurrentIngredientAction {
+  readonly type: typeof SET_CURRENT_INGREDIENT;
+  readonly id: string;
+}
+
+export interface IRemoveCurrentIngredientAction {
+  readonly type: typeof REMOVE_CURRENT_INGREDIENT;
+}
+
 export type TIngredientActions =
   | IGetIngredientsAction
   | IGetOrderNumberAction
@@ -75,4 +101,9 @@ export type TIngredientActions =
   | IGetOrderNumberSuccessAction
   | ISetCurrentTabAction
   | ISetIngredientInConstructor
-  | IGetIngredientsFailedAction;
+  | IRemoveIngredientFromConstructor
+  | IGetIngredientsFailedAction
+  | IDragCurrentElementAction
+  | ISetDragElementAction
+  | ISetCurrentIngredientAction
+  | IRemoveCurrentIngredientAction;

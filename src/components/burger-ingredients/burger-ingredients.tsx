@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, FC} from 'react';
+import React, {useCallback, useEffect, FC, SyntheticEvent} from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
 import BurgerTabs from "../burger-tabs/burger-tabs";
 import BurgerElement from "../burger-element/burger-element";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from '../../services/hooks';
 import {
   setCurrentTab,
   getIngredients,
@@ -14,13 +14,13 @@ import {
 import {useLocation, useNavigate} from "react-router-dom";
 
 
-// type TBurgerIngredients = {
-//   isActive: boolean;
-//   setModalActive: () => void
-// }
+type TBurgerIngredients = {
+  isActive: boolean;
+  setModalActive: (arg: boolean) => void
+}
 
-//const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) => {
-  const BurgerIngredients = ({isActive, setModalActive}) => {
+const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) => {
+ //const BurgerIngredients = ({isActive, setModalActive}) => {
     const {
       ingredientsData,
       dataRequest,
@@ -54,7 +54,7 @@ import {useLocation, useNavigate} from "react-router-dom";
       }
     }, [dispatch, isActive]);
 
-    const handleScroll = (e) => {
+    const handleScroll = (e: SyntheticEvent) => {
       const j = tabsNames.map((item, index) => {
         return e.target.childNodes[index].getBoundingClientRect().top - e.target.getBoundingClientRect().top;
       }).findIndex((element) => {
