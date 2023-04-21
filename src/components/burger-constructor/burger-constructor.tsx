@@ -4,10 +4,7 @@ import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-deve
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {useDispatch, useSelector} from '../../services/hooks';
-import {
-  addIngredient,
-  getOrderNumber
-} from "../../services/actions";
+import {addIngredient, getOrderNumber} from "../../services/actions";
 import {useDrop} from "react-dnd";
 
 // @ts-ignore
@@ -24,7 +21,8 @@ type TBurgerIngredients = {
   setModalActive: (arg: boolean) => void
 }
 
-const BurgerConstructor: FC<TBurgerIngredients> = ({setModalActive, isActive}) => {
+const BurgerConstructor: FC<TBurgerIngredients> =
+  ({setModalActive, isActive}) => {
     const token = getCookie('token');
     const navigate = useNavigate();
     const {
@@ -42,18 +40,18 @@ const BurgerConstructor: FC<TBurgerIngredients> = ({setModalActive, isActive}) =
       }),
       drop(item: any) {
         const elem: TIngredient = ingredientsData.filter((ingr: TIngredient) => ingr._id === item.id)[0];
-        dispatch(addIngredient(elem.type, elem._id, uuidv4()));
+        dispatch(addIngredient(elem._id, uuidv4(), elem.type));
       },
     });
     const dispatch = useDispatch();
 
-    const getBunInConstructor = () => {
+    const getBunInConstructor = (): TIngredient => {
       return ingredientsConstructor.filter((info: TIngredient) => info.type === 'bun')[0];
     }
 
     const getOrder = () => {
       if (accessToken) {
-        const data = [[...ingredientsConstructor]
+        const data: TIngredient[] = [[...ingredientsConstructor]
           .filter(info => info.type === 'bun')[0],
           ...ingredientsConstructor.filter((info: TIngredient) => info.type !== 'bun'),
           [...ingredientsConstructor].filter((info: TIngredient) => info.type === 'bun')[0]];
@@ -80,8 +78,7 @@ const BurgerConstructor: FC<TBurgerIngredients> = ({setModalActive, isActive}) =
     }, [ingredientsConstructor]);
 
     useEffect(() => {
-      if(token)
-      {
+      if (token) {
         dispatch(getUserInfo({accessToken}));
       }
 

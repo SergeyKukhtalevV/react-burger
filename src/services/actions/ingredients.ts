@@ -1,11 +1,20 @@
 import {getIngredientsRequest, getOrderNumberRequest} from "../api";
 import {AppThunk, AppDispatch} from '../types';
 import {
+  IDragCurrentElementAction,
   IGetIngredientsAction,
   IGetIngredientsFailedAction,
-  IGetIngredientsSuccessAction, IGetOrderNumberAction, IGetOrderNumberFailedAction, IGetOrderNumberSuccessAction,
-  IRemoveBunFromConstructor, ISetBunInConstructor,
+  IGetIngredientsSuccessAction,
+  IGetOrderNumberAction,
+  IGetOrderNumberFailedAction,
+  IGetOrderNumberSuccessAction,
+  IRemoveBunFromConstructor,
+  IRemoveCurrentIngredientAction,
+  IRemoveIngredientFromConstructor,
+  ISetBunInConstructor,
+  ISetCurrentIngredientAction,
   ISetCurrentTabAction,
+  ISetDragElementAction,
   ISetIngredientInConstructor
 } from "../types/action-types/ingredientsActionsTypes";
 import {TIngredient, TTypeIngredient} from "../types/ingredientTypes";
@@ -71,10 +80,15 @@ export const setIngredientInConstructorAction = (id: string, uuid: string): ISet
   uuid
 });
 
-export const removeBunFromConstructorAction = (id: string, uuid: string, type: string): IRemoveBunFromConstructor => ({
-  type: REMOVE_BUN_FROM_CONSTRUCTOR,
+export const removeIngredientFromConstructorAction = (id: string, uuid: string): IRemoveIngredientFromConstructor => ({
+  type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   id,
-  uuid,
+  uuid
+});
+
+
+export const removeBunFromConstructorAction = (type: string): IRemoveBunFromConstructor => ({
+  type: REMOVE_BUN_FROM_CONSTRUCTOR,
   ingr: type
 });
 
@@ -85,12 +99,20 @@ export const setBunInConstructorAction = ( id: string, uuid: string, type: strin
   ingr: type
 });
 
+export const setCurrentIngredientAction = (id: string): ISetCurrentIngredientAction => ({
+  type: SET_CURRENT_INGREDIENT,
+  id
+});
+
+export const removeCurrentIngredientAction = (): IRemoveCurrentIngredientAction => ({
+  type: REMOVE_CURRENT_INGREDIENT
+});
 
 export const addIngredient: AppThunk = (id: string, uuid: string, type: string) => (dispatch: AppDispatch) =>  {
     if (type !== 'bun') {
       dispatch(setIngredientInConstructorAction(id, uuid));
     } else {
-      dispatch(removeBunFromConstructorAction(id, uuid,type));
+      dispatch(removeBunFromConstructorAction(type));
       dispatch(setBunInConstructorAction(id, uuid,type));
     }
   }
@@ -120,3 +142,15 @@ export const getOrderNumber: AppThunk = (accessToken: string, data: string[]) =>
         console.log('Ошибка, запрос на получение номера заказа не выполнен', err);
       });
   }
+
+export const dragCurrentElementAction = ( dragIndex: number, hoverIndex: number): IDragCurrentElementAction => ({
+  type: DRAG_CURRENT_ELEMENT,
+  dragIndex,
+  hoverIndex
+});
+
+export const setDraggingElementAction = ( dragIndex: number, hoverIndex: number): ISetDragElementAction => ({
+  type: SET_DRAGGING_ELEMENT,
+  dragIndex,
+  hoverIndex
+});

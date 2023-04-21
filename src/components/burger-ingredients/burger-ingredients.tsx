@@ -8,7 +8,8 @@ import {useDispatch, useSelector} from '../../services/hooks';
 import {
   setCurrentTab,
   getIngredients,
-  SET_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT
+  setCurrentIngredientAction,
+  removeCurrentIngredientAction
 } from '../../services/actions/ingredients';
 import {useLocation, useNavigate} from "react-router-dom";
 import {TIngredient} from "../../services/types/ingredientTypes";
@@ -45,9 +46,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
     useEffect(() => {
       if (!isActive) {
         setTimeout(() => {
-          dispatch({
-            type: REMOVE_CURRENT_INGREDIENT,
-          });
+          dispatch(removeCurrentIngredientAction());
         }, 500);
       }
     }, [dispatch, isActive]);
@@ -67,10 +66,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
 
     const setCurrentIngredient = useCallback((id: string) => {
       setModalActive(true);
-      dispatch({
-        type: SET_CURRENT_INGREDIENT,
-        id
-      });
+      dispatch(setCurrentIngredientAction(id));
       navigate(`/ingredients/${id}`, {state: {from: location}});
     }, [dispatch, navigate, setModalActive, location]);
 

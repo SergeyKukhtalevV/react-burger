@@ -46,8 +46,6 @@ export interface IRemoveIngredientFromConstructor {
 
 export interface IRemoveBunFromConstructor {
   readonly type: typeof REMOVE_BUN_FROM_CONSTRUCTOR;
-  readonly id: string;
-  readonly uuid: string;
   readonly ingr: string;
 }
 
@@ -75,10 +73,12 @@ export interface IGetOrderNumberFailedAction {
 export interface IDragCurrentElementAction {
   readonly type: typeof DRAG_CURRENT_ELEMENT;
   readonly dragIndex: number;
+  readonly hoverIndex: number;
 }
 
 export interface ISetDragElementAction {
   readonly type: typeof SET_DRAGGING_ELEMENT;
+  readonly dragIndex: number;
   readonly hoverIndex: number;
 }
 

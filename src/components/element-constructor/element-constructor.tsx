@@ -1,16 +1,24 @@
-import React, {useRef} from 'react';
+import React, {useRef, FC, MutableRefObject} from 'react';
 import {useDrag, useDrop} from "react-dnd";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {
-  DRAG_CURRENT_ELEMENT,
-  REMOVE_BUN_FROM_CONSTRUCTOR,
-  REMOVE_INGREDIENT_FROM_CONSTRUCTOR, SET_DRAGGING_ELEMENT
+  dragCurrentElementAction,
+  removeBunFromConstructorAction,
+  removeIngredientFromConstructorAction,
+  setDraggingElementAction
 } from "../../services/actions/ingredients";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from '../../services/hooks';
+import {TIngredient} from "../../services/types/ingredientTypes";
 
-const ElementConstructor = ({info, index}) => {
-  const ref = useRef(null);
+export type TElementConstructor = {
+  info: TIngredient;
+  index: number;
+}
+
+
+const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
+  const ref = useRef<HTMLLIElement>(null);
 
   const id = info._id;
   const {ingredientsConstructor} =
@@ -29,12 +37,12 @@ const ElementConstructor = ({info, index}) => {
     collect: monitor => ({
       handlerId: monitor.getHandlerId()
     }),
-    hover(item, monitor) {
+    hover(item: any, monitor: any) {
       if (!ref.current) {
         return;
       }
-      const dragIndex = item.index;
-      const hoverIndex = index;
+      const dragIndex: number = item.index;
+      const hoverIndex: number = index;
       // Don't replace items with themselves
       if (dragIndex === hoverIndex) {
         return;
@@ -59,16 +67,8 @@ const ElementConstructor = ({info, index}) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      dispatch({
-        type: DRAG_CURRENT_ELEMENT,
-        dragIndex,
-        hoverIndex
-      });
-      dispatch({
-        type: SET_DRAGGING_ELEMENT,
-        dragIndex,
-        hoverIndex
-      });
+      dispatch(dragCurrentElementAction(dragIndex, hoverIndex));
+      dispatch(setDraggingElementAction(dragIndex, hoverIndex));
       item.index = hoverIndex;
     },
   });
@@ -76,27 +76,20 @@ const ElementConstructor = ({info, index}) => {
   dragInConstructor(dropInConstructor(ref));
   const opacity = isDrag ? 0 : 1
 
-  const handleRemoveIngredient = (uuid, id) => {
-    const elem = ingredientsConstructor.filter(ingr => ingr.uuid === uuid)[0];
+  const handleRemoveIngredient = (uuid: string, id: string) => {
+    const elem: TIngredient = ingredientsConstructor.filter((ingr: TIngredient) => ingr.uuid === uuid)[0];
     elem.type !== 'bun'
-      ? dispatch({
-        type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-        uuid,
-        id
-      })
-      : dispatch({
-        type: REMOVE_BUN_FROM_CONSTRUCTOR,
-        ingr: 'bun'
-      })
+      ? dispatch(removeIngredientFromConstructorAction(uuid,id))
+      : dispatch(removeBunFromConstructorAction('bun'));
 
   }
 
   return (
     <li style={{opacity}} ref={ref} className={`mr-2 ${burgerConstructorStyles.cell}`} data-handler-id={handlerId}>
       <DragIcon type="primary"/>
-      <ConstructorElement {...info} text={info.name} thumbnail={info.image}
+      <ConstructorElement {...info} price={info.price} text={info.name} thumbnail={info.image} type={undefined}
                           handleClose={() => {
-                            handleRemoveIngredient(info.uuid, info._id)
+                            handleRemoveIngredient(info.uuid!, info._id)
                           }}/>
     </li>
   );
