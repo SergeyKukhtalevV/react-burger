@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerElementStyles from './burger-element.module.css'
-import PropTypes from "prop-types";
-import {burgerPropTypes} from "../../utils/proptypes-validate";
-import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
+import {TIngredient} from "../../services/types/ingredientTypes";
+import {useSelector} from '../../services/hooks';
 
-const BurgerElement = ({props, setCurrIngr}) => {
+type TBurgerElement = {
+  props: TIngredient;
+  setCurrIngr: (id: string) => void
+}
+
+const BurgerElement:  FC<TBurgerElement> = ({props, setCurrIngr}) => {
   const id = props._id;
   const {
     ingredientsData
@@ -20,7 +24,7 @@ const BurgerElement = ({props, setCurrIngr}) => {
   });
   return (
     <li ref={drag} className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={() =>{setCurrIngr(props._id)}}>
-      <Counter count={ingredientsData.filter(i => i._id === props._id)[0].__v} size="default" extraClass="m-1"/>
+      <Counter count={ingredientsData.filter((i: TIngredient) => i._id === props._id)[0].__v} size="default" extraClass="m-1"/>
       <img src={props.image} alt={props.name}/>
       <div className={`mt-1 ${burgerElementStyles.price}`}>
         <p className={`text text_type_digits-default`}>{props.price} </p>
@@ -32,9 +36,3 @@ const BurgerElement = ({props, setCurrIngr}) => {
 };
 
 export default BurgerElement;
-
-BurgerElement.propTypes = {
-  props: burgerPropTypes.isRequired,
-  setCurrIngr: PropTypes.func.isRequired
-  //setInfo: PropTypes.func.isRequired
-}
