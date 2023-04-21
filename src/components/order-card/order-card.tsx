@@ -1,18 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-card.module.css'
-import {useSelector} from "react-redux";
+import {useSelector} from '../../services/hooks';
 import OrderIngredientsImage from "../order-ingredients-image/order-ingredients-image";
 
-const OrderCard = ({order, setCurrOrder}) => {
+import {TIngredient} from "../../services/types/ingredientTypes";
+import {TOrder} from "../../services/types/orderTypes";
+
+type TOrderCard = {
+  order: TOrder;
+  setCurrOrder: (arg: string) => void
+}
+
+const OrderCard: FC<TOrderCard> = ({order, setCurrOrder}) => {
 
     const {ingredientsData} = useSelector(store => store.ingredients);
-    const [ingredientsOrder, setIngredientsOrder] = useState([]);
+    const [ingredientsOrder, setIngredientsOrder] = useState<TIngredient[]>([]);
     const [orderSum, setOrderSum] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     useEffect(() => {
       setIngredientsOrder(order.ingredients.map((item) => {
-        return ingredientsData.filter(ingredient => ingredient._id === item)[0]
+        return ingredientsData.filter((ingredient: TIngredient) => ingredient._id === item)[0]
       }))
 
     }, [ingredientsData]);
