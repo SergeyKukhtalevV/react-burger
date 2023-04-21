@@ -1,22 +1,25 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, FC} from 'react';
 import {useParams} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
-import {getIngredients, SET_CURRENT_INGREDIENT} from "../services/actions/ingredients";
+import {useDispatch, useSelector} from '../services/hooks';
+import {getIngredients, setCurrentIngredientAction} from "../services/actions/ingredients";
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 
-const IngredientPage = ({isActive, setModalActive}) => {
+type TIngredientPage = {
+  isActive: boolean;
+  setModalActive: (arg: boolean) => void
+}
+
+
+const IngredientPage: FC<TIngredientPage> = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
   const {currentIngredient} = useSelector(store => store.ingredients);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const init = useCallback(() => {
-      dispatch({
-        type: SET_CURRENT_INGREDIENT,
-        id
-      });
+      dispatch(setCurrentIngredientAction(id!));
     }, [dispatch, id]
   )
 
