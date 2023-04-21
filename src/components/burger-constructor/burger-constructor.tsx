@@ -1,27 +1,38 @@
-import React, {useCallback, useEffect} from 'react';
-import PropTypes from 'prop-types';
+import React, {FC, useCallback, useEffect} from 'react';
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/OrderDetails";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from '../../services/hooks';
 import {
   addIngredient,
   getOrderNumber
-} from "../../services/actions/ingredients";
+} from "../../services/actions";
 import {useDrop} from "react-dnd";
+
+// @ts-ignore
 import {v4 as uuidv4} from 'uuid';
 import ElementConstructor from "../element-constructor/element-constructor";
 import {useNavigate} from "react-router-dom";
 import {getCookie} from "../../utils/utils";
-import {getUserInfo} from "../../services/actions/user";
+import {getUserInfo} from "../../services/actions";
 
+import {TIngredient} from "../../services/types/ingredientTypes";
 
-const BurgerConstructor = ({setModalActive, isActive}) => {
+type TBurgerIngredients = {
+  isActive: boolean;
+  setModalActive: (arg: boolean) => void
+}
+
+const BurgerConstructor: FC<TBurgerIngredients> = ({setModalActive, isActive}) => {
     const token = getCookie('token');
     const navigate = useNavigate();
-    const {ingredientsData, ingredientsConstructor, orderNumber, orderNumberRequest} =
-      useSelector(store => store.ingredients);
+    const {
+      ingredientsData,
+      ingredientsConstructor,
+      orderNumber,
+      orderNumberRequest
+    } = useSelector(store => store.ingredients);
     const {accessToken} = useSelector(store => store.user);
     // eslint-disable-next-line
     const [{isHover}, drop] = useDrop({
@@ -29,23 +40,23 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
       collect: monitor => ({
         isHover: monitor.isOver(),
       }),
-      drop(item) {
-        const elem = ingredientsData.filter(ingr => ingr._id === item.id)[0];
+      drop(item: any) {
+        const elem: TIngredient = ingredientsData.filter((ingr: TIngredient) => ingr._id === item.id)[0];
         dispatch(addIngredient(elem.type, elem._id, uuidv4()));
       },
     });
     const dispatch = useDispatch();
 
     const getBunInConstructor = () => {
-      return ingredientsConstructor.filter(info => info.type === 'bun')[0];
+      return ingredientsConstructor.filter((info: TIngredient) => info.type === 'bun')[0];
     }
 
     const getOrder = () => {
       if (accessToken) {
         const data = [[...ingredientsConstructor]
           .filter(info => info.type === 'bun')[0],
-          ...ingredientsConstructor.filter(info => info.type !== 'bun'),
-          [...ingredientsConstructor].filter(info => info.type === 'bun')[0]];
+          ...ingredientsConstructor.filter((info: TIngredient) => info.type !== 'bun'),
+          [...ingredientsConstructor].filter((info: TIngredient) => info.type === 'bun')[0]];
 
         dispatch(getOrderNumber(accessToken, data.map(ingredient => ingredient._id)));
         setModalActive(true);
@@ -56,7 +67,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
     let total = 0;
     const getTotalOrder = useCallback(() => {
       // eslint-disable-next-line
-      total = ingredientsConstructor.reduce((total, i) => {
+      total = ingredientsConstructor.reduce((total: number, i: TIngredient) => {
           if (!orderNumberRequest) {
             if (i.type !== 'bun') {
               return total + i.price;
@@ -94,7 +105,7 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
               </div>
               <ul className={`ml-4 mr-4 ${burgerConstructorStyles.ingredients}`}>
                 {
-                  ingredientsConstructor.map((info, index) => {
+                  ingredientsConstructor.map((info: TIngredient, index: number) => {
                     if (info.type !== 'bun') {
                       return (
                         <ElementConstructor key={info.uuid} info={info} index={index}/>
@@ -149,8 +160,3 @@ const BurgerConstructor = ({setModalActive, isActive}) => {
 ;
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  setModalActive: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired
-}

@@ -19,11 +19,11 @@ import {TIngredient, TIngredientState} from "../types/ingredientTypes";
 import {TIngredientActions} from "../types/action-types/ingredientsActionsTypes";
 
 const initialState: TIngredientState = {
-  ingredientsData: [],
+  ingredientsData: [] as TIngredient[],
   dataRequest: false,
   dataFailed: false,
 
-  ingredientsConstructor: [],
+  ingredientsConstructor: [] as TIngredient[],
   dragIngredientInConstructor: {} as TIngredient,
   currentIngredient: {} as TIngredient,
 

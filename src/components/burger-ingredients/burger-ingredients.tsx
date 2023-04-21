@@ -13,14 +13,12 @@ import {
 import {useLocation, useNavigate} from "react-router-dom";
 import {TIngredient} from "../../services/types/ingredientTypes";
 
-
 type TBurgerIngredients = {
   isActive: boolean;
   setModalActive: (arg: boolean) => void
 }
 
 const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) => {
- //const BurgerIngredients = ({isActive, setModalActive}) => {
     const {
       ingredientsData,
       dataRequest,
@@ -123,8 +121,3 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) =
 ;
 
 export default BurgerIngredients;
-
-// BurgerIngredients.propTypes = {
-//   isActive: PropTypes.bool.isRequired,
-//   setModalActive: PropTypes.func.isRequired
-// }
