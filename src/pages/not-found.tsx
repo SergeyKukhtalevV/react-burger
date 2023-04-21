@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import styles from './authorization.module.css'
-import {Link, NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const NotFoundPage: FC = () => {
   return (

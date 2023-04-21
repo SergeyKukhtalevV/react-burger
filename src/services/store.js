@@ -1,6 +1,6 @@
 import {applyMiddleware, legacy_createStore as createStore, compose} from 'redux';
 import {rootReducer} from './reducers/rootReducer';
-import {socketMiddleware} from './middleware/index';
+import {socketMiddleware} from './middleware';
 import thunkMiddleware from 'redux-thunk';
 import {WS_URL} from "../constants/constants";
 
