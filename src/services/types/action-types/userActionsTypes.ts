@@ -30,7 +30,7 @@ import {
   TNewPassUser,
   TNewToken,
   TRegisterUser,
-  TResponceAuthUser,
+  TResponceAuthUser, TResponceInfoUser,
   TSettingInfoUser
 } from "../userTypes";
 
@@ -82,7 +82,7 @@ export interface IGetUserInfoRequestAction {
 }
 export interface IGetUserInfoSuccessAction {
   readonly type: typeof GET_USER_INFO_SUCCESS;
-  readonly data: TNewToken;
+  readonly data: TResponceInfoUser<TAuthUserSuccess>;
 }
 export interface IGetUserInfoFailedAction {
   readonly type: typeof GET_USER_INFO_FAILED;

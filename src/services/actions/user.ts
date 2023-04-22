@@ -10,10 +10,22 @@ import {
   IGetAuthorizationUserFailedAction,
   IGetAuthorizationUserRequestAction,
   IGetAuthorizationUserSuccessAction,
+  IGetUserInfoFailedAction,
+  IGetUserInfoRequestAction,
+  IGetUserInfoSuccessAction, IGetUserNewPasswordFailedAction,
+  IGetUserNewPasswordRequestAction, IGetUserNewPasswordSuccessAction,
   ISetRegisterUserFailedAction,
-  ISetRegisterUserRequestAction, ISetRegisterUserSuccessAction
+  ISetRegisterUserRequestAction,
+  ISetRegisterUserSuccessAction
 } from "../types/action-types/userActionsTypes";
-import {TAuthUser, TAuthUserSuccess, TRegisterUser, TResponceAuthUser} from "../types/userTypes";
+import {
+  TAuthUser,
+  TAuthUserSuccess, TForgotPassUser,
+  TGettingInfoUser, TNewToken,
+  TRegisterUser,
+  TResponceAuthUser, TResponceForgotUser,
+  TResponceInfoUser
+} from "../types/userTypes";
 import {AppDispatch, AppThunk} from "../types";
 
 export const SET_REGISTER_USER_REQUEST: 'SET_REGISTER_USER_REQUEST' = 'SET_REGISTER_USER_REQUEST';
@@ -96,47 +108,53 @@ export const setRegisterUser: AppThunk = (info: TRegisterUser) => (dispatch: App
   });
 };
 
-export function getUserInfo(data) {
-  const token = getCookie('token');
-  return function (dispatch) {
-    dispatch({
-      type: GET_USER_INFO_REQUEST
-    });
+
+export const getIngoUserAction = (): IGetUserInfoRequestAction => ({
+  type: GET_USER_INFO_REQUEST
+});
+
+export const getIngoUserFailedAction = (): IGetUserInfoFailedAction => ({
+  type: GET_USER_INFO_FAILED
+});
+
+export const getIngoUserSuccessAction = (data: TResponceInfoUser<TAuthUserSuccess>): IGetUserInfoSuccessAction => ({
+  type: GET_USER_INFO_SUCCESS,
+  data
+});
+
+export const getUserInfo: AppThunk = (data: TGettingInfoUser)  => (dispatch: AppDispatch) => {
+    dispatch(getIngoUserAction());
     getUserInfoRequest(data).then(res => {
-      dispatch({
-        type: GET_USER_INFO_SUCCESS,
-        data: res
-      });
+      dispatch(getIngoUserSuccessAction(res.data));
     }).catch(err => {
-      if (token) {
-        dispatch(getFreshToken({token}));
-      }
-      dispatch({
-        type: GET_USER_INFO_FAILED
-      });
+      dispatch(getIngoUserFailedAction());
       console.log('Ошибка, запрос на получения данных пользователя не выполнен', err);
     });
   };
-}
 
-export function getUserNewPassword(info) {
-  return function (dispatch) {
-    dispatch({
-      type: GET_USER_NEW_PASSWORD_REQUEST
-    });
+export const getUserNewPasswordAction = (): IGetUserNewPasswordRequestAction => ({
+  type: GET_USER_NEW_PASSWORD_REQUEST
+});
+
+export const getUserNewPasswordFailedAction = (): IGetUserNewPasswordFailedAction => ({
+  type: GET_USER_NEW_PASSWORD_FAILED
+});
+
+export const getUserNewPasswordSuccessAction = (data: TResponceForgotUser): IGetUserNewPasswordSuccessAction => ({
+  type: GET_USER_NEW_PASSWORD_SUCCESS,
+  data
+});
+
+
+export const getUserNewPassword: AppThunk = (info: TForgotPassUser)  => (dispatch: AppDispatch) => {
+    dispatch(getUserNewPasswordAction());
     getUserNewPasswordRequest(info).then(res => {
-      dispatch({
-        type: GET_USER_NEW_PASSWORD_SUCCESS,
-        data: res
-      });
+      dispatch(getUserNewPasswordSuccessAction(res.data));
     }).catch(err => {
-      dispatch({
-        type: GET_USER_NEW_PASSWORD_FAILED
-      });
+      dispatch(getUserNewPasswordFailedAction());
       console.log('Ошибка, запрос на восстановление пользователя не выполнен', err);
     });
-  };
-}
+};
 
 export function setUserNewPassword(info) {
   return function (dispatch) {
@@ -176,7 +194,21 @@ export function getLogOutUser(data) {
   };
 }
 
-export function getFreshToken(data) {
+export const getIngoUserAction = (): IGetUserInfoRequestAction => ({
+  type: GET_USER_INFO_REQUEST
+});
+
+export const getIngoUserFailedAction = (): IGetUserInfoFailedAction => ({
+  type: GET_USER_INFO_FAILED
+});
+
+export const getIngoUserSuccessAction = (data: TResponceInfoUser<TAuthUserSuccess>): IGetUserInfoSuccessAction => ({
+  type: GET_USER_INFO_SUCCESS,
+  data
+});
+
+
+export function getFreshToken(data: TNewToken) {
   return function (dispatch) {
     dispatch({
       type: GET_REFRESH_TOKEN_REQUEST

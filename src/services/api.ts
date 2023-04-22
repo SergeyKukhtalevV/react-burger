@@ -7,7 +7,7 @@ import {
   TGettingInfoUser,
   TNewPassUser,
   TNewToken,
-  TRegisterUser, TResponceAuthUser,
+  TRegisterUser, TResponceAuthUser, TResponceForgotUser, TResponceInfoUser,
   TSettingInfoUser
 } from "./types/userTypes";
 
@@ -80,7 +80,7 @@ export const getAuthUserRequest = async (data: TAuthUser): Promise<TResponseBody
   });
 }
 
-export const getUserNewPasswordRequest = async (data: TForgotPassUser) => {
+export const getUserNewPasswordRequest = async (data: TForgotPassUser): Promise<TResponseBodyUser<'data', TResponceForgotUser>> => {
   return await request(urlPasReset, {
     method: 'POST',
     headers: {
@@ -105,7 +105,7 @@ export const setUserNewPasswordRequest = async (data: TNewPassUser) => {
   });
 }
 
-export const getUserInfoRequest = async (data: TGettingInfoUser) => {
+export const getUserInfoRequest = async (data: TGettingInfoUser): Promise<TResponseBodyUser<'data', TResponceInfoUser<TAuthUserSuccess>>> => {
   return await fetchWithRefresh(urlUser, {
     method: 'GET',
     headers: {

@@ -40,3 +40,11 @@ export type TResponceAuthUser<T> = {
   refreshToken: string;
   user: T;
 }
+export type TResponceInfoUser<T> = {
+  success: boolean;
+  user: T;
+}
+export type TResponceForgotUser = {
+  success: boolean;
+  message: string;
+}
