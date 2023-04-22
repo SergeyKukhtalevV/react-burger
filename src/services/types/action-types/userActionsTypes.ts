@@ -39,7 +39,7 @@ export interface ISetRegisterUserRequestAction {
 }
 export interface ISetRegisterUserSuccessAction {
   readonly type: typeof SET_REGISTER_USER_SUCCESS;
-  readonly data: TRegisterUser;
+  readonly data: TResponceAuthUser<TAuthUserSuccess>;
 }
 export interface ISetRegisterUserFailedAction {
   readonly type: typeof SET_REGISTER_USER_FAILED;

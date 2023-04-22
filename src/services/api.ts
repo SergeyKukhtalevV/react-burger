@@ -53,7 +53,7 @@ export const getOrderNumberRequest = async (accessToken:string, orderInfo: strin
   });
 }
 
-export const setRegisterUserRequest = async (data: TRegisterUser) => {
+export const setRegisterUserRequest = async (data: TRegisterUser): Promise<TResponseBodyUser<'data', TResponceAuthUser<TAuthUserSuccess>>> => {
   return await request(urlRegister, {
     method: 'POST',
     headers: {

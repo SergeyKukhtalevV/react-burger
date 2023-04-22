@@ -34,9 +34,9 @@ export type TAuthUserSuccess = {
 }
 
 
-export type TResponceAuthUser<TAuthUserSuccess> = {
+export type TResponceAuthUser<T> = {
   success: boolean;
   accessToken: string;
   refreshToken: string;
-  user: TAuthUserSuccess;
+  user: T;
 }

@@ -8,9 +8,12 @@ import {
 import {getCookie} from "../../utils/utils";
 import {
   IGetAuthorizationUserFailedAction,
-  IGetAuthorizationUserRequestAction, IGetAuthorizationUserSuccessAction
+  IGetAuthorizationUserRequestAction,
+  IGetAuthorizationUserSuccessAction,
+  ISetRegisterUserFailedAction,
+  ISetRegisterUserRequestAction, ISetRegisterUserSuccessAction
 } from "../types/action-types/userActionsTypes";
-import {TAuthUser, TAuthUserSuccess, TResponceAuthUser} from "../types/userTypes";
+import {TAuthUser, TAuthUserSuccess, TRegisterUser, TResponceAuthUser} from "../types/userTypes";
 import {AppDispatch, AppThunk} from "../types";
 
 export const SET_REGISTER_USER_REQUEST: 'SET_REGISTER_USER_REQUEST' = 'SET_REGISTER_USER_REQUEST';
@@ -56,37 +59,42 @@ export const getAuthorizationUserFailedAction = (): IGetAuthorizationUserFailedA
 
 export const getAuthorizationUserSuccessAction = (data: TResponceAuthUser<TAuthUserSuccess>): IGetAuthorizationUserSuccessAction => ({
   type: GET_AUTHORIZATION_USER_SUCCESS,
-    data
+  data
 });
 
 export const getAuthUser: AppThunk = (info: TAuthUser) => (dispatch: AppDispatch) => {
-    dispatch(getAuthorizationUserAction());
-    getAuthUserRequest(info).then(res => {
-      dispatch(getAuthorizationUserSuccessAction(res.data));
-    }).catch(err => {
-      dispatch(getAuthorizationUserFailedAction());
-      console.log('Ошибка, запрос на авторизацию пользователя не выполнен', err);
-    });
-  };
+  dispatch(getAuthorizationUserAction());
+  getAuthUserRequest(info).then(res => {
+    dispatch(getAuthorizationUserSuccessAction(res.data));
+  }).catch(err => {
+    dispatch(getAuthorizationUserFailedAction());
+    console.log('Ошибка, запрос на авторизацию пользователя не выполнен', err);
+  });
+};
 
-export function setRegisterUser(info) {
-  return function (dispatch) {
-    dispatch({
-      type: SET_REGISTER_USER_REQUEST
-    });
-    setRegisterUserRequest(info).then(res => {
-      dispatch({
-        type: SET_REGISTER_USER_SUCCESS,
-        data: res
-      });
-    }).catch(err => {
-      dispatch({
-        type: SET_REGISTER_USER_FAILED
-      });
-      console.log('Ошибка, запрос на регистрацию пользователя не выполнен', err);
-    });
-  };
-}
+export const setRegisterUserAction = (): ISetRegisterUserRequestAction => ({
+  type: SET_REGISTER_USER_REQUEST
+});
+
+export const setRegisterUserFailedAction = (): ISetRegisterUserFailedAction => ({
+  type: SET_REGISTER_USER_FAILED
+});
+
+export const setRegisterUserSuccessAction = (data: TResponceAuthUser<TAuthUserSuccess>): ISetRegisterUserSuccessAction => ({
+  type: SET_REGISTER_USER_SUCCESS,
+  data
+});
+
+
+export const setRegisterUser: AppThunk = (info: TRegisterUser) => (dispatch: AppDispatch) => {
+  dispatch(setRegisterUserAction());
+  setRegisterUserRequest(info).then(res => {
+    dispatch(setRegisterUserSuccessAction(res.data));
+  }).catch(err => {
+    dispatch(setRegisterUserFailedAction());
+    console.log('Ошибка, запрос на регистрацию пользователя не выполнен', err);
+  });
+};
 
 export function getUserInfo(data) {
   const token = getCookie('token');
@@ -100,7 +108,7 @@ export function getUserInfo(data) {
         data: res
       });
     }).catch(err => {
-      if(token) {
+      if (token) {
         dispatch(getFreshToken({token}));
       }
       dispatch({
@@ -167,6 +175,7 @@ export function getLogOutUser(data) {
     });
   };
 }
+
 export function getFreshToken(data) {
   return function (dispatch) {
     dispatch({
