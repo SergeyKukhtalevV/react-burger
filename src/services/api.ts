@@ -2,12 +2,12 @@ import {fetchWithRefresh, request} from "../utils/utils";
 import {TIngredient} from "./types/ingredientTypes";
 import {TOrder} from "./types/orderTypes";
 import {
-  TAuthUser,
+  TAuthUser, TAuthUserSuccess,
   TForgotPassUser,
   TGettingInfoUser,
   TNewPassUser,
   TNewToken,
-  TRegisterUser,
+  TRegisterUser, TResponceAuthUser,
   TSettingInfoUser
 } from "./types/userTypes";
 
@@ -24,6 +24,13 @@ type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
   [key in TDataKey]: TDataType
 } & {
   success: boolean;
+  message?: string;
+  headers?: Headers;
+};
+
+type TResponseBodyUser<TDataKey extends string = '', TDataType = {}> = {
+  [key in TDataKey]: TDataType
+} & {
   message?: string;
   headers?: Headers;
 };
@@ -60,7 +67,7 @@ export const setRegisterUserRequest = async (data: TRegisterUser) => {
   });
 }
 
-export const getAuthUserRequest = async (data: TAuthUser) => {
+export const getAuthUserRequest = async (data: TAuthUser): Promise<TResponseBodyUser<'data', TResponceAuthUser<TAuthUserSuccess>>> => {
   return await request(urlLogin, {
     method: 'POST',
     headers: {

@@ -24,7 +24,15 @@ import {
   SET_USER_NEW_PASSWORD_REQUEST,
   SET_USER_NEW_PASSWORD_SUCCESS
 } from "../../actions";
-import {TAuthUser, TForgotPassUser, TNewPassUser, TNewToken, TRegisterUser, TSettingInfoUser} from "../userTypes";
+import {
+  TAuthUser, TAuthUserSuccess,
+  TForgotPassUser,
+  TNewPassUser,
+  TNewToken,
+  TRegisterUser,
+  TResponceAuthUser,
+  TSettingInfoUser
+} from "../userTypes";
 
 export interface ISetRegisterUserRequestAction {
   readonly type: typeof SET_REGISTER_USER_REQUEST;
@@ -42,7 +50,7 @@ export interface IGetAuthorizationUserRequestAction {
 }
 export interface IGetAuthorizationUserSuccessAction {
   readonly type: typeof GET_AUTHORIZATION_USER_SUCCESS;
-  readonly data: TAuthUser;
+  readonly data: TResponceAuthUser<TAuthUserSuccess>;
 }
 export interface IGetAuthorizationUserFailedAction {
   readonly type: typeof GET_AUTHORIZATION_USER_FAILED;

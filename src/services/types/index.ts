@@ -2,8 +2,9 @@ import {store} from '../../index'
 import { Action, ActionCreator, Dispatch, } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { TIngredientActions } from './action-types/ingredientsActionsTypes';
+import {TUserActions} from "./action-types/userActionsTypes";
 
-type TAllActions = TIngredientActions;
+type TAllActions = TIngredientActions | TUserActions;
 
 export type RootState = ReturnType<typeof store.getState>;
 

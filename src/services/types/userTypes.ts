@@ -27,3 +27,16 @@ export type TSettingInfoUser = TGettingInfoUser & TRegisterUser;
 export type TNewToken = {
   token: string;
 }
+
+export type TAuthUserSuccess = {
+  email: string;
+  name: string;
+}
+
+
+export type TResponceAuthUser<TAuthUserSuccess> = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+  user: TAuthUserSuccess;
+}

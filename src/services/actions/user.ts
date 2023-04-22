@@ -6,6 +6,12 @@ import {
   setUserInfoRequest, setUserNewPasswordRequest, urlLogout, urlToken
 } from "../api";
 import {getCookie} from "../../utils/utils";
+import {
+  IGetAuthorizationUserFailedAction,
+  IGetAuthorizationUserRequestAction, IGetAuthorizationUserSuccessAction
+} from "../types/action-types/userActionsTypes";
+import {TAuthUser, TAuthUserSuccess, TResponceAuthUser} from "../types/userTypes";
+import {AppDispatch, AppThunk} from "../types";
 
 export const SET_REGISTER_USER_REQUEST: 'SET_REGISTER_USER_REQUEST' = 'SET_REGISTER_USER_REQUEST';
 export const SET_REGISTER_USER_SUCCESS: 'SET_REGISTER_USER_SUCCESS' = 'SET_REGISTER_USER_SUCCESS';
@@ -40,24 +46,28 @@ export const SET_USER_NEW_PASSWORD_REQUEST: 'SET_USER_NEW_PASSWORD_REQUEST' = 'S
 export const SET_USER_NEW_PASSWORD_SUCCESS: 'SET_USER_NEW_PASSWORD_SUCCESS' = 'SET_USER_NEW_PASSWORD_SUCCESS';
 export const SET_USER_NEW_PASSWORD_FAILED: 'SET_USER_NEW_PASSWORD_FAILED' = 'SET_USER_NEW_PASSWORD_FAILED';
 
-export function getAuthUser(info) {
-  return function (dispatch) {
-    dispatch({
-      type: GET_AUTHORIZATION_USER_REQUEST
-    });
+export const getAuthorizationUserAction = (): IGetAuthorizationUserRequestAction => ({
+  type: GET_AUTHORIZATION_USER_REQUEST
+});
+
+export const getAuthorizationUserFailedAction = (): IGetAuthorizationUserFailedAction => ({
+  type: GET_AUTHORIZATION_USER_FAILED
+});
+
+export const getAuthorizationUserSuccessAction = (data: TResponceAuthUser<TAuthUserSuccess>): IGetAuthorizationUserSuccessAction => ({
+  type: GET_AUTHORIZATION_USER_SUCCESS,
+    data
+});
+
+export const getAuthUser: AppThunk = (info: TAuthUser) => (dispatch: AppDispatch) => {
+    dispatch(getAuthorizationUserAction());
     getAuthUserRequest(info).then(res => {
-      dispatch({
-        type: GET_AUTHORIZATION_USER_SUCCESS,
-        data: res
-      });
+      dispatch(getAuthorizationUserSuccessAction(res.data));
     }).catch(err => {
-      dispatch({
-        type: GET_AUTHORIZATION_USER_FAILED
-      });
+      dispatch(getAuthorizationUserFailedAction());
       console.log('Ошибка, запрос на авторизацию пользователя не выполнен', err);
     });
   };
-}
 
 export function setRegisterUser(info) {
   return function (dispatch) {
