@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from '../services/hooks';
 import {getAuthUser} from "../services/actions/user";
 import {getCookie} from "../utils/utils";
 
@@ -14,7 +14,11 @@ const LoginPage = () => {
   const location = useLocation();
 
   const fromPage = location.state?.from?.pathname || '/';
-  const [form, setValue] = useState({email: '', password: ''});
+  type formLogin = {
+    email: string;
+    password: string;
+  }
+  const [form, setValue] = useState<formLogin>({email: '', password: ''});
 
   useEffect(() => {
     const token = getCookie('token');
@@ -26,13 +30,13 @@ const LoginPage = () => {
   }, // eslint-disable-next-line
     [accessToken]);
 
-  const handleLogin = useCallback(e => {
+  const handleLogin = useCallback((e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch(getAuthUser(form));
     }, // eslint-disable-next-line
     [form]
   );
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({...form, [e.target.name]: e.target.value});
   }
 
