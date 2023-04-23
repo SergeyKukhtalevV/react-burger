@@ -10,7 +10,6 @@ import {
   TRegisterUser, TResponseAuthUser, TResponseForgotUser, TResponseInfoUser, TResponseReFreshUser,
   TSettingInfoUser
 } from "./types/userTypes";
-import {URL_API} from "../constants/constants";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';

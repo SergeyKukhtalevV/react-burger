@@ -18,7 +18,7 @@ import {
   IGetUserInfoFailedAction,
   IGetUserInfoRequestAction,
   IGetUserInfoSuccessAction,
-  IGetUserNewPasswordFailedAction,
+  IGetUserNewPasswordFailedAction, IGetUserNewPasswordInitAction,
   IGetUserNewPasswordRequestAction,
   IGetUserNewPasswordSuccessAction,
   ISetRegisterUserFailedAction,
@@ -259,6 +259,10 @@ export const setUserInfoFailedAction = (): ISetUserInfoFailedAction => ({
 export const setUserInfoSuccessAction = (data: TResponseInfoUser<TAuthUserSuccess>): ISetUserInfoSuccessAction => ({
   type: SET_USER_INFO_SUCCESS,
   data
+});
+
+export const getUserNewPasswordInitAction = (): IGetUserNewPasswordInitAction => ({
+  type: GET_USER_NEW_PASSWORD_INIT
 });
 
 export const setUserInfo: AppThunk = (info: TSettingInfoUser) => (dispatch: AppDispatch) => {

@@ -22,7 +22,7 @@ import {
   GET_USER_NEW_PASSWORD_FAILED,
   SET_USER_NEW_PASSWORD_REQUEST,
   SET_USER_NEW_PASSWORD_SUCCESS,
-  SET_USER_NEW_PASSWORD_FAILED
+  SET_USER_NEW_PASSWORD_FAILED, GET_USER_NEW_PASSWORD_INIT
 
 } from '../actions/user';
 import {deleteCookie, setCookie} from "../../utils/utils";
@@ -260,6 +260,17 @@ export const userReducer = (state = initialStateUser, action: TUserActions): TUs
       };
     }
 
+    case GET_USER_NEW_PASSWORD_INIT: {
+      return {
+        ...state,
+        userInfoRequest: false,
+        userInfoFailed: false,
+        userInfoAnswer: false,
+        setNewPassword: false,
+        accessToken: "",
+        userInfo: {} as TAuthUserSuccess
+      };
+    }
     default: {
       return state;
     }

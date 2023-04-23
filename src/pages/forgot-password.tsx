@@ -3,7 +3,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from '../services/hooks';
-import {getUserNewPassword} from "../services/actions";
+import {getUserNewPassword, getUserNewPasswordInitAction} from "../services/actions";
 
 type TFormForgotPass = {
   email: string;
@@ -29,6 +29,7 @@ const ForgotPasswordPage: FC = () => {
 
     if (setNewPassword) {
       setTimeout(() => {
+        dispatch(getUserNewPasswordInitAction());
         navigate('/reset-password', {state: {from: location}});
       }, 3000);
     }

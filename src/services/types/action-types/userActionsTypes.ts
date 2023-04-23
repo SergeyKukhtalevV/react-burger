@@ -11,7 +11,7 @@ import {
   GET_USER_INFO_FAILED,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
-  GET_USER_NEW_PASSWORD_FAILED,
+  GET_USER_NEW_PASSWORD_FAILED, GET_USER_NEW_PASSWORD_INIT,
   GET_USER_NEW_PASSWORD_REQUEST,
   GET_USER_NEW_PASSWORD_SUCCESS,
   SET_REGISTER_USER_FAILED,
@@ -134,6 +134,10 @@ export interface ISetUserNewPasswordFailedAction {
   readonly type: typeof SET_USER_NEW_PASSWORD_FAILED;
 }
 
+export interface IGetUserNewPasswordInitAction {
+  readonly type: typeof GET_USER_NEW_PASSWORD_INIT;
+}
+
 export type TUserActions =
   | IGetAuthorizationUserFailedAction
   | IGetAuthorizationUserRequestAction
@@ -158,4 +162,5 @@ export type TUserActions =
   | IGetUserNewPasswordSuccessAction
   | ISetUserNewPasswordRequestAction
   | ISetUserNewPasswordFailedAction
-  | ISetUserNewPasswordSuccessAction;
+  | ISetUserNewPasswordSuccessAction
+  | IGetUserNewPasswordInitAction;
