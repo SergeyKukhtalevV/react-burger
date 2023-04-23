@@ -10,6 +10,7 @@ import {
   TRegisterUser, TResponseAuthUser, TResponseForgotUser, TResponseInfoUser, TResponseReFreshUser,
   TSettingInfoUser
 } from "./types/userTypes";
+import {URL_API} from "../constants/constants";
 
 const urlData = 'ingredients';
 const urlOrder = 'orders';
@@ -27,6 +28,23 @@ type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
   message?: string;
   headers?: Headers;
 };
+
+interface CustomBody<T extends any> extends Body {
+  json(): Promise<T>;
+}
+
+interface CustomResponse<T> extends CustomBody<T> {
+  readonly headers: Headers;
+  readonly ok: boolean;
+  readonly redirected: boolean;
+  readonly status: number;
+  readonly statusText: string;
+  readonly trailer?: Promise<Headers>;
+  readonly type: ResponseType;
+  readonly url: string;
+  clone(): Response;
+}
+
 
 export const getIngredientsRequest = async (): Promise<TResponseBody<'data', Array<TIngredient>>> => {
   return await request(urlData);
@@ -60,8 +78,8 @@ export const setRegisterUserRequest = async (data: TRegisterUser): Promise<TResp
   });
 }
 
-export const getAuthUserRequest = async (data: TAuthUser): Promise<TResponseBody<'data', TResponseAuthUser<TAuthUserSuccess>>> => {
-  return await request(urlLogin, {
+export const getAuthUserRequest = async (data: TAuthUser): Promise<CustomResponse<TResponseAuthUser<TAuthUserSuccess>>> => {
+  return await fetch(URL_API + urlLogin, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

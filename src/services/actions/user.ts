@@ -89,12 +89,15 @@ export const getAuthorizationUserSuccessAction = (data: TResponseAuthUser<TAuthU
 
 export const getAuthUser: AppThunk = (info: TAuthUser) => (dispatch: AppDispatch) => {
   dispatch(getAuthorizationUserAction());
-  getAuthUserRequest(info).then(res => {
-    dispatch(getAuthorizationUserSuccessAction(res.data));
-  }).catch(err => {
-    dispatch(getAuthorizationUserFailedAction());
-    console.log('Ошибка, запрос на авторизацию пользователя не выполнен', err);
-  });
+  getAuthUserRequest(info)
+    .then(res => res.json())
+    .then(data => {
+      dispatch(getAuthorizationUserSuccessAction({...data}))
+    })
+    .catch(err => {
+      dispatch(getAuthorizationUserFailedAction());
+      console.log('Ошибка, запрос на авторизацию пользователя не выполнен', err);
+    });
 };
 
 export const setRegisterUserAction = (): ISetRegisterUserRequestAction => ({
