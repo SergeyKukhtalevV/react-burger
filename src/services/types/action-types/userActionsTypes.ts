@@ -25,13 +25,11 @@ import {
   SET_USER_NEW_PASSWORD_SUCCESS
 } from "../../actions";
 import {
-  TAuthUser, TAuthUserSuccess,
-  TForgotPassUser,
+  TAuthUserSuccess,
   TNewPassUser,
   TNewToken,
-  TRegisterUser,
-  TResponceAuthUser, TResponceInfoUser,
-  TSettingInfoUser
+  TResponseAuthUser, TResponseReFreshUser, TResponseForgotUser,
+  TSettingInfoUser, TResponseInfoUser
 } from "../userTypes";
 
 export interface ISetRegisterUserRequestAction {
@@ -39,7 +37,7 @@ export interface ISetRegisterUserRequestAction {
 }
 export interface ISetRegisterUserSuccessAction {
   readonly type: typeof SET_REGISTER_USER_SUCCESS;
-  readonly data: TResponceAuthUser<TAuthUserSuccess>;
+  readonly data: TResponseAuthUser<TAuthUserSuccess>;
 }
 export interface ISetRegisterUserFailedAction {
   readonly type: typeof SET_REGISTER_USER_FAILED;
@@ -50,7 +48,7 @@ export interface IGetAuthorizationUserRequestAction {
 }
 export interface IGetAuthorizationUserSuccessAction {
   readonly type: typeof GET_AUTHORIZATION_USER_SUCCESS;
-  readonly data: TResponceAuthUser<TAuthUserSuccess>;
+  readonly data: TResponseAuthUser<TAuthUserSuccess>;
 }
 export interface IGetAuthorizationUserFailedAction {
   readonly type: typeof GET_AUTHORIZATION_USER_FAILED;
@@ -61,7 +59,7 @@ export interface IGetRefreshTokenRequestAction {
 }
 export interface IGetRefreshTokenSuccessAction {
   readonly type: typeof GET_REFRESH_TOKEN_SUCCESS;
-  readonly data: TNewToken;
+  readonly data: TResponseReFreshUser;
 }
 export interface IGetRefreshTokenFailedAction {
   readonly type: typeof GET_REFRESH_TOKEN_FAILED;
@@ -82,7 +80,7 @@ export interface IGetUserInfoRequestAction {
 }
 export interface IGetUserInfoSuccessAction {
   readonly type: typeof GET_USER_INFO_SUCCESS;
-  readonly data: TResponceInfoUser<TAuthUserSuccess>;
+  readonly data: TResponseInfoUser<TAuthUserSuccess>;
 }
 export interface IGetUserInfoFailedAction {
   readonly type: typeof GET_USER_INFO_FAILED;
@@ -103,7 +101,7 @@ export interface IGetUserNewPasswordRequestAction {
 }
 export interface IGetUserNewPasswordSuccessAction {
   readonly type: typeof GET_USER_NEW_PASSWORD_SUCCESS;
-  readonly data: TForgotPassUser;
+  readonly data: TResponseForgotUser;
 }
 export interface IGetUserNewPasswordFailedAction {
   readonly type: typeof GET_USER_NEW_PASSWORD_FAILED;

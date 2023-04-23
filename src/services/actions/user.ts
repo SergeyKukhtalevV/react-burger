@@ -10,10 +10,15 @@ import {
   IGetAuthorizationUserFailedAction,
   IGetAuthorizationUserRequestAction,
   IGetAuthorizationUserSuccessAction,
+  IGetRefreshTokenFailedAction,
+  IGetRefreshTokenRequestAction,
+  IGetRefreshTokenSuccessAction,
   IGetUserInfoFailedAction,
   IGetUserInfoRequestAction,
-  IGetUserInfoSuccessAction, IGetUserNewPasswordFailedAction,
-  IGetUserNewPasswordRequestAction, IGetUserNewPasswordSuccessAction,
+  IGetUserInfoSuccessAction,
+  IGetUserNewPasswordFailedAction,
+  IGetUserNewPasswordRequestAction,
+  IGetUserNewPasswordSuccessAction,
   ISetRegisterUserFailedAction,
   ISetRegisterUserRequestAction,
   ISetRegisterUserSuccessAction
@@ -23,8 +28,8 @@ import {
   TAuthUserSuccess, TForgotPassUser,
   TGettingInfoUser, TNewToken,
   TRegisterUser,
-  TResponceAuthUser, TResponceForgotUser,
-  TResponceInfoUser
+  TResponseAuthUser, TResponseForgotUser,
+  TResponseInfoUser, TResponseReFreshUser
 } from "../types/userTypes";
 import {AppDispatch, AppThunk} from "../types";
 
@@ -69,7 +74,7 @@ export const getAuthorizationUserFailedAction = (): IGetAuthorizationUserFailedA
   type: GET_AUTHORIZATION_USER_FAILED
 });
 
-export const getAuthorizationUserSuccessAction = (data: TResponceAuthUser<TAuthUserSuccess>): IGetAuthorizationUserSuccessAction => ({
+export const getAuthorizationUserSuccessAction = (data: TResponseAuthUser<TAuthUserSuccess>): IGetAuthorizationUserSuccessAction => ({
   type: GET_AUTHORIZATION_USER_SUCCESS,
   data
 });
@@ -92,7 +97,7 @@ export const setRegisterUserFailedAction = (): ISetRegisterUserFailedAction => (
   type: SET_REGISTER_USER_FAILED
 });
 
-export const setRegisterUserSuccessAction = (data: TResponceAuthUser<TAuthUserSuccess>): ISetRegisterUserSuccessAction => ({
+export const setRegisterUserSuccessAction = (data: TResponseAuthUser<TAuthUserSuccess>): ISetRegisterUserSuccessAction => ({
   type: SET_REGISTER_USER_SUCCESS,
   data
 });
@@ -117,7 +122,7 @@ export const getIngoUserFailedAction = (): IGetUserInfoFailedAction => ({
   type: GET_USER_INFO_FAILED
 });
 
-export const getIngoUserSuccessAction = (data: TResponceInfoUser<TAuthUserSuccess>): IGetUserInfoSuccessAction => ({
+export const getIngoUserSuccessAction = (data: TResponseInfoUser<TAuthUserSuccess>): IGetUserInfoSuccessAction => ({
   type: GET_USER_INFO_SUCCESS,
   data
 });
@@ -140,7 +145,7 @@ export const getUserNewPasswordFailedAction = (): IGetUserNewPasswordFailedActio
   type: GET_USER_NEW_PASSWORD_FAILED
 });
 
-export const getUserNewPasswordSuccessAction = (data: TResponceForgotUser): IGetUserNewPasswordSuccessAction => ({
+export const getUserNewPasswordSuccessAction = (data: TResponseForgotUser): IGetUserNewPasswordSuccessAction => ({
   type: GET_USER_NEW_PASSWORD_SUCCESS,
   data
 });
@@ -194,38 +199,29 @@ export function getLogOutUser(data) {
   };
 }
 
-export const getIngoUserAction = (): IGetUserInfoRequestAction => ({
-  type: GET_USER_INFO_REQUEST
+export const getRefreshTokenRequestAction = (): IGetRefreshTokenRequestAction => ({
+  type: GET_REFRESH_TOKEN_REQUEST
 });
 
-export const getIngoUserFailedAction = (): IGetUserInfoFailedAction => ({
-  type: GET_USER_INFO_FAILED
+export const getRefreshTokenFailedAction = (): IGetRefreshTokenFailedAction => ({
+  type: GET_REFRESH_TOKEN_FAILED
 });
 
-export const getIngoUserSuccessAction = (data: TResponceInfoUser<TAuthUserSuccess>): IGetUserInfoSuccessAction => ({
-  type: GET_USER_INFO_SUCCESS,
+export const getRefreshTokenSuccessAction = (data: TResponseReFreshUser): IGetRefreshTokenSuccessAction => ({
+  type: GET_REFRESH_TOKEN_SUCCESS,
   data
 });
 
 
-export function getFreshToken(data: TNewToken) {
-  return function (dispatch) {
-    dispatch({
-      type: GET_REFRESH_TOKEN_REQUEST
-    });
-    getTokenRequest(urlToken, data).then(res => {
-      dispatch({
-        type: GET_REFRESH_TOKEN_SUCCESS,
-        data: res
-      });
+export const getFreshToken: AppThunk = (info: TNewToken)  => (dispatch: AppDispatch) => {
+    dispatch(getRefreshTokenRequestAction());
+    getTokenRequest(urlToken, info).then(res => {
+      dispatch(getRefreshTokenSuccessAction(res.data));
     }).catch(err => {
-      dispatch({
-        type: GET_REFRESH_TOKEN_FAILED
-      });
+      dispatch(getRefreshTokenFailedAction());
       console.log('Ошибка, запрос на обновление токена не выполнен', err);
     });
   };
-}
 
 
 export function setUserInfo(info) {

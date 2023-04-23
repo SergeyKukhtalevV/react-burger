@@ -28,23 +28,35 @@ export type TNewToken = {
   token: string;
 }
 
+// export type TReFreshToken = TGettingInfoUser &
+//   {
+//     refreshToken: string;
+//     success: boolean;
+//   };
+
 export type TAuthUserSuccess = {
   email: string;
   name: string;
 }
 
 
-export type TResponceAuthUser<T> = {
+export type TResponseAuthUser<T> = {
   success: boolean;
   accessToken: string;
   refreshToken: string;
   user: T;
 }
-export type TResponceInfoUser<T> = {
+export type TResponseInfoUser<T> = {
   success: boolean;
   user: T;
 }
-export type TResponceForgotUser = {
+export type TResponseForgotUser = {
   success: boolean;
   message: string;
+}
+
+export type TResponseReFreshUser = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
 }
