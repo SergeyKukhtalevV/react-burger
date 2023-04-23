@@ -78,8 +78,8 @@ export const setRegisterUserRequest = async (data: TRegisterUser): Promise<TResp
   });
 }
 
-export const getAuthUserRequest = async (data: TAuthUser): Promise<CustomResponse<TResponseAuthUser<TAuthUserSuccess>>> => {
-  return await fetch(URL_API + urlLogin, {
+export const getAuthUserRequest = async (data: TAuthUser): Promise<TResponseAuthUser<TAuthUserSuccess>> => {
+  return await request(urlLogin, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ export const setUserNewPasswordRequest = async (data: TNewPassUser): Promise<TRe
   });
 }
 
-export const getUserInfoRequest = async (data: TGettingInfoUser): Promise<TResponseBody<'data', TResponseInfoUser<TAuthUserSuccess>>> => {
+export const getUserInfoRequest = async (data: TGettingInfoUser): Promise<TResponseAuthUser<TAuthUserSuccess>> => {
   return await fetchWithRefresh(urlUser, {
     method: 'GET',
     headers: {

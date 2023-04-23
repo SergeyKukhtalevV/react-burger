@@ -90,9 +90,8 @@ export const getAuthorizationUserSuccessAction = (data: TResponseAuthUser<TAuthU
 export const getAuthUser: AppThunk = (info: TAuthUser) => (dispatch: AppDispatch) => {
   dispatch(getAuthorizationUserAction());
   getAuthUserRequest(info)
-    .then(res => res.json())
-    .then(data => {
-      dispatch(getAuthorizationUserSuccessAction({...data}))
+    .then(res => {
+      dispatch(getAuthorizationUserSuccessAction({...res}))
     })
     .catch(err => {
       dispatch(getAuthorizationUserFailedAction());
@@ -140,8 +139,9 @@ export const getIngoUserSuccessAction = (data: TResponseInfoUser<TAuthUserSucces
 
 export const getUserInfo: AppThunk = (data: TGettingInfoUser) => (dispatch: AppDispatch) => {
   dispatch(getIngoUserAction());
-  getUserInfoRequest(data).then(res => {
-    dispatch(getIngoUserSuccessAction(res.data));
+  getUserInfoRequest(data)
+    .then(res => {
+    dispatch(getIngoUserSuccessAction({...res}));
   }).catch(err => {
     dispatch(getIngoUserFailedAction());
     console.log('Ошибка, запрос на получения данных пользователя не выполнен', err);
