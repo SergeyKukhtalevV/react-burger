@@ -28,13 +28,6 @@ type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
   headers?: Headers;
 };
 
-// type TResponseBodyUser<TDataKey extends string = '', TDataType = {}> = {
-//   [key in TDataKey]: TDataType
-// } & {
-//   message?: string;
-//   headers?: Headers;
-// };
-
 export const getIngredientsRequest = async (): Promise<TResponseBody<'data', Array<TIngredient>>> => {
   return await request(urlData);
 }
@@ -142,3 +135,14 @@ export const getTokenRequest = async (url: string, data: TNewToken): Promise<TRe
   });
 }
 
+export const getLogoutUser = async (url: string, data: TNewToken): Promise<TResponseBody<'data', TResponseForgotUser>> => {
+  return await request(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      token: data.token
+    })
+  });
+}
