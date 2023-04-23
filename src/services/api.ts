@@ -29,23 +29,6 @@ type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
   headers?: Headers;
 };
 
-interface CustomBody<T extends any> extends Body {
-  json(): Promise<T>;
-}
-
-interface CustomResponse<T> extends CustomBody<T> {
-  readonly headers: Headers;
-  readonly ok: boolean;
-  readonly redirected: boolean;
-  readonly status: number;
-  readonly statusText: string;
-  readonly trailer?: Promise<Headers>;
-  readonly type: ResponseType;
-  readonly url: string;
-  clone(): Response;
-}
-
-
 export const getIngredientsRequest = async (): Promise<TResponseBody<'data', Array<TIngredient>>> => {
   return await request(urlData);
 }
@@ -64,7 +47,7 @@ export const getOrderNumberRequest = async (accessToken:string, orderInfo: strin
   });
 }
 
-export const setRegisterUserRequest = async (data: TRegisterUser): Promise<TResponseBody<'data', TResponseAuthUser<TAuthUserSuccess>>> => {
+export const setRegisterUserRequest = async (data: TRegisterUser): Promise<TResponseAuthUser<TAuthUserSuccess>> => {
   return await request(urlRegister, {
     method: 'POST',
     headers: {
@@ -91,7 +74,7 @@ export const getAuthUserRequest = async (data: TAuthUser): Promise<TResponseAuth
   });
 }
 
-export const getUserNewPasswordRequest = async (data: TForgotPassUser): Promise<TResponseBody<'data', TResponseForgotUser>> => {
+export const getUserNewPasswordRequest = async (data: TForgotPassUser): Promise<TResponseForgotUser> => {
   return await request(urlPasReset, {
     method: 'POST',
     headers: {
@@ -103,7 +86,7 @@ export const getUserNewPasswordRequest = async (data: TForgotPassUser): Promise<
   });
 }
 
-export const setUserNewPasswordRequest = async (data: TNewPassUser): Promise<TResponseBody<'data', TResponseForgotUser>> => {
+export const setUserNewPasswordRequest = async (data: TNewPassUser): Promise<TResponseForgotUser> => {
   return await fetchWithRefresh(urlPasReset, {
     method: 'POST',
     headers: {
@@ -126,7 +109,7 @@ export const getUserInfoRequest = async (data: TGettingInfoUser): Promise<TRespo
   });
 }
 
-export const setUserInfoRequest = async (data: TSettingInfoUser): Promise<TResponseBody<'data', TResponseInfoUser<TAuthUserSuccess>>> => {
+export const setUserInfoRequest = async (data: TSettingInfoUser): Promise<TResponseInfoUser<TAuthUserSuccess>> => {
   return await fetchWithRefresh(urlUser, {
     method: 'PATCH',
     headers: {
@@ -141,7 +124,7 @@ export const setUserInfoRequest = async (data: TSettingInfoUser): Promise<TRespo
   });
 }
 
-export const getTokenRequest = async (url: string, data: TNewToken): Promise<TResponseBody<'data', TResponseReFreshUser>> => {
+export const getTokenRequest = async (url: string, data: TNewToken): Promise<TResponseReFreshUser> => {
   return await request(url, {
     method: 'POST',
     headers: {
@@ -153,7 +136,7 @@ export const getTokenRequest = async (url: string, data: TNewToken): Promise<TRe
   });
 }
 
-export const getLogoutUser = async (url: string, data: TNewToken): Promise<TResponseBody<'data', TResponseForgotUser>> => {
+export const getLogoutUser = async (url: string, data: TNewToken): Promise<TResponseForgotUser> => {
   return await request(url, {
     method: 'POST',
     headers: {

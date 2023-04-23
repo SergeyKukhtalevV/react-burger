@@ -115,8 +115,9 @@ export const setRegisterUserSuccessAction = (data: TResponseAuthUser<TAuthUserSu
 
 export const setRegisterUser: AppThunk = (info: TRegisterUser) => (dispatch: AppDispatch) => {
   dispatch(setRegisterUserAction());
-  setRegisterUserRequest(info).then(res => {
-    dispatch(setRegisterUserSuccessAction(res.data));
+  setRegisterUserRequest(info)
+    .then(res => {
+    dispatch(setRegisterUserSuccessAction({...res}));
   }).catch(err => {
     dispatch(setRegisterUserFailedAction());
     console.log('Ошибка, запрос на регистрацию пользователя не выполнен', err);
@@ -164,8 +165,9 @@ export const getUserNewPasswordSuccessAction = (data: TResponseForgotUser): IGet
 
 export const getUserNewPassword: AppThunk = (info: TForgotPassUser) => (dispatch: AppDispatch) => {
   dispatch(getUserNewPasswordAction());
-  getUserNewPasswordRequest(info).then(res => {
-    dispatch(getUserNewPasswordSuccessAction(res.data));
+  getUserNewPasswordRequest(info)
+    .then(res => {
+    dispatch(getUserNewPasswordSuccessAction({...res}));
   }).catch(err => {
     dispatch(getUserNewPasswordFailedAction());
     console.log('Ошибка, запрос на восстановление пользователя не выполнен', err);
@@ -187,8 +189,9 @@ export const setUserNewPasswordSuccessAction = (data: TResponseForgotUser): ISet
 
 export const setUserNewPassword: AppThunk = (info: TNewPassUser) => (dispatch: AppDispatch) => {
   dispatch(setUserNewPasswordRequestAction());
-  setUserNewPasswordRequest(info).then(res => {
-    dispatch(setUserNewPasswordSuccessAction(res.data));
+  setUserNewPasswordRequest(info)
+    .then(res => {
+    dispatch(setUserNewPasswordSuccessAction({...res}));
   }).catch(err => {
     dispatch(setUserNewPasswordFailedAction());
     console.log('Ошибка, запрос на сохранение нового пароля пользователя не выполнен', err);
@@ -211,8 +214,9 @@ export const getLogoutUserSuccessAction = (data: TResponseForgotUser): IGetLogou
 
 export const getLogOutUser: AppThunk = (info: TNewToken) => (dispatch: AppDispatch) => {
   dispatch(getLogoutUserRequestAction());
-  getLogoutUser(urlLogout, info).then(res => {
-    dispatch(getLogoutUserSuccessAction(res.data));
+  getLogoutUser(urlLogout, info)
+    .then(res => {
+    dispatch(getLogoutUserSuccessAction({...res}));
   }).catch(err => {
     dispatch(getLogoutUserFailedAction());
     console.log('Ошибка, запрос на выход из системы не выполнен', err);
@@ -235,8 +239,9 @@ export const getRefreshTokenSuccessAction = (data: TResponseReFreshUser): IGetRe
 
 export const getFreshToken: AppThunk = (info: TNewToken) => (dispatch: AppDispatch) => {
   dispatch(getRefreshTokenRequestAction());
-  getTokenRequest(urlToken, info).then(res => {
-    dispatch(getRefreshTokenSuccessAction(res.data));
+  getTokenRequest(urlToken, info)
+    .then(res => {
+    dispatch(getRefreshTokenSuccessAction({...res}));
   }).catch(err => {
     dispatch(getRefreshTokenFailedAction());
     console.log('Ошибка, запрос на обновление токена не выполнен', err);
@@ -258,8 +263,9 @@ export const setUserInfoSuccessAction = (data: TResponseInfoUser<TAuthUserSucces
 
 export const setUserInfo: AppThunk = (info: TSettingInfoUser) => (dispatch: AppDispatch) => {
   dispatch(setUserInfoRequestAction());
-  setUserInfoRequest(info).then(res => {
-    dispatch(setUserInfoSuccessAction(res.data));
+  setUserInfoRequest(info)
+    .then(res => {
+    dispatch(setUserInfoSuccessAction({...res}));
   }).catch(err => {
     dispatch(setUserInfoFailedAction());
     console.log('Ошибка, запрос на изменение данных пользователя не выполнен', err);
