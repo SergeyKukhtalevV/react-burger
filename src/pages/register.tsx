@@ -5,17 +5,17 @@ import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-deve
 import {useDispatch, useSelector} from '../services/hooks';
 import {setRegisterUser} from "../services/actions";
 
+type TFormReg = {
+  name: string;
+  email: string;
+  password: string;
+}
 const RegisterPage: FC = () => {
 
   const {accessToken} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  type TFormReg = {
-    name: string;
-    email: string;
-    password: string;
-  }
 
   const [form, setValue] = useState<TFormReg>({name: '', email: '', password: ''});
   useEffect(() => {

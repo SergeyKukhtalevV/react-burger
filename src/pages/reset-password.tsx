@@ -1,19 +1,24 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, FC} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
-import {setUserNewPassword} from "../services/actions/user";
+import {useDispatch, useSelector} from '../services/hooks';
+import {setUserNewPassword} from "../services/actions";
 
-const ResetPasswordPage = () => {
+type TFormForgotPass = {
+  password: string;
+  code: string;
+}
+
+const ResetPasswordPage: FC = () => {
   const {userInfoAnswer} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '';
 
-  const [form, setValue] = useState({password: '', token: ''});
-  const handleResetPassword = useCallback(e => {
+  const [form, setValue] = useState<TFormForgotPass>({password: '', code: ''});
+  const handleResetPassword = useCallback((e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch(setUserNewPassword(form));
     }, [form]
@@ -29,7 +34,7 @@ const ResetPasswordPage = () => {
     }
   }, [userInfoAnswer]);
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({...form, [e.target.name]: e.target.value});
   }
   return (

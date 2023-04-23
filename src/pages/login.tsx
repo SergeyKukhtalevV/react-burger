@@ -6,6 +6,10 @@ import {useDispatch, useSelector} from '../services/hooks';
 import {getAuthUser} from "../services/actions/user";
 import {getCookie} from "../utils/utils";
 
+type TFormLogin = {
+  email: string;
+  password: string;
+}
 const LoginPage: FC = () => {
 
   const {accessToken, userInfoFailed} = useSelector(store => store.user);
@@ -14,10 +18,7 @@ const LoginPage: FC = () => {
   const location = useLocation();
 
   const fromPage = location.state?.from?.pathname || '/';
-  type TFormLogin = {
-    email: string;
-    password: string;
-  }
+
   const [form, setValue] = useState<TFormLogin>({email: '', password: ''});
 
   useEffect(() => {
