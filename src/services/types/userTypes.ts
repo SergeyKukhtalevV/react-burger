@@ -24,6 +24,7 @@ export type TGettingInfoUser = {
 
 export type TSettingInfoUser = TGettingInfoUser & TRegisterUser;
 
+
 export type TNewToken = {
   token: string;
 }

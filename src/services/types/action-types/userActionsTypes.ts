@@ -90,7 +90,7 @@ export interface ISetUserInfoRequestAction {
 }
 export interface ISetUserInfoSuccessAction {
   readonly type: typeof SET_USER_INFO_SUCCESS;
-  readonly data: TSettingInfoUser;
+  readonly data: TResponseInfoUser<TAuthUserSuccess>;
 }
 export interface ISetUserInfoFailedAction {
   readonly type: typeof SET_USER_INFO_FAILED;

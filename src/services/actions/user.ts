@@ -21,15 +21,15 @@ import {
   IGetUserNewPasswordSuccessAction,
   ISetRegisterUserFailedAction,
   ISetRegisterUserRequestAction,
-  ISetRegisterUserSuccessAction
+  ISetRegisterUserSuccessAction, ISetUserInfoFailedAction, ISetUserInfoRequestAction, ISetUserInfoSuccessAction
 } from "../types/action-types/userActionsTypes";
 import {
   TAuthUser,
   TAuthUserSuccess, TForgotPassUser,
-  TGettingInfoUser, TNewToken,
+  TGettingInfoUser, TNewPassUser, TNewToken,
   TRegisterUser,
   TResponseAuthUser, TResponseForgotUser,
-  TResponseInfoUser, TResponseReFreshUser
+  TResponseInfoUser, TResponseReFreshUser, TSettingInfoUser
 } from "../types/userTypes";
 import {AppDispatch, AppThunk} from "../types";
 
@@ -223,23 +223,26 @@ export const getFreshToken: AppThunk = (info: TNewToken)  => (dispatch: AppDispa
     });
   };
 
+export const setUserInfoRequestAction = (): ISetUserInfoRequestAction => ({
+  type: SET_USER_INFO_REQUEST
+});
 
-export function setUserInfo(info) {
-  return function (dispatch) {
-    dispatch({
-      type: SET_USER_INFO_REQUEST
-    });
+export const setUserInfoFailedAction = (): ISetUserInfoFailedAction => ({
+  type: SET_USER_INFO_FAILED
+});
+
+export const setUserInfoSuccessAction = (data: TResponseInfoUser<TAuthUserSuccess>): ISetUserInfoSuccessAction => ({
+  type: SET_USER_INFO_SUCCESS,
+  data
+});
+
+export const setUserInfo:  AppThunk = (info: TSettingInfoUser) => (dispatch: AppDispatch) => {
+    dispatch(setUserInfoRequestAction());
     setUserInfoRequest(info).then(res => {
-      dispatch({
-        type: SET_USER_INFO_SUCCESS,
-        data: res
-      });
+      dispatch(setUserInfoSuccessAction(res.data));
     }).catch(err => {
-      dispatch({
-        type: SET_USER_INFO_FAILED
-      });
+      dispatch(setUserInfoFailedAction());
       console.log('Ошибка, запрос на изменение данных пользователя не выполнен', err);
     });
   };
-}
 
