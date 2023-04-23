@@ -22,14 +22,15 @@ import {
   GET_USER_NEW_PASSWORD_FAILED,
   SET_USER_NEW_PASSWORD_REQUEST,
   SET_USER_NEW_PASSWORD_SUCCESS,
-  SET_USER_NEW_PASSWORD_FAILED,
-  GET_USER_NEW_PASSWORD_INIT
+  SET_USER_NEW_PASSWORD_FAILED
 
 } from '../actions/user';
 import {deleteCookie, setCookie} from "../../utils/utils";
+import {TAuthUserSuccess, TUserStateUser} from "../types/userTypes";
+import {TUserActions} from "../types/action-types/userActionsTypes";
 
-const initialStateUser = {
-  userInfo: {},
+const initialStateUser: TUserStateUser<TAuthUserSuccess> = {
+  userInfo: {} as TAuthUserSuccess,
   userInfoRequest: false,
   userInfoFailed: false,
   userInfoAnswer: false,
@@ -38,7 +39,7 @@ const initialStateUser = {
   isUserAuth: false
 }
 
-export const userReducer = (state = initialStateUser, action) => {
+export const userReducer = (state = initialStateUser, action: TUserActions): TUserStateUser<TAuthUserSuccess> => {
   switch (action.type) {
     case SET_REGISTER_USER_REQUEST: {
       return {
@@ -143,7 +144,7 @@ export const userReducer = (state = initialStateUser, action) => {
         userInfoFailed: false,
         userInfoAnswer: true,
         accessToken: "",
-        userInfo: {},
+        userInfo: {} as TAuthUserSuccess,
         isUserAuth: false,
         setNewPassword: false
       };
@@ -258,17 +259,7 @@ export const userReducer = (state = initialStateUser, action) => {
         setNewPassword: true
       };
     }
-    case GET_USER_NEW_PASSWORD_INIT: {
-      return {
-        ...state,
-        userInfoRequest: false,
-        userInfoFailed: false,
-        userInfoAnswer: false,
-        setNewPassword: false,
-        accessToken: "",
-        userInfo: {}
-      };
-    }
+
     default: {
       return state;
     }

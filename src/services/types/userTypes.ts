@@ -61,3 +61,13 @@ export type TResponseReFreshUser = {
   accessToken: string;
   refreshToken: string;
 }
+
+export type TUserStateUser<T> = {
+  userInfo: T;
+  userInfoRequest: boolean;
+  userInfoFailed: boolean;
+  userInfoAnswer: boolean;
+  setNewPassword: boolean;
+  accessToken: string;
+  isUserAuth: boolean;
+}
