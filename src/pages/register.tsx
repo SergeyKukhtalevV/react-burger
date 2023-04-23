@@ -1,17 +1,23 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, FC} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
-import {setRegisterUser} from "../services/actions/user";
+import {useDispatch, useSelector} from '../services/hooks';
+import {setRegisterUser} from "../services/actions";
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
 
   const {accessToken} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [form, setValue] = useState({name: '', email: '', password: ''});
+  type TFormReg = {
+    name: string;
+    email: string;
+    password: string;
+  }
+
+  const [form, setValue] = useState<TFormReg>({name: '', email: '', password: ''});
   useEffect(() => {
     if (accessToken) {
       setTimeout(() => {
@@ -20,12 +26,12 @@ const RegisterPage = () => {
     }
   }, [accessToken, navigate]);
 
-  const handleRegister = useCallback(e => {
+  const handleRegister = useCallback((e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch(setRegisterUser(form));
     }, [form, dispatch]
   );
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({...form, [e.target.name]: e.target.value});
   }
   return (

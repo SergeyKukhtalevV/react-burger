@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, FC} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from '../services/hooks';
 import {getAuthUser} from "../services/actions/user";
 import {getCookie} from "../utils/utils";
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
 
   const {accessToken, userInfoFailed} = useSelector(store => store.user);
   const dispatch = useDispatch();
@@ -14,11 +14,11 @@ const LoginPage = () => {
   const location = useLocation();
 
   const fromPage = location.state?.from?.pathname || '/';
-  type formLogin = {
+  type TFormLogin = {
     email: string;
     password: string;
   }
-  const [form, setValue] = useState<formLogin>({email: '', password: ''});
+  const [form, setValue] = useState<TFormLogin>({email: '', password: ''});
 
   useEffect(() => {
     const token = getCookie('token');

@@ -1,39 +1,41 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from './authorization.module.css'
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
-import {getUserNewPassword, GET_USER_NEW_PASSWORD_INIT} from "../services/actions/user";
+import {useDispatch, useSelector} from '../services/hooks';
+import {getUserNewPassword} from "../services/actions";
 
+type TFormForgotPass = {
+  email: string;
+}
 const initialFormState = {
   email: ''
 }
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage: FC = () => {
 
   const {setNewPassword} = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [formValues, setFormValue] = useState(initialFormState);
-  const handleFormForgotPassword = (e) => {
+  const [formValues, setFormValue] = useState<TFormForgotPass>(initialFormState);
+  const handleFormForgotPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(getUserNewPassword(formValues))
   }
 
   useEffect(() => {
-    console.log(setNewPassword);
+
     if (setNewPassword) {
       setTimeout(() => {
-        dispatch({type: GET_USER_NEW_PASSWORD_INIT});
         navigate('/reset-password', {state: {from: location}});
       }, 3000);
     }
   },
   // eslint-disable-next-line
   [dispatch, setNewPassword]);
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValue({...formValues, [e.target.name]: e.target.value});
   }
   return (
