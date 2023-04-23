@@ -111,7 +111,7 @@ export interface ISetUserNewPasswordRequestAction {
 }
 export interface ISetUserNewPasswordSuccessAction {
   readonly type: typeof SET_USER_NEW_PASSWORD_SUCCESS;
-  readonly data: TNewPassUser;
+  readonly data: TResponseForgotUser;
 }
 export interface ISetUserNewPasswordFailedAction {
   readonly type: typeof SET_USER_NEW_PASSWORD_FAILED;

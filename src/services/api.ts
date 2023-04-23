@@ -92,7 +92,7 @@ export const getUserNewPasswordRequest = async (data: TForgotPassUser): Promise<
   });
 }
 
-export const setUserNewPasswordRequest = async (data: TNewPassUser) => {
+export const setUserNewPasswordRequest = async (data: TNewPassUser): Promise<TResponseBody<'data', TResponseForgotUser>> => {
   return await fetchWithRefresh(urlPasReset, {
     method: 'POST',
     headers: {

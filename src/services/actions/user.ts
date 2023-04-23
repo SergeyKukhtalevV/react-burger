@@ -21,7 +21,11 @@ import {
   IGetUserNewPasswordSuccessAction,
   ISetRegisterUserFailedAction,
   ISetRegisterUserRequestAction,
-  ISetRegisterUserSuccessAction, ISetUserInfoFailedAction, ISetUserInfoRequestAction, ISetUserInfoSuccessAction
+  ISetRegisterUserSuccessAction,
+  ISetUserInfoFailedAction,
+  ISetUserInfoRequestAction,
+  ISetUserInfoSuccessAction, ISetUserNewPasswordFailedAction,
+  ISetUserNewPasswordRequestAction, ISetUserNewPasswordSuccessAction
 } from "../types/action-types/userActionsTypes";
 import {
   TAuthUser,
@@ -161,24 +165,28 @@ export const getUserNewPassword: AppThunk = (info: TForgotPassUser)  => (dispatc
     });
 };
 
-export function setUserNewPassword(info) {
-  return function (dispatch) {
-    dispatch({
-      type: SET_USER_NEW_PASSWORD_REQUEST
-    });
+export const setUserNewPasswordRequestAction = (): ISetUserNewPasswordRequestAction => ({
+  type: SET_USER_NEW_PASSWORD_REQUEST
+});
+
+export const setUserNewPasswordFailedAction = (): ISetUserNewPasswordFailedAction => ({
+  type: SET_USER_NEW_PASSWORD_FAILED
+});
+
+export const setUserNewPasswordSuccessAction = (data: TResponseForgotUser): ISetUserNewPasswordSuccessAction => ({
+  type: SET_USER_NEW_PASSWORD_SUCCESS,
+  data
+});
+
+export const setUserNewPassword: AppThunk = (info: TNewPassUser)  => (dispatch: AppDispatch) => {
+    dispatch(setUserNewPasswordRequestAction());
     setUserNewPasswordRequest(info).then(res => {
-      dispatch({
-        type: SET_USER_NEW_PASSWORD_SUCCESS,
-        data: res
-      });
+      dispatch(setUserNewPasswordSuccessAction(res.data));
     }).catch(err => {
-      dispatch({
-        type: SET_USER_NEW_PASSWORD_FAILED
-      });
+      dispatch(setUserNewPasswordFailedAction());
       console.log('Ошибка, запрос на сохранение нового пароля пользователя не выполнен', err);
     });
   };
-}
 
 export function getLogOutUser(data) {
   return function (dispatch) {
