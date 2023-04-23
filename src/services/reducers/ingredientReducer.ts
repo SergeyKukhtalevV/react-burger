@@ -29,7 +29,7 @@ const initialState: TIngredientState = {
 
   createdOrder: {} as TIngredient,
 
-  orderNumber: null,
+  orderNumber: 0,
   orderNumberRequest: false,
   orderNumberFailed: false,
 
@@ -124,7 +124,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
       return {
         ...state,
         orderNumberRequest: true,
-        orderNumber: null,
+        orderNumber: 0,
         ingredientsConstructor: [[...state.ingredientsConstructor]
           .filter(info => info.type === 'bun')[0],
           ...state.ingredientsConstructor.filter(info => info.type !== 'bun'),

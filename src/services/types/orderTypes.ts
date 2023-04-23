@@ -11,6 +11,6 @@ export type TOrder = {
   updateAt: string;
 } & TIngredientsOrder;
 
-export type TOrders<TOrder> = {
-  orders: TOrder[];
+export type TOrders<T> = {
+  orders: T[];
 }

@@ -15,8 +15,8 @@ export type TIngredient = {
 }
 export type TTypeIngredient = 'Булки' | 'Соусы' | 'Начинки';
 
-export type TIngredients<TIngredient> = {
-  ingredients: TIngredient[];
+export type TIngredients<T> = {
+  ingredients: T[];
 }
 
 export type TIngredientState = {
@@ -30,7 +30,7 @@ export type TIngredientState = {
 
   createdOrder: TIngredient;
 
-  orderNumber: number | null;
+  orderNumber: number;
   orderNumberRequest: boolean;
   orderNumberFailed: boolean;
 

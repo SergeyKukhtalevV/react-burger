@@ -62,9 +62,10 @@ const BurgerConstructor: FC<TBurgerIngredients> =
         navigate('/login');
       }
     }
-    let total = 0;
-    const getTotalOrder = useCallback(() => {
+    let total: number = 0;
+    const getTotalOrder = useCallback((): number => {
       // eslint-disable-next-line
+      // @ts-ignore
       total = ingredientsConstructor.reduce((total: number, i: TIngredient) => {
           if (!orderNumberRequest) {
             if (i.type !== 'bun') {

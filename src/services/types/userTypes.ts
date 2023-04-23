@@ -29,12 +29,6 @@ export type TNewToken = {
   token: string;
 }
 
-// export type TReFreshToken = TGettingInfoUser &
-//   {
-//     refreshToken: string;
-//     success: boolean;
-//   };
-
 export type TAuthUserSuccess = {
   email: string;
   name: string;

@@ -21,7 +21,8 @@ const ResetPasswordPage: FC = () => {
   const handleResetPassword = useCallback((e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch(setUserNewPassword(form));
-    }, [form]
+    }, // eslint-disable-next-line
+    [form]
   );
   useEffect(() => {
     if (fromPage !== '/forgot-password') {
@@ -32,7 +33,8 @@ const ResetPasswordPage: FC = () => {
         navigate('/login');
       }, 3000);
     }
-  }, [userInfoAnswer]);
+  }, // eslint-disable-next-line
+    [userInfoAnswer]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({...form, [e.target.name]: e.target.value});

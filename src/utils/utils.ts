@@ -6,9 +6,9 @@ export type TOptionHeaders = {
   Authorization?: string;
 };
 
-export type TOption<TOptionHeaders> = {
+export type TOption<T> = {
   readonly method: string;
-  headers: TOptionHeaders;
+  headers: T;
   readonly body?: string;
 };
 
