@@ -9,7 +9,7 @@ import {
   setCurrentTab,
   getIngredients,
   setCurrentIngredientAction,
-  removeCurrentIngredientAction
+  removeCurrentIngredientAction, setCountIngredientsZero
 } from '../../services/actions';
 import {useLocation, useNavigate} from "react-router-dom";
 import {TIngredient, TTypeIngredient} from "../../services/types/ingredientTypes";
@@ -33,6 +33,7 @@ const BurgerIngredients: FC<TFCWithModal> = ({isActive, setModalActive}) => {
       () => {
         if (fromPage === '') {
           dispatch(getIngredients());
+          dispatch(setCountIngredientsZero());
         }
       },
       // eslint-disable-next-line

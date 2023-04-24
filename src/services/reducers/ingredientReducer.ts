@@ -13,7 +13,7 @@ import {
   SET_BUN_IN_CONSTRUCTOR,
   REMOVE_BUN_FROM_CONSTRUCTOR,
   DRAG_CURRENT_ELEMENT,
-  SET_DRAGGING_ELEMENT
+  SET_DRAGGING_ELEMENT, SET_COUNT_INGREDIENTS_ZERO
 } from '../actions/ingredients';
 import {TIngredient, TIngredientState} from "../types/ingredientTypes";
 import {TIngredientActions} from "../types/action-types/ingredientsActionsTypes";
@@ -57,11 +57,18 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
         ...state, dataFailed: true, dataRequest: false
       };
     }
+    case SET_COUNT_INGREDIENTS_ZERO: {
+      return {
+        ...state,
+        ingredientsData: state.ingredientsData.map((item) =>
+          item._id ? {...item, cnt: 0} : item)
+      };
+    }
     case SET_INGREDIENT_IN_CONSTRUCTOR: {
       return {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
-          item._id === action.id ? {...item, __v: ++item.__v} : item),
+          item._id === action.id ? {...item, cnt: ++item.cnt!} : item),
         ingredientsConstructor: [...state.ingredientsConstructor, {
           ...[...state.ingredientsData].filter(item =>
             item._id === action.id)[0], uuid: action.uuid
@@ -72,7 +79,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
       return {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
-          item._id === action.id ? {...item, __v: --item.__v} : item),
+          item._id === action.id ? {...item, cnt: --item.cnt!} : item),
         ingredientsConstructor: [...state.ingredientsConstructor.filter(item =>
           item.uuid !== action.uuid)]
       }
@@ -81,7 +88,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
       return {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
-          item._id === action.id ? {...item, __v: (item.__v++ + ++item.__v)} : item),
+          item._id === action.id ? {...item, cnt: (item.cnt!++ + ++item.cnt!)} : item),
         ingredientsConstructor: [...state.ingredientsConstructor, ([...state.ingredientsData].filter(item =>
           item._id === action.id)[0])]
       }
@@ -90,7 +97,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
       return {
         ...state,
         ingredientsData: [...state.ingredientsData].map(item =>
-          item.type === action.ingr ? {...item, __v: 0} : item),
+          item.type === action.ingr ? {...item, cnt: 0} : item),
         ingredientsConstructor: [...state.ingredientsConstructor.filter((item) =>
           item.type !== action.ingr)]
       }
@@ -135,7 +142,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
       return {
         ...state, orderNumberFailed: false, orderNumber: action.item,
         orderNumberRequest: false,
-        ingredientsData: [...state.ingredientsData].map(item => [{...item, __v: 0}][0]),
+        ingredientsData: [...state.ingredientsData].map(item => [{...item, cnt: 0}][0]),
         ingredientsConstructor: []
       };
     }

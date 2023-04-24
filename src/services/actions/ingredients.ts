@@ -11,7 +11,7 @@ import {
   IRemoveBunFromConstructor,
   IRemoveCurrentIngredientAction,
   IRemoveIngredientFromConstructor,
-  ISetBunInConstructor,
+  ISetBunInConstructor, ISetCountIngredientsZero,
   ISetCurrentIngredientAction,
   ISetCurrentTabAction,
   ISetDragElementAction,
@@ -22,6 +22,7 @@ import {TIngredient, TTypeIngredient} from "../types/ingredientTypes";
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED';
+export const SET_COUNT_INGREDIENTS_ZERO: 'SET_COUNT_INGREDIENTS_ZERO' = 'SET_COUNT_INGREDIENTS_ZERO';
 
 export const SET_INGREDIENT_IN_CONSTRUCTOR: 'SET_INGREDIENT_IN_CONSTRUCTOR' = 'SET_INGREDIENT_IN_CONSTRUCTOR';
 export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR: 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR' = 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
@@ -50,6 +51,10 @@ export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
 export const getIngredientsSuccessAction = (items: TIngredient[]): IGetIngredientsSuccessAction => ({
   type: GET_INGREDIENTS_SUCCESS,
   items
+});
+
+export const setCountIngredientsZero = (): ISetCountIngredientsZero => ({
+  type: SET_COUNT_INGREDIENTS_ZERO
 });
 
 export const getIngredients:  AppThunk = () => (dispatch: AppDispatch) => {
