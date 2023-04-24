@@ -1,4 +1,4 @@
-import {TWsFeedSuccess} from "../types/orderTypes";
+import {TOrder, TWsFeedSuccess} from "../types/orderTypes";
 import {
   IRemoveCurrentOrderFeedAction,
   ISetCurrentOrderFeedAction
@@ -32,12 +32,12 @@ export interface IWsFeedConnectionErrorAction {
 }
 
 export interface IWsFeedConnectionClosedAction {
-  readonly type: typeof WS_USER_FEED_CONNECTION_CLOSED;
+  readonly type: typeof WS_FEED_CONNECTION_CLOSED;
 }
 
 export interface IWsFeedGetMessageAction {
   readonly type: typeof WS_FEED_GET_MESSAGE;
-  readonly payload: TWsFeedSuccess;
+  readonly payload: TWsFeedSuccess<TOrder>;
 }
 
 export interface IWsFeedSendMessageAction {
@@ -74,7 +74,7 @@ export interface IWsUserFeedConnectionClosedAction {
 
 export interface IWsUserFeedGetMessageAction {
   readonly type: typeof WS_USER_FEED_GET_MESSAGE;
-  readonly payload: TWsFeedSuccess;
+  readonly payload: TWsFeedSuccess<TOrder>;
 }
 
 export interface IWsUserFeedSendMessageAction {

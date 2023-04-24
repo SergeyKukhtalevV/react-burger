@@ -11,7 +11,7 @@ import {
   WS_FEED_CONNECTION_SUCCESS,
   WS_FEED_GET_MESSAGE,
   WS_FEED_SEND_MESSAGE,
-  WS_USER_FEED_CONNECTION_CLOSED
+  WS_FEED_CONNECTION_CLOSED
 } from "../action-types";
 
 export const SET_CURRENT_ORDER_FEED: 'SET_CURRENT_ORDER_FEED' = 'SET_CURRENT_ORDER_FEED';
@@ -19,16 +19,16 @@ export const REMOVE_CURRENT_ORDER_FEED: 'REMOVE_CURRENT_ORDER_FEED' = 'REMOVE_CU
 
 export interface ISetCurrentOrderFeedAction {
   readonly type: typeof SET_CURRENT_ORDER_FEED;
-  readonly data: TOrder;
+  readonly id: string;
 }
 
 export interface IRemoveCurrentOrderFeedAction {
   readonly type: typeof REMOVE_CURRENT_ORDER_FEED;
 }
 
-export const setCurrentOrderFeedAction = (data: TOrder): ISetCurrentOrderFeedAction => ({
+export const setCurrentOrderFeedAction = (id: string): ISetCurrentOrderFeedAction => ({
   type: SET_CURRENT_ORDER_FEED,
-  data
+  id
 });
 
 export const removeCurrentOrderFeedAction = (): IRemoveCurrentOrderFeedAction => ({
@@ -48,10 +48,10 @@ export const wsFeedConnectionErrorAction = () : IWsFeedConnectionErrorAction => 
 });
 
 export const wsFeedConnectionClosedAction = () : IWsFeedConnectionClosedAction => ({
-  type: WS_USER_FEED_CONNECTION_CLOSED
+  type: WS_FEED_CONNECTION_CLOSED
 });
 
-export const wsFeedGetMessageAction = (payload: TWsFeedSuccess) : IWsFeedGetMessageAction => ({
+export const wsFeedGetMessageAction = (payload: TWsFeedSuccess<TOrder>) : IWsFeedGetMessageAction => ({
   type: WS_FEED_GET_MESSAGE,
   payload
 });

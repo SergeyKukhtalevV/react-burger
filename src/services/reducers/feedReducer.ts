@@ -1,23 +1,25 @@
-import {SET_CURRENT_ORDER_FEED, REMOVE_CURRENT_ORDER_FEED} from "../actions/feed";
+import {SET_CURRENT_ORDER_FEED, REMOVE_CURRENT_ORDER_FEED} from "../actions";
 import {
+  TWsFeedActions,
   WS_FEED_CONNECTION_CLOSED,
   WS_FEED_CONNECTION_ERROR,
   WS_FEED_CONNECTION_SUCCESS,
   WS_FEED_GET_MESSAGE
 } from "../action-types";
+import {TOrder, TWsFeedState} from "../types/orderTypes";
 
-const initialStateFeed = {
+const initialStateFeed: TWsFeedState = {
   wsConnected: false,
   isError: false,
-  orders: [],
+  orders: [] as TOrder[],
   ordersTotal: 0,
   totalToday: 0,
-  currentOrder: {},
+  currentOrder: {} as TOrder,
   ordersDone: [],
   ordersPending: []
 }
 
-export const feedReducer = (state = initialStateFeed, action) => {
+export const feedReducer = (state = initialStateFeed, action: TWsFeedActions): TWsFeedState => {
   switch (action.type) {
     case WS_FEED_CONNECTION_SUCCESS: {
       return {
@@ -59,7 +61,7 @@ export const feedReducer = (state = initialStateFeed, action) => {
     case REMOVE_CURRENT_ORDER_FEED: {
       return {
         ...state,
-        currentOrder: {}
+        currentOrder: {} as TOrder
       };
     }
     default: {
