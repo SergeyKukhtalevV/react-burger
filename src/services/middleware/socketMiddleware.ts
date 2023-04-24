@@ -1,8 +1,11 @@
 import {getCookie} from "../../utils/utils";
+import {TFeedActions, TUserFeedActions, TWsFeedActions} from "../action-types";
+import {Middleware, MiddlewareAPI} from "redux";
+import {AppDispatch, RootState} from "../types";
 
-export const socketMiddleware = (wsUrl, wsActions) => {
-  return store => {
-    let socket = null;
+export const socketMiddleware = (wsUrl: string, wsActions: TFeedActions | TUserFeedActions): Middleware => {
+  return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+    let socket: WebSocket | null = null;
 
     return next => action => {
       const { dispatch } = store;

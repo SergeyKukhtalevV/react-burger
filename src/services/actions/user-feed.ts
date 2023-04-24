@@ -60,7 +60,7 @@ export const wsUserFeedConnectionClosedAction = () : IWsUserFeedConnectionClosed
   type: WS_USER_FEED_CONNECTION_CLOSED
 });
 
-export const wsUserFeedGetMessageAction = (payload: TWsFeedSuccess) : IWsUserFeedGetMessageAction => ({
+export const wsUserFeedGetMessageAction = (payload: TWsFeedSuccess<TOrder>) : IWsUserFeedGetMessageAction => ({
   type: WS_USER_FEED_GET_MESSAGE,
   payload
 });

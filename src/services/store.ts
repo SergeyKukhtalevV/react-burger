@@ -6,6 +6,8 @@ import {WS_URL} from "../constants/constants";
 
 
 import {
+  TFeedActions,
+  TUserFeedActions,
   WS_FEED_CONNECTION_CLOSED,
   WS_FEED_CONNECTION_ERROR,
   WS_FEED_CONNECTION_START,
@@ -21,7 +23,7 @@ import {
 } from './action-types';
 
 
-const wsFeedActions = {
+const wsFeedActions: TFeedActions = {
   wsInit: WS_FEED_CONNECTION_START,
   wsSendMessage: WS_FEED_SEND_MESSAGE,
   onOpen: WS_FEED_CONNECTION_SUCCESS,
@@ -29,7 +31,7 @@ const wsFeedActions = {
   onError: WS_FEED_CONNECTION_ERROR,
   onMessage: WS_FEED_GET_MESSAGE
 };
-const wsUserFeedActions = {
+const wsUserFeedActions: TUserFeedActions = {
   wsInit: WS_USER_FEED_CONNECTION_START,
   wsSendMessage: WS_USER_FEED_SEND_MESSAGE,
   onOpen: WS_USER_FEED_CONNECTION_SUCCESS,

@@ -54,6 +54,14 @@ export type TWsFeedActions =
   | ISetCurrentOrderFeedAction
   | IRemoveCurrentOrderFeedAction;
 
+export type TFeedActions = {
+  wsInit: typeof WS_FEED_CONNECTION_START,
+  wsSendMessage: typeof WS_FEED_SEND_MESSAGE,
+  onOpen: typeof WS_FEED_CONNECTION_SUCCESS,
+  onClose: typeof WS_FEED_CONNECTION_CLOSED,
+  onError: typeof WS_FEED_CONNECTION_ERROR,
+  onMessage: typeof WS_FEED_GET_MESSAGE
+};
 //////////////////////////////////////////////////////////////
 
 export interface IWsUserFeedConnectionStartAction {
@@ -90,3 +98,13 @@ export type TWsUserFeedActions =
   | IWsUserFeedSendMessageAction
   | ISetCurrentOrderUserFeedAction
   | IRemoveCurrentOrderUserFeedAction;
+
+
+export type TUserFeedActions = {
+  wsInit: typeof WS_USER_FEED_CONNECTION_START,
+  wsSendMessage: typeof WS_USER_FEED_SEND_MESSAGE,
+  onOpen: typeof WS_USER_FEED_CONNECTION_SUCCESS,
+  onClose: typeof WS_USER_FEED_CONNECTION_CLOSED,
+  onError: typeof WS_USER_FEED_CONNECTION_ERROR,
+  onMessage: typeof WS_USER_FEED_GET_MESSAGE
+};
