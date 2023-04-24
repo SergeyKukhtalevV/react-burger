@@ -1,5 +1,6 @@
 import {URL_API} from "../constants/constants";
 import {getTokenRequest, urlToken} from "../services/api";
+import {TResponseReFreshUser} from "../services/types/userTypes";
 
 export type TOptionHeaders = {
   readonly 'Content-Type': string;
@@ -14,8 +15,6 @@ export type TOption<T> = {
 
 export const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
-    console.log(res);
-    //console.log(res.json());
     return res.json();
 
   }
@@ -33,7 +32,7 @@ export const fetchWithRefresh = async <T>(url: string, options: TOption<TOptionH
     return await request<T>(url, options);
   } catch (err: any) {
     if (err.message === 'jwt expired') {
-      const refreshData: any = await getTokenRequest(urlToken, {token: getCookie('token')!});
+      const refreshData: TResponseReFreshUser = await getTokenRequest(urlToken, {token: getCookie('token')!});
       if (!refreshData.success) {
         await Promise.reject(refreshData);
       }

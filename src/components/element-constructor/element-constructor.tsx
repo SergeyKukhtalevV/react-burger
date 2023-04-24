@@ -1,4 +1,4 @@
-import React, {useRef, FC, MutableRefObject} from 'react';
+import React, {useRef, FC} from 'react';
 import {useDrag, useDrop} from "react-dnd";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,9 +7,9 @@ import {
   removeBunFromConstructorAction,
   removeIngredientFromConstructorAction,
   setDraggingElementAction
-} from "../../services/actions/ingredients";
+} from "../../services/actions";
 import {useDispatch, useSelector} from '../../services/hooks';
-import {TIngredient} from "../../services/types/ingredientTypes";
+import {TIngredient, TItem} from "../../services/types/ingredientTypes";
 
 export type TElementConstructor = {
   info: TIngredient;
@@ -32,12 +32,12 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
       isDrag: monitor.isDragging(),
     }),
   });
-  const [{handlerId}, dropInConstructor] = useDrop({
+  const [{handlerId}, dropInConstructor] = useDrop<TItem, TItem, {handlerId: string | symbol | null }>({
     accept: "elementInConstructor",
-    collect: monitor => ({
+    collect: (monitor) => ({
       handlerId: monitor.getHandlerId()
     }),
-    hover(item: any, monitor: any) {
+    hover(item, monitor) {
       if (!ref.current) {
         return;
       }
@@ -55,7 +55,7 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
       // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%

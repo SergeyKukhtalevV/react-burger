@@ -38,3 +38,7 @@ export type TIngredientState = {
   scrollPosition: number | null;
   currentTab: TTypeIngredient;
 }
+export type TItem = {
+  id: string;
+  index: number;
+}
