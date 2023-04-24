@@ -10,9 +10,9 @@ import {
   getIngredients,
   setCurrentIngredientAction,
   removeCurrentIngredientAction
-} from '../../services/actions/ingredients';
+} from '../../services/actions';
 import {useLocation, useNavigate} from "react-router-dom";
-import {TIngredient} from "../../services/types/ingredientTypes";
+import {TIngredient, TTypeIngredient} from "../../services/types/ingredientTypes";
 import {TFCWithModal} from "../../services/types/data";
 
 const BurgerIngredients: FC<TFCWithModal> = ({isActive, setModalActive}) => {
@@ -79,7 +79,7 @@ const BurgerIngredients: FC<TFCWithModal> = ({isActive, setModalActive}) => {
               // @ts-ignore
               onScroll={handleScroll}>
               {
-                tabsNames.map((type: any) => {
+                tabsNames.map((type: {id: number, name: TTypeIngredient, type: "main" | "bun" | "sauce"}) => {
                   return (
                     <li className={`${burgerIngredientsStyles.elements}`} key={type.id}>
                       <p className={`text text_type_main-medium ${burgerIngredientsStyles.subtitle}`}>
