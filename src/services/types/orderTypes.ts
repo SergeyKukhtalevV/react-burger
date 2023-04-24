@@ -11,6 +11,25 @@ export type TOrder = {
   updateAt: string;
 } & TIngredientsOrder;
 
+export type TWsFeedSuccess = {
+  success: boolean;
+  total: number;
+  totalToday: number;
+} & TOrder[];
+
+export type TWsFeedCurrentOrder = {
+  id: string;
+}
 export type TOrders<T> = {
   orders: T[];
+}
+export type TWsFeedState = {
+  wsConnected: boolean;
+  isError: boolean;
+  orders: TOrder[];
+  ordersTotal: number;
+  totalToday: number,
+  currentOrder: TOrder,
+  ordersDone: TOrder[],
+  ordersPending: TOrder[]
 }
