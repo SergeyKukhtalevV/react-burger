@@ -1,16 +1,20 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback, FC} from 'react';
 import OrderCard from "../components/order-card/order-card";
 import styles from "./feed-orders.module.css"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from '../services/hooks';
 import {useLocation, useNavigate} from "react-router-dom";
 import {
   getIngredients,
-  REMOVE_CURRENT_ORDER_FEED,
-  SET_CURRENT_ORDER_FEED
+  removeCurrentOrderFeedAction,
+  setCurrentOrderFeedAction, wsFeedConnectionClosedAction, wsFeedConnectionStartAction
 } from "../services/actions";
-import {WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_START,} from "../services/action-types";
 
-const FeedOrdersPage = ({isActive, setModalActive}) => {
+type TFeedOrdersPage = {
+  isActive: boolean;
+  setModalActive: (arg: boolean) => void
+}
+
+const FeedOrdersPage: FC<TFeedOrdersPage> = ({isActive, setModalActive}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '';
@@ -26,29 +30,25 @@ const FeedOrdersPage = ({isActive, setModalActive}) => {
     if (ingredientsData.length === 0) {
       dispatch(getIngredients());
     }
-    dispatch({type: WS_FEED_CONNECTION_START});
+    dispatch(wsFeedConnectionStartAction());
     return () => {
-      dispatch({type: WS_FEED_CONNECTION_CLOSED});
+      dispatch(wsFeedConnectionClosedAction());
     }
-  }, []);
+  }, // eslint-disable-next-line
+    []);
 
   useEffect(() => {
     if (!isActive) {
       setTimeout(() => {
-        dispatch({
-          type: REMOVE_CURRENT_ORDER_FEED,
-        });
+        dispatch(removeCurrentOrderFeedAction());
       }, 500);
     }
   }, [dispatch, isActive]);
 
-  const setCurrentOrder = useCallback((id) => {
+  const setCurrentOrder = useCallback((id: string) => {
     setModalActive(true);
 
-    dispatch({
-      type: SET_CURRENT_ORDER_FEED,
-      id
-    });
+    dispatch(setCurrentOrderFeedAction(id));
     navigate(`/feed/${id}`, {state: {from: location}});
   }, [dispatch, navigate, setModalActive, location]);
 

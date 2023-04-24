@@ -1,5 +1,5 @@
 import {getCookie} from "../../utils/utils";
-import {TFeedActions, TUserFeedActions, TWsFeedActions} from "../action-types";
+import {TFeedActions, TUserFeedActions} from "../action-types";
 import {Middleware, MiddlewareAPI} from "redux";
 import {AppDispatch, RootState} from "../types";
 
@@ -9,7 +9,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TFeedActions | TUserF
 
     return next => action => {
       const { dispatch } = store;
-      const { type, payload } = action;
+      const { type} = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
       const accessToken = getCookie('accessToken');
 

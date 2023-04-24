@@ -16,8 +16,6 @@ type TAcc = {
 
 
 const OrderInfo: FC<TOrderInfo> = ({info, ingredientsOrder}) => {
-  console.log(info);
-  console.log(ingredientsOrder);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [orderSum, setOrderSum] = useState<number>(0);
   const [countIngredients, setCountIngredients] = useState<TAcc[]>([]);
