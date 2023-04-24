@@ -12,22 +12,25 @@ export type TOption<T> = {
   readonly body?: string;
 };
 
-export const checkResponse = (res: any) => {
+export const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
+    console.log(res);
+    //console.log(res.json());
     return res.json();
+
   }
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export const request = (endPoint: string, options?: TOption<TOptionHeaders>) => {
+export const request = <T>(endPoint: string, options?: TOption<TOptionHeaders>): Promise<T> => {
   // принимает два аргумента: урл и объект опций, как и `fetch`
-  return fetch(URL_API + endPoint, options).then(checkResponse);
+  return fetch(URL_API + endPoint, options).then(checkResponse<T>);
 }
 
 //******
-export const fetchWithRefresh = async (url: string, options: TOption<TOptionHeaders>)=> {
+export const fetchWithRefresh = async <T>(url: string, options: TOption<TOptionHeaders>): Promise<T>=> {
   try {
-    return await request(url, options);
+    return await request<T>(url, options);
   } catch (err: any) {
     if (err.message === 'jwt expired') {
       const refreshData: any = await getTokenRequest(urlToken, {token: getCookie('token')!});
@@ -37,7 +40,7 @@ export const fetchWithRefresh = async (url: string, options: TOption<TOptionHead
       setCookie('token', refreshData.refreshToken);
       setCookie('accessToken', refreshData.accessToken);
       options.headers.Authorization = refreshData.accessToken;
-      return await request(url, options);
+      return await request<T>(url, options);
     } else {
       return Promise.reject(err);
     }
