@@ -1,19 +1,23 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
+import {useDispatch, useSelector} from '../services/hooks';
 import {useParams} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../services/actions";
-import {WS_USER_FEED_CONNECTION_START} from "../services/action-types";
 import Modal from "../components/modal/modal";
 import OrderInfo from "../components/order-info/OrderInfo";
-import {SET_CURRENT_ORDER_USER_FEED} from "../services/actions/user-feed";
+import {
+  setCurrentOrderUserFeedAction,
+  wsUserFeedConnectionStartAction
+} from "../services/actions/user-feed";
+import {TIngredient} from "../services/types/ingredientTypes";
+import {TFCWithModal} from "../services/types/data";
 
-const OrderPage = ({isActive, setModalActive}) => {
+const OrderPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
   const {ordersUserFeed, currentOrderUserFeed, wsConnectedUserFeed} = useSelector(store => store.userFeed);
   const {ingredientsData} = useSelector(store => store.ingredients);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [ingredientsOrder, setIngredientsOrder] = useState([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [ingredientsOrder, setIngredientsOrder] = useState<TIngredient[]>([]);
   const dispatch = useDispatch();
 
   useEffect(
@@ -22,13 +26,10 @@ const OrderPage = ({isActive, setModalActive}) => {
         dispatch(getIngredients());
       }
       if(ordersUserFeed.length !== 0) {
-        dispatch({
-          type: SET_CURRENT_ORDER_USER_FEED,
-          id
-        });
+        dispatch(setCurrentOrderUserFeedAction(id!));
       }
       if (ordersUserFeed.length === 0) {
-        dispatch({type: WS_USER_FEED_CONNECTION_START});
+        dispatch(wsUserFeedConnectionStartAction());
       }
       if (currentOrderUserFeed) {
         setIsLoaded(true);

@@ -6,7 +6,6 @@ import {TModal} from "../../services/types/data";
 
 type TModalWindow = TModal & React.ButtonHTMLAttributes<HTMLBodyElement>;
 
-
 const Modal: FC<TModalWindow> = ({active, setActive, children}) => {
 
   const navigate = useNavigate();

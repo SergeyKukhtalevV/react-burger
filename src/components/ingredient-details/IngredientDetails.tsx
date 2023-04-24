@@ -2,11 +2,7 @@ import React, {FC} from 'react';
 import ingredientDetailsStyles from "./ingredient-details.module.css";
 import {TIngredient} from '../../services/types/ingredientTypes';
 
-type TInfo<TIngredient> = {
-  info: TIngredient;
-}
-
-const IngredientDetails: FC<TInfo<TIngredient>> = ({info}) => {
+const IngredientDetails: FC<{info: TIngredient}> = ({info}) => {
   return (
     <div className={`${ingredientDetailsStyles.modal_ingredient}`}>
       <p className="mt-10 ml-10 pt-3 text text_type_main-large">Детали ингредиента</p>

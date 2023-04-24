@@ -13,16 +13,10 @@ import ElementConstructor from "../element-constructor/element-constructor";
 import {useNavigate} from "react-router-dom";
 import {getCookie} from "../../utils/utils";
 import {getUserInfo} from "../../services/actions";
-
 import {TIngredient} from "../../services/types/ingredientTypes";
+import {TFCWithModal} from "../../services/types/data";
 
-type TBurgerIngredients = {
-  isActive: boolean;
-  setModalActive: (arg: boolean) => void
-}
-
-const BurgerConstructor: FC<TBurgerIngredients> =
-  ({setModalActive, isActive}) => {
+const BurgerConstructor: FC<TFCWithModal> = ({setModalActive, isActive}) => {
     const token = getCookie('token');
     const navigate = useNavigate();
     const {

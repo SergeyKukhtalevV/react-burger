@@ -8,16 +8,11 @@ import {
   removeCurrentOrderFeedAction,
   setCurrentOrderFeedAction, wsFeedConnectionClosedAction, wsFeedConnectionStartAction
 } from "../services/actions";
+import {TFCWithModal} from "../services/types/data";
 
-type TFeedOrdersPage = {
-  isActive: boolean;
-  setModalActive: (arg: boolean) => void
-}
-
-const FeedOrdersPage: FC<TFeedOrdersPage> = ({isActive, setModalActive}) => {
+const FeedOrdersPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const fromPage = location.state?.from?.pathname || '';
   const navigate = useNavigate();
   const {orders, ordersDone, ordersPending, ordersTotal, totalToday} = useSelector(store => store.feed);
   const {

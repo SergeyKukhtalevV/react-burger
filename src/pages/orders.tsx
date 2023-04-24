@@ -1,30 +1,30 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback, FC} from 'react';
 import OrderCard from "../components/order-card/order-card";
 import styles from "./orders.module.css"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from '../services/hooks';
 import {useLocation, useNavigate} from "react-router-dom";
 import {
   getFreshToken,
   getIngredients
 } from "../services/actions";
 import {
-  WS_USER_FEED_CONNECTION_CLOSED,
-  WS_USER_FEED_CONNECTION_START
-} from "../services/action-types";
-import {REMOVE_CURRENT_ORDER_USER_FEED, SET_CURRENT_ORDER_USER_FEED} from "../services/actions/user-feed";
+  removeCurrentOrderUserFeedAction,
+  setCurrentOrderUserFeedAction,
+  wsUserFeedConnectionClosedAction,
+  wsUserFeedConnectionStartAction
+} from "../services/actions/user-feed";
 import {getCookie} from "../utils/utils";
+import {TFCWithModal} from "../services/types/data";
 
-const OrdersPage = ({isActive, setModalActive}) => {
+const OrdersPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const fromPage = location.state?.from?.pathname || '';
   const navigate = useNavigate();
   const {ordersUserFeed, wsTakeMessageUserFeed, wsConnectedUserFeed} = useSelector(store => store.userFeed);
   const {
     ingredientsData
   } = useSelector(store => store.ingredients);
   const token = getCookie('token');
-  const accessToken = getCookie('accessToken');
 
   useEffect(() => {
 
@@ -33,35 +33,32 @@ const OrdersPage = ({isActive, setModalActive}) => {
     }
     if (ordersUserFeed.length === 0) {
 
-      dispatch({type: WS_USER_FEED_CONNECTION_START});
+      dispatch(wsUserFeedConnectionStartAction());
     }
     if (wsTakeMessageUserFeed === 'Invalid or missing token') {
 
       dispatch(getFreshToken({token}));
-      dispatch({type: WS_USER_FEED_CONNECTION_START});
+      dispatch(wsUserFeedConnectionStartAction());
     }
     return () => {
-      dispatch({type: WS_USER_FEED_CONNECTION_CLOSED});
+      dispatch(wsUserFeedConnectionClosedAction());
     }
-  }, [dispatch, ingredientsData, wsTakeMessageUserFeed, wsConnectedUserFeed, ordersUserFeed]);
+  }, // eslint-disable-next-line
+    [dispatch, ingredientsData, wsTakeMessageUserFeed, wsConnectedUserFeed, ordersUserFeed]);
 
 
   useEffect(() => {
     if (!isActive) {
       setTimeout(() => {
-        dispatch({
-          type: REMOVE_CURRENT_ORDER_USER_FEED,
-        });
+        dispatch(removeCurrentOrderUserFeedAction());
       }, 500);
     }
-  }, [isActive]);
+  }, // eslint-disable-next-line
+    [isActive]);
 
-  const setCurrentOrder = useCallback((id) => {
+  const setCurrentOrder = useCallback((id: string) => {
     setModalActive(true);
-    dispatch({
-      type: SET_CURRENT_ORDER_USER_FEED,
-      id
-    });
+    dispatch(setCurrentOrderUserFeedAction(id));
     navigate(`/profile/orders/${id}`, {state: {from: location}});
   }, [dispatch, navigate, setModalActive, location]);
 

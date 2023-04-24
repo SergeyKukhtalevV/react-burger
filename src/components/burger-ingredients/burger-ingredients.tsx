@@ -13,13 +13,9 @@ import {
 } from '../../services/actions/ingredients';
 import {useLocation, useNavigate} from "react-router-dom";
 import {TIngredient} from "../../services/types/ingredientTypes";
+import {TFCWithModal} from "../../services/types/data";
 
-type TBurgerIngredients = {
-  isActive: boolean;
-  setModalActive: (arg: boolean) => void
-}
-
-const BurgerIngredients: FC<TBurgerIngredients> = ({isActive, setModalActive}) => {
+const BurgerIngredients: FC<TFCWithModal> = ({isActive, setModalActive}) => {
     const {
       ingredientsData,
       dataRequest,

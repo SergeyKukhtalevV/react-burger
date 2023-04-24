@@ -4,14 +4,9 @@ import {useDispatch, useSelector} from '../services/hooks';
 import {getIngredients, setCurrentIngredientAction} from "../services/actions/ingredients";
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
+import {TFCWithModal} from "../services/types/data";
 
-type TIngredientPage = {
-  isActive: boolean;
-  setModalActive: (arg: boolean) => void
-}
-
-
-const IngredientPage: FC<TIngredientPage> = ({isActive, setModalActive}) => {
+const IngredientPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
   const {currentIngredient} = useSelector(store => store.ingredients);

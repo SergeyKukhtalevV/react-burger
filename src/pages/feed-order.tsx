@@ -8,13 +8,9 @@ import {useParams} from "react-router";
 import Modal from "../components/modal/modal";
 import OrderInfo from "../components/order-info/OrderInfo";
 import {TIngredient} from "../services/types/ingredientTypes";
+import {TFCWithModal} from "../services/types/data";
 
-type TFeedOrderPage = {
-  isActive: boolean;
-  setModalActive: (arg: boolean) => void
-}
-
-const FeedOrderPage: FC<TFeedOrderPage> = ({isActive, setModalActive}) => {
+const FeedOrderPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
   const {orders, currentOrder} = useSelector(store => store.feed);
