@@ -1,21 +1,22 @@
 import {
+  TWsUserFeedActions,
   WS_USER_FEED_CONNECTION_CLOSED,
   WS_USER_FEED_CONNECTION_ERROR,
   WS_USER_FEED_CONNECTION_SUCCESS,
   WS_USER_FEED_GET_MESSAGE
 } from "../action-types";
 import {REMOVE_CURRENT_ORDER_USER_FEED, SET_CURRENT_ORDER_USER_FEED} from "../actions/user-feed";
-import {getCookie} from "../../utils/utils";
+import {TOrder, TWsUserFeedState} from "../types/orderTypes";
 
-const initialStateUserFeed = {
+const initialStateUserFeed: TWsUserFeedState = {
   wsConnectedUserFeed: false,
   isErrorUserFeed: false,
   wsTakeMessageUserFeed: '',
-  ordersUserFeed: [],
-  currentOrderUserFeed: {}
+  ordersUserFeed: [] as TOrder[],
+  currentOrderUserFeed: {} as TOrder
 }
 
-export const userFeedReducer = (state = initialStateUserFeed, action) => {
+export const userFeedReducer = (state = initialStateUserFeed, action: TWsUserFeedActions): TWsUserFeedState => {
   switch (action.type) {
     case WS_USER_FEED_CONNECTION_SUCCESS: {
       return {
@@ -54,7 +55,7 @@ export const userFeedReducer = (state = initialStateUserFeed, action) => {
     case REMOVE_CURRENT_ORDER_USER_FEED: {
       return {
         ...state,
-        currentOrderUserFeed: {}
+        currentOrderUserFeed: {} as TOrder
       };
     }
     default: {

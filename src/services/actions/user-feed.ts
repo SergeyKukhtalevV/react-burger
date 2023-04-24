@@ -28,16 +28,16 @@ export const REMOVE_CURRENT_ORDER_USER_FEED: 'REMOVE_CURRENT_ORDER_USER_FEED' = 
 
 export interface ISetCurrentOrderUserFeedAction {
   readonly type: typeof SET_CURRENT_ORDER_USER_FEED;
-  readonly data: TOrder;
+  readonly id: string;
 }
 
 export interface IRemoveCurrentOrderUserFeedAction {
   readonly type: typeof REMOVE_CURRENT_ORDER_USER_FEED;
 }
 
-export const setCurrentOrderUserFeedAction = (data: TOrder): ISetCurrentOrderUserFeedAction => ({
+export const setCurrentOrderUserFeedAction = (id: string): ISetCurrentOrderUserFeedAction => ({
   type: SET_CURRENT_ORDER_USER_FEED,
-  data
+  id
 });
 
 export const removeCurrentOrderUserFeedAction = (): IRemoveCurrentOrderUserFeedAction => ({

@@ -16,6 +16,7 @@ export type TWsFeedSuccess<T> = {
   total: number;
   totalToday: number;
   orders: T[];
+  message?: string;
 };
 
 export type TWsFeedCurrentOrder = {
@@ -31,4 +32,12 @@ export type TWsFeedState = {
   currentOrder: TOrder,
   ordersDone: (number | null)[],
   ordersPending: (number | null)[]
+}
+
+export type TWsUserFeedState = {
+  wsConnectedUserFeed: boolean;
+  isErrorUserFeed: boolean;
+  wsTakeMessageUserFeed: string | undefined;
+  ordersUserFeed: TOrder[];
+  currentOrderUserFeed: TOrder;
 }
