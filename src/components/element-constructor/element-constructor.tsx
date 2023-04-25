@@ -32,7 +32,7 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
       isDrag: monitor.isDragging(),
     }),
   });
-  const [{handlerId}, dropInConstructor] = useDrop<TItem, TItem, {handlerId: string | symbol | null }>({
+  const [{handlerId}, dropInConstructor] = useDrop<TItem, TItem, { handlerId: string | symbol | null }>({
     accept: "elementInConstructor",
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId()
@@ -55,7 +55,7 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
       // Get pixels to the top
-      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset ? (clientOffset.y - hoverBoundingRect.top) : 0;
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
@@ -76,9 +76,9 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
   dragInConstructor(dropInConstructor(ref));
   const opacity = isDrag ? 0 : 1
 
-  const handleRemoveIngredient = (id: string, uuid: string, ) => {
+  const handleRemoveIngredient = (id: string, uuid: string,) => {
     const elem = ingredientsConstructor.find((ingr: TIngredient) => ingr.uuid === uuid);
-    if(elem) {
+    if (elem) {
       elem.type !== 'bun'
         ? dispatch(removeIngredientFromConstructorAction(id, uuid))
         : dispatch(removeBunFromConstructorAction('bun'));
@@ -90,7 +90,9 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
       <DragIcon type="primary"/>
       <ConstructorElement {...info} price={info.price} text={info.name} thumbnail={info.image} type={undefined}
                           handleClose={() => {
-                            handleRemoveIngredient(info._id, info.uuid!)
+                            if (info.uuid) {
+                              handleRemoveIngredient(info._id, info.uuid)
+                            }
                           }}/>
     </li>
   );

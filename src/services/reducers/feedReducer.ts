@@ -11,7 +11,7 @@ import {TOrder, TWsFeedState} from "../types/orderTypes";
 const initialStateFeed: TWsFeedState = {
   wsConnected: false,
   isError: false,
-  orders: [] as TOrder[],
+  orders: [],
   ordersTotal: 0,
   totalToday: 0,
   currentOrder: {} as TOrder,

@@ -23,10 +23,10 @@ import FeedOrderPage from "../../pages/feed-order";
 
 const App: FC = () => {
 
-  const [modalOrderActive, setModalOrderActive] = useState<boolean>(false);
-  const [modalIngredientActive, setModalIngredientActive] = useState<boolean>(false);
-  const [modalFeedOrderActive, setModalFeedOrderActive] = useState<boolean>(false);
-  const [modalUserFeedOrderActive, setModalUserFeedOrderActive] = useState<boolean>(false);
+  const [modalOrderActive, setModalOrderActive] = useState(false);
+  const [modalIngredientActive, setModalIngredientActive] = useState(false);
+  const [modalFeedOrderActive, setModalFeedOrderActive] = useState(false);
+  const [modalUserFeedOrderActive, setModalUserFeedOrderActive] = useState(false);
 
   return (
     <BrowserRouter>

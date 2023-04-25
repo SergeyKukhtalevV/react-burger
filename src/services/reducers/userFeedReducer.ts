@@ -12,7 +12,7 @@ const initialStateUserFeed: TWsUserFeedState = {
   wsConnectedUserFeed: false,
   isErrorUserFeed: false,
   wsTakeMessageUserFeed: '',
-  ordersUserFeed: [] as TOrder[],
+  ordersUserFeed: [],
   currentOrderUserFeed: {} as TOrder
 }
 
