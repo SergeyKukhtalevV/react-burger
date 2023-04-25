@@ -105,7 +105,7 @@ const BurgerIngredients: FC<TFCWithModal> = ({isActive, setModalActive}) => {
             </ul>
         }
         <Modal active={isActive} setActive={setModalActive}>
-          <IngredientDetails info={currentIngredient}/>
+          <IngredientDetails info={currentIngredient? currentIngredient : {} as TIngredient}/>
         </Modal>
       </section>
     );

@@ -5,6 +5,7 @@ import {getIngredients, setCurrentIngredientAction} from "../services/actions/in
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import {TFCWithModal} from "../services/types/data";
+import {TIngredient} from "../services/types/ingredientTypes";
 
 const IngredientPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
 
@@ -33,7 +34,7 @@ const IngredientPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
     <Modal active={isActive} setActive={setModalActive}>
       {!isLoaded
         ? <p className="mt-10 ml-10 mb-10 pt-3 text text_type_main-large">Идет загрузка...</p>
-        : <IngredientDetails info={currentIngredient}/>
+        : <IngredientDetails info={currentIngredient ? currentIngredient : {} as TIngredient}/>
       }
     </Modal>
   );

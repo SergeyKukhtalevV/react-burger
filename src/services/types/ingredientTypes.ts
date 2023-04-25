@@ -27,7 +27,7 @@ export type TIngredientState = {
 
   ingredientsConstructor: TIngredient[];
   dragIngredientInConstructor: TIngredient;
-  currentIngredient: TIngredient;
+  currentIngredient: TIngredient | undefined;
 
   createdOrder: TIngredient;
 

@@ -103,7 +103,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientActio
     case SET_CURRENT_INGREDIENT: {
       return {
         ...state,
-        currentIngredient: [...state.ingredientsData].filter(item => item._id === action.id)[0]
+        currentIngredient: [...state.ingredientsData].find((item) => (item._id === action.id))
       }
     }
     case REMOVE_CURRENT_INGREDIENT: {
