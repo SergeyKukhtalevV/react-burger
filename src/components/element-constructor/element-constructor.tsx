@@ -76,12 +76,13 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
   dragInConstructor(dropInConstructor(ref));
   const opacity = isDrag ? 0 : 1
 
-  const handleRemoveIngredient = (uuid: string, id: string) => {
-    const elem: TIngredient = ingredientsConstructor.filter((ingr: TIngredient) => ingr.uuid === uuid)[0];
-    elem.type !== 'bun'
-      ? dispatch(removeIngredientFromConstructorAction(uuid,id))
-      : dispatch(removeBunFromConstructorAction('bun'));
-
+  const handleRemoveIngredient = (id: string, uuid: string, ) => {
+    const elem = ingredientsConstructor.find((ingr: TIngredient) => ingr.uuid === uuid);
+    if(elem) {
+      elem.type !== 'bun'
+        ? dispatch(removeIngredientFromConstructorAction(id, uuid))
+        : dispatch(removeBunFromConstructorAction('bun'));
+    }
   }
 
   return (
@@ -89,7 +90,7 @@ const ElementConstructor: FC<TElementConstructor> = ({info, index}) => {
       <DragIcon type="primary"/>
       <ConstructorElement {...info} price={info.price} text={info.name} thumbnail={info.image} type={undefined}
                           handleClose={() => {
-                            handleRemoveIngredient(info.uuid!, info._id)
+                            handleRemoveIngredient(info._id, info.uuid!)
                           }}/>
     </li>
   );
