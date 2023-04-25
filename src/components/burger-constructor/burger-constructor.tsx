@@ -56,11 +56,9 @@ const BurgerConstructor: FC<TFCWithModal> = ({setModalActive, isActive}) => {
         navigate('/login');
       }
     }
-    let total: number = 0;
     const getTotalOrder = useCallback((): number => {
       // eslint-disable-next-line
-      // @ts-ignore
-      total = ingredientsConstructor.reduce((total, item) => {
+      return ingredientsConstructor.reduce((total: any, item) => {
           if (!orderNumberRequest) {
             if (item.type !== 'bun') {
               return total + item.price;
@@ -69,7 +67,6 @@ const BurgerConstructor: FC<TFCWithModal> = ({setModalActive, isActive}) => {
         },
         0
       )
-      return total;
     }, [ingredientsConstructor]);
 
     useEffect(() => {
