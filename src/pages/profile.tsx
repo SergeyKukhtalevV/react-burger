@@ -13,7 +13,7 @@ type TProfile = {
 }
 const ProfilePage: FC = () => {
   const {userInfo, accessToken, userInfoAnswer} = useSelector(store => store.user);
-  const [isInfoChanged, setIsInfoChanged] = useState<boolean>(false);
+  const [isInfoChanged, setIsInfoChanged] = useState(false);
   const dispatch = useDispatch();
 
 

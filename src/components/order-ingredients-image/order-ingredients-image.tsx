@@ -3,9 +3,9 @@ import styles from "./order-ingredients-image.module.css";
 import {TIngredient, TIngredients} from '../../services/types/ingredientTypes';
 
 const OrderIngredientsImage: FC<TIngredients<TIngredient>> = ({ingredients}) => {
-  const [countIngredients, setCountIngredients] = useState<number>(0);
+  const [countIngredients, setCountIngredients] = useState(0);
   const [listIngredients, setListIngredients] = useState<TIngredient[]>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     if (ingredients) {
       setIsLoaded(true);
@@ -20,6 +20,7 @@ const OrderIngredientsImage: FC<TIngredients<TIngredient>> = ({ingredients}) => 
   return (
     isLoaded
     ? <div className={styles.icons}>
+        {/* eslint-disable-next-line array-callback-return */}
       {listIngredients.map((ingredient, index) => {
         if (index === 0) {
           return (

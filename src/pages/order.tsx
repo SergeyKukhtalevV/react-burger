@@ -16,7 +16,7 @@ const OrderPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
   const {id} = useParams();
   const {ordersUserFeed, currentOrderUserFeed, wsConnectedUserFeed} = useSelector(store => store.userFeed);
   const {ingredientsData} = useSelector(store => store.ingredients);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [ingredientsOrder, setIngredientsOrder] = useState<TIngredient[]>([]);
   const dispatch = useDispatch();
 
@@ -26,7 +26,9 @@ const OrderPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
         dispatch(getIngredients());
       }
       if(ordersUserFeed.length !== 0) {
-        dispatch(setCurrentOrderUserFeedAction(id!));
+        if(id) {
+          dispatch(setCurrentOrderUserFeedAction(id));
+        }
       }
       if (ordersUserFeed.length === 0) {
         dispatch(wsUserFeedConnectionStartAction());

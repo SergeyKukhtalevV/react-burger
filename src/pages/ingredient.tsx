@@ -11,7 +11,7 @@ const IngredientPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
 
   const {id} = useParams();
   const {currentIngredient} = useSelector(store => store.ingredients);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
 
   const init = useCallback(() => {

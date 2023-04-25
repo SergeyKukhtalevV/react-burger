@@ -13,35 +13,34 @@ const Modal: FC<TModalWindow> = ({active, setActive, children}) => {
   const fromPage = location.state?.from?.pathname || '/';
 
   const closePopup = useCallback(() => {
-    setActive(false);
-    navigate(fromPage, {state: {from: location}});
-  }, // eslint-disable-next-line
+      setActive(false);
+      navigate(fromPage, {state: {from: location}});
+    }, // eslint-disable-next-line
     [setActive, navigate, location]);
 
   React.useEffect(() => {
 
-    function closeModalByEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        closePopup();
+      function closeModalByEscape(e: KeyboardEvent) {
+        if (e.key === 'Escape') {
+          closePopup();
+        }
       }
-    }
 
-    if (active) {
-      document.addEventListener('keydown', closeModalByEscape);
-      return () => {
-        document.removeEventListener('keydown', closeModalByEscape);
+      if (active) {
+        document.addEventListener('keydown', closeModalByEscape);
+        return () => {
+          document.removeEventListener('keydown', closeModalByEscape);
+        }
       }
-    }
-  },
-  // eslint-disable-next-line
-  [active]);
-
-  return ReactDOM.createPortal(
-    <ModalOverlay active={active} setActive={setActive}>
+    },
+    // eslint-disable-next-line
+    [active]);
+    return ReactDOM.createPortal(
+      <ModalOverlay active={active} setActive={setActive}>
         {children}
 
-    </ModalOverlay>, document.getElementById('react-modals')!
-  );
+      </ModalOverlay>, document.getElementById('react-modals')!
+    );
 };
 
 export default Modal;

@@ -51,6 +51,7 @@ const OrderInfo: FC<TOrderInfo> = ({info, ingredientsOrder}) => {
         <p className={`text_type_main-medium mt-15`}>Состав:</p>
         <ul className={`${styles.ingredientsList} mt-6 pr-6`}>
           {
+            // eslint-disable-next-line array-callback-return
             Object.keys(countIngredients).map((key:string, index) => {
               const ingr = ingredientsOrder.find(ingredient => ingredient._id === key);
               if(ingr) {
