@@ -11,17 +11,13 @@ import {
   REMOVE_BUN_FROM_CONSTRUCTOR,
   REMOVE_CURRENT_INGREDIENT,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-  SET_BUN_IN_CONSTRUCTOR, SET_COUNT_INGREDIENTS_ZERO,
-  SET_CURRENT_INGREDIENT,
+  SET_BUN_IN_CONSTRUCTOR, SET_CURRENT_INGREDIENT,
   SET_DRAGGING_ELEMENT,
   SET_INGREDIENT_IN_CONSTRUCTOR
 } from "../../actions";
 
 export interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
-}
-export interface ISetCountIngredientsZero {
-  readonly type: typeof SET_COUNT_INGREDIENTS_ZERO;
 }
 
 export interface IGetIngredientsSuccessAction {
@@ -113,5 +109,4 @@ export type TIngredientActions =
   | IDragCurrentElementAction
   | ISetDragElementAction
   | ISetCurrentIngredientAction
-  | IRemoveCurrentIngredientAction
-  | ISetCountIngredientsZero;
+  | IRemoveCurrentIngredientAction;

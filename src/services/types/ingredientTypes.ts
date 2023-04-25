@@ -12,8 +12,8 @@ export type TIngredient = {
   image_large: string;
   __v: number;
   uuid?: string;
-  cnt?: number;
 }
+
 export type TTypeIngredient = 'Булки' | 'Соусы' | 'Начинки';
 
 export type TIngredients<T> = {

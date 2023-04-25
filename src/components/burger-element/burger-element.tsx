@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerElementStyles from './burger-element.module.css'
 import {useDrag} from "react-dnd";
@@ -12,9 +12,20 @@ type TBurgerElement = {
 
 const BurgerElement:  FC<TBurgerElement> = ({props, setCurrIngr}) => {
   const id = props._id;
-  const {
-    ingredientsData
-  } = useSelector(store => store.ingredients);
+
+  const {ingredientsConstructor} = useSelector(store => store.ingredients);
+
+  const count = useMemo(() => {
+    let cnt: number = 0;
+    cnt = ingredientsConstructor.filter(item => item._id === id).length;
+    if(ingredientsConstructor.find((item) => (item.type === 'bun' && item._id === id))){
+      if(cnt < 2) {
+        cnt++;
+      }
+    }
+    return cnt;
+  }, [ingredientsConstructor, id]);
+
   const [{ isDrag }, drag] = useDrag({
     type: "ingredient",
     item: {id},
@@ -24,7 +35,7 @@ const BurgerElement:  FC<TBurgerElement> = ({props, setCurrIngr}) => {
   });
   return (
     <li ref={drag} className={`ml-4 mr-2 ${burgerElementStyles.card}`} onClick={() =>{setCurrIngr(props._id)}}>
-      <Counter count={ingredientsData.filter((i: TIngredient) => i._id === props._id)[0].cnt!} size="default" extraClass="m-1"/>
+      <Counter count={count? count : 0} size="default" extraClass="m-1"/>
       <img src={props.image} alt={props.name}/>
       <div className={`mt-1 ${burgerElementStyles.price}`}>
         <p className={`text text_type_digits-default`}>{props.price} </p>
