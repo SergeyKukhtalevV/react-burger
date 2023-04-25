@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState, FC} from 'react';
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from '../services/hooks';
-import {getIngredients, setCurrentIngredientAction} from "../services/actions/ingredients";
+import {getIngredients, setCurrentIngredientAction} from "../services/actions";
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import {TFCWithModal} from "../services/types/data";
@@ -15,7 +15,9 @@ const IngredientPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
   const dispatch = useDispatch();
 
   const init = useCallback(() => {
-      dispatch(setCurrentIngredientAction(id!));
+    if(id) {
+      dispatch(setCurrentIngredientAction(id));
+    }
     }, [dispatch, id]
   )
 

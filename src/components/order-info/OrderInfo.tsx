@@ -16,8 +16,8 @@ type TAcc = {
 
 
 const OrderInfo: FC<TOrderInfo> = ({info, ingredientsOrder}) => {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [orderSum, setOrderSum] = useState<number>(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [orderSum, setOrderSum] = useState(0);
   const [countIngredients, setCountIngredients] = useState<TAcc[]>([]);
 
   useEffect(() => {
@@ -52,24 +52,27 @@ const OrderInfo: FC<TOrderInfo> = ({info, ingredientsOrder}) => {
         <ul className={`${styles.ingredientsList} mt-6 pr-6`}>
           {
             Object.keys(countIngredients).map((key:string, index) => {
-              return (
-                <li className={styles.ingredient} key={index}>
-                  <div className={styles.ingredientContainer}>
-                    <img className={styles.ingredientImage}
-                         src={ingredientsOrder.find(ingredient => ingredient._id === key)!.image_mobile}
-                         alt={ingredientsOrder.find(ingredient => ingredient._id === key)!.name}/>
-                    <p
-                      className={`${styles.name} text text_type_main-small`}>{ingredientsOrder.find(ingredient => ingredient._id === key)!.name}</p>
-                  </div>
-                  <div className={`text text_type_main-large ${styles.ingredientPrice}`}>
-                    <p
-                      className="text text_type_digits-default">
-                      {// @ts-ignore
-                        countIngredients[key]} x {ingredientsOrder.find(ingredient => ingredient._id === key)!.price}</p>
-                    <CurrencyIcon type="primary"/>
-                  </div>
-                </li>
-              );
+              const ingr = ingredientsOrder.find(ingredient => ingredient._id === key);
+              if(ingr) {
+                return (
+                  <li className={styles.ingredient} key={index}>
+                    <div className={styles.ingredientContainer}>
+                      <img className={styles.ingredientImage}
+                           src={ingr.image_mobile}
+                           alt={ingr.name}/>
+                      <p
+                        className={`${styles.name} text text_type_main-small`}>{ingr.name}</p>
+                    </div>
+                    <div className={`text text_type_main-large ${styles.ingredientPrice}`}>
+                      <p
+                        className="text text_type_digits-default">
+                        {// @ts-ignore
+                          countIngredients[key]} x {ingr.price}</p>
+                      <CurrencyIcon type="primary"/>
+                    </div>
+                  </li>
+                );
+              }
             })
           }
 
