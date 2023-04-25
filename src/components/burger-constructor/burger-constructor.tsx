@@ -60,11 +60,11 @@ const BurgerConstructor: FC<TFCWithModal> = ({setModalActive, isActive}) => {
     const getTotalOrder = useCallback((): number => {
       // eslint-disable-next-line
       // @ts-ignore
-      total = ingredientsConstructor.reduce((total: number, i: TIngredient) => {
+      total = ingredientsConstructor.reduce((total, item) => {
           if (!orderNumberRequest) {
-            if (i.type !== 'bun') {
-              return total + i.price;
-            } else return total + i.price * 2;
+            if (item.type !== 'bun') {
+              return total + item.price;
+            } else return total + item.price * 2;
           }
         },
         0

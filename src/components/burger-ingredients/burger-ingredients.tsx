@@ -47,7 +47,7 @@ const BurgerIngredients: FC<TFCWithModal> = ({isActive, setModalActive}) => {
       }
     }, [dispatch, isActive]);
 
-    const handleScroll = (event: SyntheticEvent<Element, Event> & { target: Element; }) => {
+    const handleScroll = (event:  React.UIEvent<HTMLUListElement, UIEvent> & { target: Element; }) => {
       const j = tabsNames.map((item: any, index: number) => {
         return (event.target.childNodes[index] as Element).getBoundingClientRect().top - event.target.getBoundingClientRect().top;
       }).findIndex((element: number) => {
@@ -76,8 +76,7 @@ const BurgerIngredients: FC<TFCWithModal> = ({isActive, setModalActive}) => {
             ? <p className="text text_type_main-medium">Идет загрузка...</p>
             :
             <ul className={`mt-10 ${burgerIngredientsStyles.ingredients}`}
-              // @ts-ignore
-              onScroll={handleScroll}>
+              onScroll={(e: React.UIEvent<HTMLUListElement, UIEvent> & { target: Element; }) => {handleScroll(e)}}>
               {
                 tabsNames.map((type: {id: number, name: TTypeIngredient, type: "main" | "bun" | "sauce"}) => {
                   return (
