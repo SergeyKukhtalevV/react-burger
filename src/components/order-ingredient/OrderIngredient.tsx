@@ -1,15 +1,12 @@
-import React, {useEffect, useState, FC} from 'react';
-import styles from "../order-info/order-info.module.css";
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {FC} from 'react';
+import styles from "./order-ingredient.module.css";
+import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {TIngredient} from '../../services/types/ingredientTypes';
-import {TOrder} from '../../services/types/orderTypes';
-import OrderInfo from "../order-info/OrderInfo";
 
 type TOrderIngredient = {
   info: TIngredient;
   quantity: any
 }
-
 
 const OrderIngredient: FC<TOrderIngredient> = ({info, quantity}) => {
   return (
