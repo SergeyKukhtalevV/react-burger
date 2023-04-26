@@ -27,8 +27,7 @@ const OrderInfo: FC<TOrderInfo> = ({info, ingredientsOrder}) => {
       setOrderSum(ingredientsOrder.reduce((total, i) => {
         return total + i.price;
       }, 0));
-      setCountIngredients(ingredientsOrder.reduce((acc: TAcc[], el): TAcc[] => {
-        // @ts-ignore
+      setCountIngredients(ingredientsOrder.reduce((acc: any, el): TAcc[] => {
         acc[el._id] = (acc[el._id] || 0) + 1;
         return acc;
       }, []));
