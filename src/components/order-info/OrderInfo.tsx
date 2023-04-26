@@ -3,6 +3,7 @@ import styles from "./order-info.module.css";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import {TIngredient} from '../../services/types/ingredientTypes';
 import {TOrder} from '../../services/types/orderTypes';
+import OrderIngredient from "../order-ingredient/OrderIngredient";
 
 type TOrderInfo = {
   info: TOrder;
@@ -52,31 +53,15 @@ const OrderInfo: FC<TOrderInfo> = ({info, ingredientsOrder}) => {
         <ul className={`${styles.ingredientsList} mt-6 pr-6`}>
           {
             // eslint-disable-next-line array-callback-return
-            Object.keys(countIngredients).map((key:string, index) => {
+            Object.keys(countIngredients).map((key:any, index) => {
               const ingr = ingredientsOrder.find(ingredient => ingredient._id === key);
               if(ingr) {
                 return (
-                  <li className={styles.ingredient} key={index}>
-                    <div className={styles.ingredientContainer}>
-                      <img className={styles.ingredientImage}
-                           src={ingr.image_mobile}
-                           alt={ingr.name}/>
-                      <p
-                        className={`${styles.name} text text_type_main-small`}>{ingr.name}</p>
-                    </div>
-                    <div className={`text text_type_main-large ${styles.ingredientPrice}`}>
-                      <p
-                        className="text text_type_digits-default">
-                        {// @ts-ignore
-                          countIngredients[key]} x {ingr.price}</p>
-                      <CurrencyIcon type="primary"/>
-                    </div>
-                  </li>
+                  <OrderIngredient info={ingr} key={index} quantity={countIngredients[key]}/>
                 );
               }
             })
           }
-
         </ul>
         <div className={`${styles.modal_footer} mt-10`}>
           <FormattedDate className={`text text_type_main-default text_color_inactive`}
