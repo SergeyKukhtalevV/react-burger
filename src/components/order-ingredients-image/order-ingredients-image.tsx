@@ -20,7 +20,6 @@ const OrderIngredientsImage: FC<TIngredients<TIngredient>> = ({ingredients}) => 
   return (
     isLoaded
     ? <div className={styles.icons}>
-        {/* eslint-disable-next-line array-callback-return */}
       {listIngredients.map((ingredient, index) => {
         if (index === 0) {
           return (
@@ -64,6 +63,7 @@ const OrderIngredientsImage: FC<TIngredients<TIngredient>> = ({ingredients}) => 
               </div>
             )
           }
+          else return null;
         }
       })
       }

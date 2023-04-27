@@ -25,10 +25,8 @@ const OrderPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
       if (ingredientsData.length === 0) {
         dispatch(getIngredients());
       }
-      if(ordersUserFeed.length !== 0) {
-        if(id) {
-          dispatch(setCurrentOrderUserFeedAction(id));
-        }
+      if (ordersUserFeed.length !== 0 && id) {
+        dispatch(setCurrentOrderUserFeedAction(id));
       }
       if (ordersUserFeed.length === 0) {
         dispatch(wsUserFeedConnectionStartAction());
@@ -36,7 +34,7 @@ const OrderPage: FC<TFCWithModal> = ({isActive, setModalActive}) => {
       if (currentOrderUserFeed) {
         setIsLoaded(true);
         setModalActive(true);
-        if(currentOrderUserFeed.ingredients) {
+        if (currentOrderUserFeed.ingredients) {
           setIngredientsOrder(currentOrderUserFeed.ingredients.map((item) => {
             return ingredientsData.filter(ingredient => ingredient._id === item)[0];
           }));
