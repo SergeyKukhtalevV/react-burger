@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-const store = initStore();
+export const store = initStore();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

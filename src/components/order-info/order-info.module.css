@@ -47,36 +47,6 @@
   background: #2F2F37;
 }
 
-.ingredient {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.ingredientContainer {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-}
-
-.ingredientImage {
-  background: #131316;
-  border: 2px solid #801AB2;
-  border-radius: 100px;
-  box-sizing: border-box;
-  height: 64px;
-  object-fit: cover;
-  width: 64px;
-}
-
-.ingredientPrice {
-  display: flex;
-  flex-direction: row;
-  gap: 9px;
-}
-
 .modal_footer {
   align-items: center;
   display: flex;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, FC} from 'react';
 import appStyles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -20,9 +20,8 @@ import OrdersPage from "../../pages/orders";
 import OrderPage from "../../pages/order";
 import FeedOrdersPage from "../../pages/feed-orders";
 import FeedOrderPage from "../../pages/feed-order";
-import {getCookie} from "../../utils/utils";
 
-function App() {
+const App: FC = () => {
 
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
